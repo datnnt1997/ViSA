@@ -1,0 +1,1 @@
+{"text": "sản phẩm tốt. Pin khỏe, chíp nhanh, ram rộng. 100%!!!!!! Camera rõ nét, Liên quân chơi ok, mượt!Nhân viên nhiệt tình!!!!!", "labels": [[0, 12, "GENERAL#POSITIVE"], [14, 22, "BATTERY#POSITIVE"], [24, 50, "PERFORMANCE#POSITIVE"], [57, 70, "CAMERA#POSITIVE"], [72, 95, "PERFORMANCE#POSITIVE"], [96, 116, "SER&ACC#POSITIVE"]]}
