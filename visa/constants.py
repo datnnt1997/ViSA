@@ -11,10 +11,9 @@ ASPECT_LABELS = ["O", "B-SCREEN", "B-CAMERA", "B-FEATURES", "B-BATTERY", "B-PERF
                  "B-GENERAL", "B-SER&ACC", "I-SCREEN", "I-CAMERA", "I-FEATURES", "I-BATTERY", "I-PERFORMANCE",
                  "I-STORAGE", "I-DESIGN", "I-PRICE", "I-GENERAL", "I-SER&ACC"]
 
-SENTIMENT_LABELS = ["NEGATIVE", "NEUTRAL", "POSITIVE"]
+SENTIMENT_LABELS = ["O", "NEGATIVE", "NEUTRAL", "POSITIVE"]
 
 if os.path.exists("vncorenlp/VnCoreNLP-1.1.1.jar"):
     RDRSEGMENTER = VnCoreNLP("vncorenlp/VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m')
 else:
     RDRSEGMENTER = None
-
