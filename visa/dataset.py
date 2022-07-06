@@ -40,6 +40,6 @@ def build_dataset(data_dir: Union[str or os.PathLike],
 
 # DEBUG
 if __name__ == "__main__":
-    from transformers import AutoTokenizer
+    from transformers import AutoTokenizer,
     tokenizer = AutoTokenizer.from_pretrained('vinai/phobert-base')
     build_dataset('datasets/samples', tokenizer, dtype='train', max_seq_len=128, device='cuda', overwrite_data=True)
