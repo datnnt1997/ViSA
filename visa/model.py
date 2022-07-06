@@ -1,9 +1,39 @@
-from transformers import RobertaConfig, RobertaForTokenClassification
+from typing import Optional, Any, List, Tuple
+from collections import OrderedDict
+from transformers import logging, RobertaConfig, RobertaForTokenClassification
 from torchcrf import CRF
 
 import torch
 import torch.nn as nn
 import random
+
+logging.set_verbosity_error()
+
+class ABSAOutput(OrderedDict):
+    loss: Optional[torch.FloatTensor] = torch.FloatTensor([0.0])
+    a_loss: Optional[torch.FloatTensor] = torch.FloatTensor([0.0])
+    s_loss: Optional[torch.FloatTensor] = torch.FloatTensor([0.0])
+    a_tags: Optional[List[int]] = []
+    s_tags: Optional[List[int]] = []
+
+    def __getitem__(self, k):
+        if isinstance(k, str):
+            inner_dict = {k: v for (k, v) in self.items()}
+            return inner_dict[k]
+        else:
+            return self.to_tuple()[k]
+
+    def __setattr__(self, name, value):
+        if name in self.keys() and value is not None:
+            super().__setitem__(name, value)
+        super().__setattr__(name, value)
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        super().__setattr__(key, value)
+
+    def to_tuple(self) -> Tuple[Any]:
+        return tuple(self[k] for k in self.keys())
 
 
 class ABSAConfig(RobertaConfig):
@@ -21,22 +51,20 @@ class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.teacher_forcing_ratio = config.teacher_forcing_ratio
-        self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
-        self.sentiment_detection = nn.Linear(config.hidden_size, config.num_slabels)
+
+        self.linear_aspect = nn.Linear(config.hidden_size, config.num_alabels)
+        self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
+
+        self.aspect_detection = nn.Linear(config.num_alabels, config.num_alabels)
+        self.sentiment_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
         self.s_crf = CRF(config.num_slabels, batch_first=True)
 
         self.post_init()
 
-    def forward(self,
-                input_ids,
-                token_type_ids=None,
-                attention_mask=None,
-                alabels=None,
-                slabels=None,
-                valid_ids=None,
-                label_masks=None):
+    def forward(self, input_ids, token_type_ids=None, attention_mask=None, alabels=None, slabels=None, valid_ids=None,
+                label_masks=None, **kwargs):
         seq_output = self.roberta(input_ids, token_type_ids, attention_mask, head_mask=None)[0]
 
         batch_size, max_len, feat_dim = seq_output.shape
@@ -45,14 +73,23 @@ class ABSAModel(RobertaForTokenClassification):
 
         valid_seq_output = self.dropout(valid_seq_output)
 
-        a_logits = self.aspect_detection(valid_seq_output)
-        seq_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
-        if alabels is not None:
-            a_loss = 1 - self.crf(a_logits, alabels, mask=label_masks.type(torch.uint8))
-            teacher_force = random.random() < self.teacher_forcing_ratio
-            if teacher_force:
+        a_logits = self.aspect_detection(self.linear_aspect(valid_seq_output))
+        a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
 
-        return None
+        s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
+        s_tags = self.s_crf.decode(s_logits, mask=label_masks != 0)
+
+        a_loss = torch.zeros(1)
+        if alabels is not None:
+            a_loss = 1 - self.a_crf(a_logits, alabels, mask=label_masks.type(torch.uint8))
+        s_loss = torch.zeros(1)
+        if slabels is not None:
+            s_loss = 1 - self.s_crf(s_logits, slabels, mask=label_masks.type(torch.uint8))
+        return ABSAOutput(loss=a_loss + s_loss,
+                          a_loss=a_loss,
+                          s_loss=s_loss,
+                          a_tags=a_tags,
+                          s_tags=s_tags)
 
 
 # DEBUG

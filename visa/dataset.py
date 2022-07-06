@@ -27,11 +27,11 @@ def build_dataset(data_dir: Union[str or os.PathLike],
                   device: str = 'cpu',
                   overwrite_data: bool = True,
                   use_crf: bool = True) -> ABSADataset:
-    dfile_path = Path(data_dir+f'/{dtype}.jsonl.txt')
+    dfile_path = Path(data_dir+f'/{dtype}.jsonl')
     cached_path = dfile_path.with_suffix('.cached')
     if not os.path.exists(cached_path) or overwrite_data:
         examples = read_data(dfile_path)
-        features = convert_example_to_features(examples, tokenizer, max_seq_len)
+        features = convert_example_to_features(examples, tokenizer, max_seq_len, use_crf=use_crf)
         torch.save(features, cached_path)
     else:
         features = torch.load(cached_path)
@@ -40,6 +40,6 @@ def build_dataset(data_dir: Union[str or os.PathLike],
 
 # DEBUG
 if __name__ == "__main__":
-    from transformers import AutoTokenizer,
+    from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained('vinai/phobert-base')
     build_dataset('datasets/samples', tokenizer, dtype='train', max_seq_len=128, device='cuda', overwrite_data=True)

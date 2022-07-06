@@ -1,3 +1,4 @@
-vncorenlp
 torch
+vncorenlp~=1.0.3
 pytorch-crf~=0.7.2
+transformers~=4.20.1

@@ -1,5 +1,23 @@
 import os
 import logging
+import torch
+import random
+import numpy as np
+
+
+def set_ramdom_seed(seed: int):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+
+def get_total_model_parameters(model):
+    total_params, trainable_params = 0, 0
+    for name, parameter in model.named_parameters():
+        params = parameter.numel()
+        if parameter.requires_grad:
+            trainable_params += params
+        total_params += params
+    return total_params,
 
 
 def init_logger(log_file=None, log_file_level=logging.NOTSET):
