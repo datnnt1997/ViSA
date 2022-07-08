@@ -1,6 +1,6 @@
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 
-from visa.constants import LOGGER
+from visa.constants import LOGGER, ASPECT_LABELS, SENTIMENT_LABELS
 from visa.helper import set_ramdom_seed
 from visa.arguments import get_train_argument
 from visa.dataset import build_dataset
@@ -19,14 +19,18 @@ def save_model(args, saved_file, model):
     }
     torch.save(saved_data, saved_file)
 
+
 def train_one_epoch():
     NotImplemented
+
 
 def validate():
     NotImplemented
 
+
 def test():
     NotImplemented
+
 
 def train():
     args = get_train_argument()
@@ -55,7 +59,9 @@ def train():
                              overwrite_data=args.overwrite_data,
                              use_crf=use_crf)
 
-    config = ABSAConfig.from_pretrained(args.model_name_or_pathj, )
+    config = ABSAConfig.from_pretrained(args.model_name_or_path,
+                                        num_slabels=len(SENTIMENT_LABELS),
+                                        num_alabels=len(ASPECT_LABELS))
     model = ABSAModel.from_pretrained(args.model_name_or_path, config=config)
     model.resize_position_embeddings(len(tokenizer))
     model.to(device)
@@ -87,6 +93,7 @@ def train():
     scheduler = get_cosine_schedule_with_warmup(optimizer,
                                                 num_warmup_steps=train_steps_per_epoch,
                                                 num_training_steps=args.epochs * train_steps_per_epoch)
+
 
 if __name__ == "__main__":
     if sys.argv[1] == 'train':

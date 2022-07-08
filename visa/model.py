@@ -9,6 +9,7 @@ import random
 
 logging.set_verbosity_error()
 
+
 class ABSAOutput(OrderedDict):
     loss: Optional[torch.FloatTensor] = torch.FloatTensor([0.0])
     a_loss: Optional[torch.FloatTensor] = torch.FloatTensor([0.0])
