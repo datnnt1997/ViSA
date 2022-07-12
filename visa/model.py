@@ -5,7 +5,7 @@ from torchcrf import CRF
 
 import torch
 import torch.nn as nn
-import random
+import torch.nn.functional as F
 
 logging.set_verbosity_error()
 
@@ -52,7 +52,8 @@ class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.teacher_forcing_ratio = config.teacher_forcing_ratio
-
+        self.num_alabels = config.num_alabels
+        self.num_slabels = config.num_slabels
         self.linear_aspect = nn.Linear(config.hidden_size, config.num_alabels)
         self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
 
@@ -64,9 +65,9 @@ class ABSAModel(RobertaForTokenClassification):
 
         self.post_init()
 
-    def forward(self, input_ids, token_type_ids=None, attention_mask=None, alabels=None, slabels=None, valid_ids=None,
+    def forward(self, input_ids, token_type_ids=None, attention_mask=None, a_labels=None, s_labels=None, valid_ids=None,
                 label_masks=None, **kwargs):
-        seq_output = self.roberta(input_ids, token_type_ids, attention_mask, head_mask=None)[0]
+        seq_output = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids, head_mask=None)[0]
 
         batch_size, max_len, feat_dim = seq_output.shape
         range_vector = torch.arange(0, batch_size, dtype=torch.long, device=seq_output.device).unsqueeze(1)
@@ -78,14 +79,16 @@ class ABSAModel(RobertaForTokenClassification):
         a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
 
         s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
-        s_tags = self.s_crf.decode(s_logits, mask=label_masks != 0)
+        s_tags = torch.masked_select(torch.argmax(F.log_softmax(s_logits, dim=2), dim=2).view(-1),
+                                     mask=label_masks.view(-1) != 0).tolist()
 
         a_loss = torch.zeros(1)
-        if alabels is not None:
-            a_loss = 1 - self.a_crf(a_logits, alabels, mask=label_masks.type(torch.uint8))
+        if a_labels is not None:
+            a_loss = 1 - self.a_crf(a_logits, a_labels, mask=label_masks.type(torch.uint8))
         s_loss = torch.zeros(1)
-        if slabels is not None:
-            s_loss = 1 - self.s_crf(s_logits, slabels, mask=label_masks.type(torch.uint8))
+        if s_labels is not None:
+            loss_func = nn.CrossEntropyLoss()
+            s_loss = loss_func(s_logits.view(-1, self.num_slabels), s_labels.view(-1))
         return ABSAOutput(loss=a_loss + s_loss,
                           a_loss=a_loss,
                           s_loss=s_loss,
