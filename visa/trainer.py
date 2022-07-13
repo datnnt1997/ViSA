@@ -67,32 +67,32 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
             a_labels = torch.masked_select(batch['a_labels'].view(-1), active_accuracy)
             s_labels = torch.masked_select(batch['s_labels'].view(-1), active_accuracy)
             eval_aspect_golds.extend(a_labels.detach().cpu().tolist())
-            eval_senti_golds.extend(s_labels.detach().cpu().tolist())
+            # eval_senti_golds.extend(s_labels.detach().cpu().tolist())
             if isinstance(outputs.a_tags[-1], list):
                 eval_aspect_preds.extend(list(itertools.chain(*outputs.a_tags)))
             else:
                 eval_aspect_preds.extend(outputs.a_tags)
-            if isinstance(outputs.s_tags[-1], list):
-                eval_senti_preds.extend(list(itertools.chain(*outputs.s_tags)))
-            else:
-                eval_senti_preds.extend(outputs.s_tags)
+            # if isinstance(outputs.s_tags[-1], list):
+            #     eval_senti_preds.extend(list(itertools.chain(*outputs.s_tags)))
+            # else:
+            #     eval_senti_preds.extend(outputs.s_tags)
     epoch_loss = eval_loss / len(iterator)
     aspect_reports: dict = classification_report(eval_aspect_golds, eval_aspect_preds,
                                                  output_dict=True,
                                                  zero_division=0)
-    senti_reports: dict = classification_report(eval_senti_golds, eval_senti_preds,
-                                                output_dict=True,
-                                                zero_division=0)
+    # senti_reports: dict = classification_report(eval_senti_golds, eval_senti_preds,
+    #                                             output_dict=True,
+    #                                             zero_division=0)
     epoch_aspect_avg_f1 = aspect_reports['macro avg']['f1-score']
-    epoch_senti_avg_f1 = senti_reports['macro avg']['f1-score']
+    # epoch_senti_avg_f1 = senti_reports['macro avg']['f1-score']
     epoch_aspect_avg_acc = aspect_reports['accuracy']
-    epoch_senti_avg_acc = senti_reports['accuracy']
+    # epoch_senti_avg_acc = senti_reports['accuracy']
     LOGGER.info(f"\t{'*' * 20}Validate Summary{'*' * 20}")
     LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};\n"
                 f"\t[Aspect] BIO-Accuracy: {epoch_aspect_avg_acc:.4f}; BIO-Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
-                f"\t[Sentiment] BIO-Accuracy: {epoch_senti_avg_acc:.4f}; BIO-Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
+                # f"\t[Sentiment] BIO-Accuracy: {epoch_senti_avg_acc:.4f}; BIO-Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
-    return epoch_loss, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
+    return epoch_loss, (epoch_aspect_avg_f1, epoch_aspect_avg_acc)#, (epoch_senti_avg_f1, epoch_senti_avg_acc)
 
 
 def test():
@@ -184,7 +184,7 @@ def train():
                                   scheduler=scheduler)
 
         # Validate trained model on dataset
-        eval_loss, aspect_scores, senti_scores = validate(model=model,
+        eval_loss, aspect_scores = validate(model=model,
                                                 task=args.task,
                                                 iterator=eval_iterator,
                                                 cur_epoch=epoch,
