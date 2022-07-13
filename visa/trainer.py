@@ -78,7 +78,7 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
             else:
                 eval_senti_preds.extend(outputs.s_tags)
     epoch_loss = eval_loss / len(iterator)
-    scores = calc_score(eval_aspect_golds, eval_aspect_preds)
+    scores = calc_score([ASPECT_LABELS[aid] for aid in eval_aspect_golds], [SENTIMENT_LABELS[sid] for sid in eval_aspect_preds])
     LOGGER.info(scores)
     aspect_reports: dict = classification_report(eval_aspect_golds, eval_aspect_preds,
                                                  output_dict=True,
