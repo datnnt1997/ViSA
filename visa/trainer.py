@@ -34,7 +34,7 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
     model.train()
     tqdm_bar = tqdm(enumerate(iterator), total=len(iterator), desc=f'[TRAIN-EPOCH {cur_epoch}]')
     for idx, batch in tqdm_bar:
-        outputs = model(**batch)
+        outputs = model(epoch=cur_epoch, **batch)
         # backward pass
         torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=max_grad_norm)
         optim.zero_grad()
@@ -61,7 +61,7 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
         tqdm_desc = f'[EVAL- Epoch {cur_epoch}]'
         eval_bar = tqdm(enumerate(iterator), total=len(iterator), desc=tqdm_desc)
         for idx, batch in eval_bar:
-            outputs = model(**batch)
+            outputs = model(epoch=cur_epoch, **batch)
             eval_loss += outputs.loss.detach().item()
             active_accuracy = batch['label_masks'].view(-1) != 0
             a_labels = torch.masked_select(batch['a_labels'].view(-1), active_accuracy)

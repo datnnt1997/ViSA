@@ -71,7 +71,7 @@ class ABSAModel(RobertaForTokenClassification):
 
         self.post_init()
 
-    def forward(self, input_ids, token_type_ids=None, attention_mask=None, a_labels=None, s_labels=None, valid_ids=None,
+    def forward(self, epoch:int, input_ids, token_type_ids=None, attention_mask=None, a_labels=None, s_labels=None, valid_ids=None,
                 label_masks=None, **kwargs):
         seq_output = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids, head_mask=None)[0]
 
@@ -86,10 +86,11 @@ class ABSAModel(RobertaForTokenClassification):
 
         if a_labels is not None and s_labels is not None:
             loss, a_tags, s_tags = self.hier_loss(aspects=a_logits,
-                                   sentis=s_logits,
-                                   true_a_labels=a_labels,
-                                   true_s_labels=s_labels,
-                                   mask=label_masks)
+                                                  sentis=s_logits,
+                                                  true_a_labels=a_labels,
+                                                  true_s_labels=s_labels,
+                                                  mask=label_masks,
+                                                  epoch=epoch)
             return ABSAOutput(loss=loss, a_tags=a_tags, s_tags=s_tags)
 
         a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
