@@ -60,10 +60,10 @@ def read_data(fpath: Union[str, os.PathLike]) -> List[ABSAExample]:
                 for idx, _ in enumerate(aspect_text):
                     if idx == 0:
                         aspect_tags.append(f"B-{as_tag.strip()}")
-                        senti_tags.append(senti_tag)
+                        senti_tags.append(f"B-{senti_tag.strip()}")
                         continue
                     aspect_tags.append(f"I-{as_tag.strip()}")
-                    senti_tags.append(senti_tag)
+                    senti_tags.append(f"I-{senti_tag.strip()}")
                 norm_text.extend(aspect_text)
                 last_index = span[1]
 
