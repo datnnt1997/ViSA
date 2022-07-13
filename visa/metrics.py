@@ -147,8 +147,8 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     sum_correct_counts = sum(correct_counts.values())
     sum_true_counts = sum(true_counts.values())
 
-    nonO_correct_counts = sum(v for k, v in correct_counts.items() if k != 'O')
-    nonO_true_counts = sum(v for k, v in true_counts.items() if k != 'O')
+    # nonO_correct_counts = sum(v for k, v in correct_counts.items() if k != 'O')
+    # nonO_true_counts = sum(v for k, v in true_counts.items() if k != 'O')
 
     chunk_types = sorted(list(set(list(true_chunks) + list(pred_chunks))))
 
@@ -159,8 +159,8 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
         return res
 
     # print overall performance, and performance per chunk type
-    LOGGER.info(f"Processed {sum_true_counts} tokens with {sum_true_chunks} phrases; "
-                f"Found: {sum_pred_chunks} phrases; correct: {sum_correct_chunks}.")
+    # LOGGER.info(f"Processed {sum_true_counts} tokens with {sum_true_chunks} phrases; "
+    #             f"Found: {sum_pred_chunks} phrases; correct: {sum_correct_chunks}.")
     # LOGGER.info("Accuracy: %0.4f; (without `O` tag)" % (nonO_correct_counts / nonO_true_counts))
     LOGGER.info("Accuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
                 % (sum_correct_counts / sum_true_counts, prec, rec, f1))

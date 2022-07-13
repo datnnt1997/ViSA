@@ -79,10 +79,6 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
                 eval_senti_preds.extend(outputs.s_tags)
 
     epoch_loss = eval_loss / len(iterator)
-    a_scores = calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                        [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds])
-    s_scores = calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
-                          [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     aspect_reports: dict = classification_report(eval_aspect_golds, eval_aspect_preds,
                                                  output_dict=True,
                                                  zero_division=0)
@@ -98,9 +94,11 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};\n")
     LOGGER.info(f"\tChunk-Report: {epoch_loss:.4f};\n")
     LOGGER.info(f"\tAspect]:\n")
-    LOGGER.info(a_scores)
+    calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+               [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds])
     LOGGER.info(f"\tSentiment]:\n")
-    LOGGER.info(s_scores)
+    calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
+               [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\tBIO-Report: {epoch_loss:.4f};\n")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
