@@ -10,7 +10,7 @@ from visa.helper import set_ramdom_seed
 from visa.arguments import get_train_argument
 from visa.dataset import build_dataset
 from visa.model import ABSAConfig, ABSAModel
-from visa.metrics import calc_score
+from visa.metrics import calc_score, calc_overall_score
 
 import os
 import torch
@@ -99,10 +99,16 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     LOGGER.info(f"\tSentiment]:\n")
     calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
+    LOGGER.info(f"\tAspect-Sentiment]:\n")
+    calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+                       pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                       true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
+                       pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\tBIO-Report: {epoch_loss:.4f};\n")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
+
     return epoch_loss, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
 
 

@@ -119,10 +119,33 @@ def count_chunks(true_seqs, pred_seqs):
             correct_counts, true_counts, pred_counts)
 
 
+def merge_tags(aspect_tags, senti_tags):
+    merged_tags = []
+    prev_a_tag, prev_s_tag = 'O', 'O'
+    for a_tag, s_tag in zip(aspect_tags, senti_tags):
+        if a_tag == 'O' and s_tag == 'O':
+            merged_tags.append('O')
+
+        _, a_type = split_tag(a_tag)
+        _, s_type = split_tag(s_tag)
+
+        a_start = is_chunk_start(prev_a_tag, a_tag)
+        s_start = is_chunk_start(prev_s_tag, s_tag)
+        if a_start or s_start:
+            merged_tag = f"B-{a_type}#{s_tag}"
+        else:
+            merged_tag = f"I-{a_type}#{s_tag}"
+
+        merged_tags.append(merged_tag)
+
+        prev_a_tag, prev_s_tag = a_tag, s_tag
+    return merged_tags
+
+
 def calc_metrics(tp, p, t, percent=True):
     """
-    compute overall precision, recall and FB1 (default values are 0.0)
-    if percent is True, return 100 * original decimal value
+        Compute overall precision, recall and FB1 (default values are 0.0)
+        if percent is True, return 100 * original decimal value
     """
     precision = tp / p if p else 0
     recall = tp / t if t else 0
@@ -162,16 +185,26 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     # LOGGER.info(f"Processed {sum_true_counts} tokens with {sum_true_chunks} phrases; "
     #             f"Found: {sum_pred_chunks} phrases; correct: {sum_correct_chunks}.")
     # LOGGER.info("Accuracy: %0.4f; (without `O` tag)" % (nonO_correct_counts / nonO_true_counts))
-    LOGGER.info("Accuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
+    LOGGER.info("\tAccuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
                 % (sum_correct_counts / sum_true_counts, prec, rec, f1))
     # for each chunk type, compute precision, recall and FB1 (default values are 0.0)
     for t in chunk_types:
         prec, rec, f1 = calc_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
-        LOGGER.info("%17s: Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f  %d" % (t, prec, rec, f1, pred_chunks[t]))
+        LOGGER.info("\t%17s: Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f  %d" % (t, prec, rec, f1, pred_chunks[t]))
     return res
 
 
 def calc_score(true_seqs, pred_seqs, verbose=True):
+    correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts = count_chunks(true_seqs,
+                                                                                                      pred_seqs)
+    result = get_result(correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts,
+                        verbose=verbose)
+    return result
+
+
+def calc_overall_score(true_apsect_seqs, pred_apsect_seqs, true_senti_seqs, pred_senti_seqs, verbose=True):
+    true_seqs = merge_tags(true_apsect_seqs, true_senti_seqs)
+    pred_seqs = merge_tags(pred_apsect_seqs, pred_senti_seqs)
     correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts = count_chunks(true_seqs,
                                                                                                       pred_seqs)
     result = get_result(correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts,
