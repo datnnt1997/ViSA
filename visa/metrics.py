@@ -123,7 +123,7 @@ def merge_tags(aspect_tags, senti_tags):
     merged_tags = []
     prev_a_tag, prev_s_tag = 'O', 'O'
     for a_tag, s_tag in zip(aspect_tags, senti_tags):
-        if a_tag == 'O' and s_tag == 'O':
+        if a_tag == 'O' or s_tag == 'O':
             merged_tags.append('O')
 
         _, a_type = split_tag(a_tag)

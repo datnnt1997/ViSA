@@ -92,19 +92,19 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     epoch_senti_avg_acc = senti_reports['accuracy']
     LOGGER.info(f"\t{'*' * 20}Validate Summary{'*' * 20}")
     LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};\n")
-    LOGGER.info(f"\tChunk-Report: {epoch_loss:.4f};\n")
-    LOGGER.info(f"\tAspect]:\n")
+    LOGGER.info(f"\tChunk-Report:\n")
+    LOGGER.info(f"\t[Aspect]:\n")
     calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
                [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds])
-    LOGGER.info(f"\tSentiment]:\n")
+    LOGGER.info(f"\t[Sentiment]:\n")
     calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
-    LOGGER.info(f"\tAspect-Sentiment]:\n")
+    LOGGER.info(f"\t[Aspect-Sentiment]:\n")
     calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
                        pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
                        true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                        pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
-    LOGGER.info(f"\tBIO-Report: {epoch_loss:.4f};\n")
+    LOGGER.info(f"\tBIO-Report:\n")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
