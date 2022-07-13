@@ -10,7 +10,7 @@ class HierarchicalLossNetwork:
         Logics to calculate the loss of the model.
     '''
 
-    def __init__(self, aspect_func, senti_func, device='cpu', alpha=1, beta=0.8, p_loss=3):
+    def __init__(self, aspect_func, senti_func, device='cpu', alpha=2, beta=0.8, p_loss=3):
         self.a_func = aspect_func
         self.s_func = senti_func
         self.alpha = alpha

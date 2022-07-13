@@ -50,6 +50,7 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
                 f"Spend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
     return epoch_loss
 
+
 def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.PathLike] = './', is_test=False):
     start_time = time.time()
     model.eval()
@@ -148,9 +149,11 @@ def train():
         {'params': [p for n, p in encoder_param_optimizer if not any(nd in n for nd in no_decay)],
          'lr': args.learning_rate, 'weight_decay': args.weight_decay},
         {'params': [p for n, p in encoder_param_optimizer if any(nd in n for nd in no_decay)],
-         'weight_decay': 0.0},
+         'lr': args.learning_rate, 'weight_decay': 0.0},
         {'params': [p for n, p in task_param_optimizer if not any(nd in n for nd in no_decay)],
-         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay}
+         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay},
+        {'params': [p for n, p in task_param_optimizer if any(nd in n for nd in no_decay)],
+         'lr': args.classifier_learning_rate, 'weight_decay': 0.0}
     ]
 
     optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
