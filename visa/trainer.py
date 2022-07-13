@@ -10,6 +10,7 @@ from visa.helper import set_ramdom_seed
 from visa.arguments import get_train_argument
 from visa.dataset import build_dataset
 from visa.model import ABSAConfig, ABSAModel
+from visa.metrics import calc_score
 
 import os
 import torch
@@ -77,6 +78,8 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
             else:
                 eval_senti_preds.extend(outputs.s_tags)
     epoch_loss = eval_loss / len(iterator)
+    scores = calc_score(eval_aspect_golds, eval_aspect_preds)
+    LOGGER.info(scores)
     aspect_reports: dict = classification_report(eval_aspect_golds, eval_aspect_preds,
                                                  output_dict=True,
                                                  zero_division=0)

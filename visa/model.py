@@ -56,10 +56,9 @@ class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.teacher_forcing_ratio = config.teacher_forcing_ratio
-        self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
         self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
 
-        # self.aspect_detection = nn.Linear(config.num_alabels, config.num_alabels)
+        self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
         self.sentiment_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
@@ -71,8 +70,15 @@ class ABSAModel(RobertaForTokenClassification):
 
         self.post_init()
 
-    def forward(self, input_ids, token_type_ids=None, attention_mask=None, a_labels=None, s_labels=None, valid_ids=None,
-                label_masks=None, **kwargs):
+    def forward(self,
+                input_ids: torch.LongTensor,
+                token_type_ids: Optional[torch.LongTensor] = None,
+                attention_mask: Optional[torch.LongTensor] = None,
+                a_labels: Optional[torch.LongTensor] = None,
+                s_labels: Optional[torch.LongTensor] = None,
+                valid_ids: Optional[torch.LongTensor] = None,
+                label_masks: Optional[torch.LongTensor] = None,
+                **kwargs):
         seq_output = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids, head_mask=None)[0]
 
         batch_size, max_len, feat_dim = seq_output.shape
