@@ -3,6 +3,8 @@ from collections import OrderedDict
 from transformers import logging, RobertaConfig, RobertaForTokenClassification
 from torchcrf import CRF
 
+from .loss import HierarchicalLossNetwork
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -41,10 +43,12 @@ class ABSAConfig(RobertaConfig):
     def __init__(self,
                  num_alabels: int = 21,
                  num_slabels: int = 4,
+                 device: str = 'cpu',
                  teacher_forcing_ratio: float =0.5, **kwargs):
         super().__init__(num_labels=num_alabels, **kwargs)
         self.num_alabels = num_alabels
         self.num_slabels = num_slabels
+        self.device = device
         self.teacher_forcing_ratio = teacher_forcing_ratio
 
 
@@ -52,8 +56,6 @@ class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.teacher_forcing_ratio = config.teacher_forcing_ratio
-        self.num_alabels = config.num_alabels
-        self.num_slabels = config.num_slabels
         self.linear_aspect = nn.Linear(config.hidden_size, config.num_alabels)
         self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
 
@@ -62,6 +64,10 @@ class ABSAModel(RobertaForTokenClassification):
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
         self.s_crf = CRF(config.num_slabels, batch_first=True)
+
+        self.hier_loss = HierarchicalLossNetwork(device=config.device,
+                                                 aspect_func=self.a_crf,
+                                                 senti_func=self.s_crf)
 
         self.post_init()
 
@@ -76,24 +82,20 @@ class ABSAModel(RobertaForTokenClassification):
         valid_seq_output = self.dropout(valid_seq_output)
 
         a_logits = self.aspect_detection(self.linear_aspect(valid_seq_output))
-        a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
-
         s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
-        s_tags = torch.masked_select(torch.argmax(F.log_softmax(s_logits, dim=2), dim=2).view(-1),
-                                     mask=label_masks.view(-1) != 0).tolist()
 
-        a_loss = torch.zeros(1)
-        if a_labels is not None:
-            a_loss = 1 - self.a_crf(a_logits, a_labels, mask=label_masks.type(torch.uint8))
-        s_loss = torch.zeros(1)
-        if s_labels is not None:
-            loss_func = nn.CrossEntropyLoss()
-            s_loss = loss_func(s_logits.view(-1, self.num_slabels), s_labels.view(-1))
-        return ABSAOutput(loss=a_loss + s_loss,
-                          a_loss=a_loss,
-                          s_loss=s_loss,
-                          a_tags=a_tags,
-                          s_tags=s_tags)
+        if a_labels is not None and s_labels is not None:
+            loss, a_tags, s_tags = self.hier_loss(aspects=a_logits,
+                                   sentis=s_logits,
+                                   true_a_labels=a_labels,
+                                   true_s_labels=s_labels,
+                                   mask=label_masks)
+            return ABSAOutput(loss=loss, a_tags=a_tags, s_tags=s_tags)
+
+        a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
+        s_tags = self.s_crf.decode(s_logits, mask=label_masks != 0)
+
+        return ABSAOutput(a_tags=a_tags, s_tags=s_tags)
 
 
 # DEBUG
