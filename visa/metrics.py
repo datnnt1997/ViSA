@@ -125,18 +125,18 @@ def merge_tags(aspect_tags, senti_tags):
     for a_tag, s_tag in zip(aspect_tags, senti_tags):
         if a_tag == 'O' or s_tag == 'O':
             merged_tags.append('O')
-
-        _, a_type = split_tag(a_tag)
-        _, s_type = split_tag(s_tag)
-
-        a_start = is_chunk_start(prev_a_tag, a_tag)
-        s_start = is_chunk_start(prev_s_tag, s_tag)
-        if a_start or s_start:
-            merged_tag = f"B-{a_type}#{s_tag}"
         else:
-            merged_tag = f"I-{a_type}#{s_tag}"
+            _, a_type = split_tag(a_tag)
+            _, s_type = split_tag(s_tag)
 
-        merged_tags.append(merged_tag)
+            a_start = is_chunk_start(prev_a_tag, a_tag)
+            s_start = is_chunk_start(prev_s_tag, s_tag)
+            if a_start or s_start:
+                merged_tag = f"B-{a_type}#{s_tag}"
+            else:
+                merged_tag = f"I-{a_type}#{s_tag}"
+
+            merged_tags.append(merged_tag)
 
         prev_a_tag, prev_s_tag = a_tag, s_tag
     return merged_tags
