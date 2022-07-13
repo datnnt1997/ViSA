@@ -57,13 +57,13 @@ class ABSAModel(RobertaForTokenClassification):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.teacher_forcing_ratio = config.teacher_forcing_ratio
         self.linear_aspect = nn.Linear(config.hidden_size, config.num_alabels)
-        self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
+        # self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
 
         self.aspect_detection = nn.Linear(config.num_alabels, config.num_alabels)
-        self.sentiment_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
+        # self.sentiment_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
-        self.s_crf = CRF(config.num_slabels, batch_first=True)
+        # self.s_crf = CRF(config.num_slabels, batch_first=True)
 
         self.hier_loss = HierarchicalLossNetwork(device=config.device,
                                                  aspect_func=self.a_crf,
@@ -82,11 +82,10 @@ class ABSAModel(RobertaForTokenClassification):
         valid_seq_output = self.dropout(valid_seq_output)
 
         a_logits = self.aspect_detection(self.linear_aspect(valid_seq_output))
-        s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
+        # s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
 
         if a_labels is not None and s_labels is not None:
             loss, a_tags, s_tags = self.hier_loss(aspects=a_logits,
-                                                  sentis=s_logits,
                                                   true_a_labels=a_labels,
                                                   true_s_labels=s_labels,
                                                   mask=label_masks,
@@ -94,7 +93,7 @@ class ABSAModel(RobertaForTokenClassification):
             return ABSAOutput(loss=loss, a_tags=a_tags, s_tags=s_tags)
 
         a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
-        s_tags = self.s_crf.decode(s_logits, mask=label_masks != 0)
+        # s_tags = self.s_crf.decode(s_logits, mask=label_masks != 0)
 
         return ABSAOutput(a_tags=a_tags, s_tags=s_tags)
 

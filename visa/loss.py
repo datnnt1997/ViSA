@@ -38,15 +38,15 @@ class HierarchicalLossNetwork:
                 bool_tensor.append(False)
         return torch.FloatTensor(bool_tensor).to(self.device)
 
-    def calculate_tloss(self, epoch, aspects, sentis, true_a_labels, true_s_labels, mask=None):
+    def calculate_tloss(self, epoch, aspects, true_a_labels, true_s_labels, mask=None):
         '''
             Calculates the task loss.
         '''
         a_loss = 1 - self.a_func(aspects, true_a_labels, mask=mask.type(torch.uint8))
-        if epoch >= self.joint_learning:
-            s_loss = 1 - self.s_func(sentis, true_s_labels, mask=mask.type(torch.uint8))
-            tloss = self.a_w * a_loss + self.s_w * s_loss
-            return self.alpha * tloss
+        # if epoch >= self.joint_learning:
+        #     s_loss = 1 - self.s_func(sentis, true_s_labels, mask=mask.type(torch.uint8))
+        #     tloss = self.a_w * a_loss + self.s_w * s_loss
+        #     return self.alpha * tloss
         return self.alpha * a_loss
 
     def calculate_dloss(self,
@@ -68,13 +68,13 @@ class HierarchicalLossNetwork:
         dloss += torch.sum(torch.pow(self.p_loss, D_l * l_prev) * torch.pow(self.p_loss, D_l * l_curr) - 1)
         return self.beta * dloss
 
-    def __call__(self, epoch, aspects, sentis, true_a_labels, true_s_labels, mask=None):
-        loss = self.calculate_tloss(epoch, aspects, sentis, true_a_labels, true_s_labels, mask)
+    def __call__(self, epoch, aspects, true_a_labels, true_s_labels, mask=None):
+        loss = self.calculate_tloss(epoch, aspects, true_a_labels, true_s_labels, mask)
         aspect_tags = list(itertools.chain(*self.a_func.decode(aspects, mask=mask != 0)))
-        senti_tags =list(itertools.chain(*self.s_func.decode(sentis, mask=mask != 0)))
-        if epoch >= self.joint_learning:
-            active_labels = mask.view(-1) != 0
-            true_a_labels = torch.masked_select(true_a_labels.view(-1), active_labels).to(self.device)
-            true_s_labels = torch.masked_select(true_s_labels.view(-1), active_labels).to(self.device)
-            loss += self.calculate_dloss(aspect_tags, senti_tags, true_a_labels, true_s_labels)
-        return loss, aspect_tags, senti_tags
+        # senti_tags =list(itertools.chain(*self.s_func.decode(sentis, mask=mask != 0)))
+        # if epoch >= self.joint_learning:
+        #     active_labels = mask.view(-1) != 0
+        #     true_a_labels = torch.masked_select(true_a_labels.view(-1), active_labels).to(self.device)
+        #     true_s_labels = torch.masked_select(true_s_labels.view(-1), active_labels).to(self.device)
+        #     loss += self.calculate_dloss(aspect_tags, senti_tags, true_a_labels, true_s_labels)
+        return loss, aspect_tags#, senti_tags
