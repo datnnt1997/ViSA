@@ -41,8 +41,8 @@ class HierarchicalLossNetwork:
         '''
             Calculates the task loss.
         '''
-        a_loss = 1 - self.a_func(aspects, true_a_labels, mask=mask.type(torch.uint8))
-        s_loss = 1 - self.s_func(sentis, true_s_labels, mask=mask.type(torch.uint8))
+        a_loss = 1 - self.a_func(aspects, true_a_labels, mask=mask.type(torch.uint8), reduction='mean')
+        s_loss = 1 - self.s_func(sentis, true_s_labels, mask=mask.type(torch.uint8), reduction='mean')
         tloss = self.a_w * a_loss + self.s_w * s_loss
         return self.alpha * tloss
 
