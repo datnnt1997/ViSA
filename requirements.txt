@@ -7,3 +7,4 @@ scikit-learn~=1.0.2
 tensorboard~=2.9.0
 tensorboardX~=2.5
 matplotlib~=3.5.2
+pyvi~=0.1.1

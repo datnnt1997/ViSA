@@ -185,11 +185,11 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     #             f"Found: {sum_pred_chunks} phrases; correct: {sum_correct_chunks}.")
     # LOGGER.info("Accuracy: %0.4f; (without `O` tag)" % (nonO_correct_counts / nonO_true_counts))
     # for each chunk type, compute precision, recall and FB1 (default values are 0.0)
+    LOGGER.info("\tAccuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
+                % (sum_correct_counts / sum_true_counts, prec, rec, f1))
     for t in chunk_types:
         prec, rec, f1 = calc_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
         LOGGER.info("\t%17s: Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f  %d" % (t, prec, rec, f1, pred_chunks[t]))
-    LOGGER.info("\tAccuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
-                % (sum_correct_counts / sum_true_counts, prec, rec, f1))
     return res
 
 
