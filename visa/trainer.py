@@ -1,6 +1,7 @@
 from typing import Union
 from tqdm import tqdm
 from pathlib import Path
+from tensorboardX import SummaryWriter
 from sklearn.metrics import classification_report
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 from torch.utils.data import RandomSampler, DataLoader
@@ -23,7 +24,8 @@ import itertools
 def save_model(args, saved_file, model):
     saved_data = {
         'model': model.state_dict(),
-        'classes': args.label2id,
+        'a_classes': ASPECT_LABELS,
+        's_classes': SENTIMENT_LABELS,
         'args': args
     }
     torch.save(saved_data, saved_file)
@@ -85,31 +87,29 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     senti_reports: dict = classification_report(eval_senti_golds, eval_senti_preds,
                                                 output_dict=True,
                                                 zero_division=0)
-
     epoch_aspect_avg_f1 = aspect_reports['macro avg']['f1-score']
     epoch_senti_avg_f1 = senti_reports['macro avg']['f1-score']
     epoch_aspect_avg_acc = aspect_reports['accuracy']
     epoch_senti_avg_acc = senti_reports['accuracy']
     LOGGER.info(f"\t{'*' * 20}Validate Summary{'*' * 20}")
-    LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};\n")
-    LOGGER.info(f"\tChunk-Report:\n")
-    LOGGER.info(f"\t[Aspect]:\n")
+    LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};")
+    LOGGER.info(f"\tChunk-Report:")
+    LOGGER.info(f"\t[Aspect]:")
     calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
                [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds])
-    LOGGER.info(f"\t[Sentiment]:\n")
+    LOGGER.info(f"\t[Sentiment]:")
     calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
-    LOGGER.info(f"\t[Aspect-Sentiment]:\n")
-    calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                       pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                       true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
-                       pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
+    LOGGER.info(f"\t[Aspect-Sentiment]:")
+    _, _, overall_f1 = calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+                                  pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                                  true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
+                                  pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\tBIO-Report:\n")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
-
-    return epoch_loss, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
+    return epoch_loss, overall_f1, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
 
 
 def test():
@@ -124,10 +124,10 @@ def train():
     use_crf = True if 'crf' in args.model_arch else False
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
+    tensorboard_writer = SummaryWriter()
     assert os.path.isdir(args.data_dir), f'{args.data_dir} not found!'
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
-
     train_set = build_dataset(args.data_dir,
                               tokenizer,
                               dtype='train',
@@ -199,28 +199,29 @@ def train():
                                   cur_epoch=epoch,
                                   max_grad_norm=args.max_grad_norm,
                                   scheduler=scheduler)
-
+        tensorboard_writer.add_scalar('TRAIN/Loss', tr_loss, epoch)
         # Validate trained model on dataset
-        eval_loss, aspect_scores, senti_scores = validate(model=model,
-                                                task=args.task,
-                                                iterator=eval_iterator,
-                                                cur_epoch=epoch,
-                                                is_test=False)
-        #
-        # LOGGER.info(f"\t{'*' * 20}Epoch Summary{'*' * 20}")
-        # LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f}")
-        # LOGGER.info(f"\tEpoch BIO-F1 score = {eval_f1:.6f} ; Best score = {best_score:.6f}")
+        eval_loss, overall_f1, aspect_scores, senti_scores = validate(model=model,
+                                                                    task=args.task,
+                                                                    iterator=eval_iterator,
+                                                                    cur_epoch=epoch,
+                                                                    is_test=False)
+        tensorboard_writer.add_scalar('EVAL/Loss', eval_loss, epoch)
+        tensorboard_writer.add_scalar('EVAL/Overall', overall_f1, epoch)
+        LOGGER.info(f"\t{'*' * 20}Epoch Summary{'*' * 20}")
+        LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f}")
+        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_f1:.6f} ; Best score = {best_score:.6f}")
         #
         # if eval_loss < best_loss:
         #     best_loss = eval_loss
-        # if eval_f1 > best_score:
-        #     cumulative_early_steps = 0
-        #     best_score = eval_f1
-        #     saved_file = Path(args.output_dir + f"/best_model.pt")
-        #     LOGGER.info(f"\t***New best model, saving to {saved_file}...***")
-        #     save_model(args, saved_file, model)
-        # else:
-        #     cumulative_early_steps += 1
+        if overall_f1 > best_score:
+            cumulative_early_steps = 0
+            best_score = overall_f1
+            saved_file = Path(args.output_dir + f"/best_model.pt")
+            LOGGER.info(f"\t***New best model, saving to {saved_file}...***")
+            save_model(args, saved_file, model)
+        else:
+            cumulative_early_steps += 1
 
 
 if __name__ == "__main__":
