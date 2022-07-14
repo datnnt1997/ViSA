@@ -185,6 +185,7 @@ def train():
                                 num_workers=args.num_workers)
     eval_iterator = DataLoader(eval_set, batch_size=args.eval_batch_size, num_workers=args.num_workers)
     best_score = 0.0
+    best_epoch = 0
     best_loss = float('inf')
     cumulative_early_steps = 0
     for epoch in range(int(args.epochs)):
@@ -210,12 +211,13 @@ def train():
         tensorboard_writer.add_scalar('EVAL/micro-F1', overall_scores["micro"][-1], epoch)
         tensorboard_writer.add_scalar('EVAL/macro-F1', overall_scores["macro"][-1], epoch)
         LOGGER.info(f"\t{'*' * 20}Epoch Summary{'*' * 20}")
-        LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f}")
-        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_scores['macro'][-1]:.6f} ; Best score = {best_score:.6f}")
+        LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f};")
+        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_scores['macro'][-1]:.6f} ; Best score = {best_score:.6f} at Epoch-{best_epoch};")
         #
-        # if eval_loss < best_loss:
-        #     best_loss = eval_loss
+        if eval_loss < best_loss:
+            best_loss = eval_loss
         if overall_scores['macro'][-1] > best_score:
+            best_epoch = epoch
             cumulative_early_steps = 0
             best_score = overall_scores['macro'][-1]
             saved_file = Path(args.output_dir + f"/best_model.pt")
