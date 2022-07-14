@@ -4,6 +4,7 @@ from .helper import init_logger
 
 import os
 
+from sklearn.metrics import classification_report
 
 LOGGER = init_logger(datetime.now().strftime('%d%b%Y_%H-%M-%S.log'))
 

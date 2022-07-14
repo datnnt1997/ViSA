@@ -142,27 +142,23 @@ def merge_tags(aspect_tags, senti_tags):
     return merged_tags
 
 
-def calc_metrics(tp, p, t, percent=True):
+def calc_macro_metrics(tp, p, t, percent=True):
     """
         Compute overall precision, recall and FB1 (default values are 0.0)
         if percent is True, return 100 * original decimal value
     """
-    precision = tp / p if p else 0
-    recall = tp / t if t else 0
-    fb1 = 2 * precision * recall / (precision + recall) if precision + recall else 0
+    macro_precision = tp / p if p else 0
+    macro_recall = tp / t if t else 0
+    macro_fb1 = 2 * macro_precision * macro_recall / (macro_precision + macro_recall) if macro_precision + macro_recall else 0
+
     if percent:
-        return 100 * precision, 100 * recall, 100 * fb1
+        return 100 * macro_precision, 100 * macro_recall, 100 * macro_fb1
     else:
-        return precision, recall, fb1
+        return macro_precision, macro_recall, macro_fb1
 
 
 def get_result(correct_chunks, true_chunks, pred_chunks,
                correct_counts, true_counts, pred_counts, verbose=True):
-    """
-    if verbose, print overall performance, as well as preformance per chunk type;
-    otherwise, simply return overall prec, rec, f1 scores
-    """
-    # sum counts
     sum_correct_chunks = sum(correct_chunks.values())
     sum_true_chunks = sum(true_chunks.values())
     sum_pred_chunks = sum(pred_chunks.values())
@@ -170,26 +166,22 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     sum_correct_counts = sum(correct_counts.values())
     sum_true_counts = sum(true_counts.values())
 
-    # nonO_correct_counts = sum(v for k, v in correct_counts.items() if k != 'O')
-    # nonO_true_counts = sum(v for k, v in true_counts.items() if k != 'O')
-
     chunk_types = sorted(list(set(list(true_chunks) + list(pred_chunks))))
+    micro_prec, micro_rec, micro_f1 = calc_macro_metrics(sum_correct_chunks, sum_pred_chunks, sum_true_chunks, percent=False)
+    res ={"micro": (micro_prec, micro_rec, micro_f1), "marco": ()}
 
-    # compute overall precision, recall and FB1 (default values are 0.0)
-    prec, rec, f1 = calc_metrics(sum_correct_chunks, sum_pred_chunks, sum_true_chunks, percent=False)
-    res = (prec, rec, f1)
-    if not verbose:
-        return res
-    # print overall performance, and performance per chunk type
-    # LOGGER.info(f"Processed {sum_true_counts} tokens with {sum_true_chunks} phrases; "
-    #             f"Found: {sum_pred_chunks} phrases; correct: {sum_correct_chunks}.")
-    # LOGGER.info("Accuracy: %0.4f; (without `O` tag)" % (nonO_correct_counts / nonO_true_counts))
-    # for each chunk type, compute precision, recall and FB1 (default values are 0.0)
-    LOGGER.info("\tAccuracy: %0.4f;  Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f"
-                % (sum_correct_counts / sum_true_counts, prec, rec, f1))
+    sum_prec, sum_rec, sum_f1 = 0.0, 0.0, 0.0
     for t in chunk_types:
-        prec, rec, f1 = calc_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
-        LOGGER.info("\t%17s: Precision: %0.4f; Recall: %0.4f; F1-score: %0.4f  %d" % (t, prec, rec, f1, pred_chunks[t]))
+        prec, rec, f1 = calc_macro_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
+        LOGGER.info(f"\t{t:17s}: Precision: {prec:0.4f}; Recall: {rec:0.4f}; F1-score: {f1:0.4f}  {pred_chunks[t]}")
+        sum_prec += prec
+        sum_rec += rec
+        sum_f1 += f1
+    macro_prec, macro_rec, macro_f1 =  (sum_prec/len(chunk_types), sum_rec/len(chunk_types), sum_f1/len(chunk_types))
+    res["macro"] = (macro_prec, macro_rec, macro_f1)
+    LOGGER.info(f"\tAccuracy: {sum_correct_counts / sum_true_counts:0.4f};")
+    LOGGER.info(f"\tmicro-Precision: {micro_prec:0.4f}; micro-Recall: {micro_rec:0.4f}; micro-F1-score: {micro_f1:0.4f}")
+    LOGGER.info(f"\tmacro-Precision: {macro_prec:0.4f}; macro-Recall: {macro_rec:0.4f}; macro-F1-score: {macro_f1:0.4f}")
     return res
 
 

@@ -101,15 +101,15 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\t[Aspect-Sentiment]:")
-    _, _, overall_f1 = calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+    overall_scores = calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
                                   pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
                                   true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
                                   pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
-    LOGGER.info(f"\tBIO-Report:\n")
+    LOGGER.info(f"\tBIO-Report:")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
-    return epoch_loss, overall_f1, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
+    return epoch_loss, overall_scores, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
 
 
 def test():
@@ -201,22 +201,23 @@ def train():
                                   scheduler=scheduler)
         tensorboard_writer.add_scalar('TRAIN/Loss', tr_loss, epoch)
         # Validate trained model on dataset
-        eval_loss, overall_f1, aspect_scores, senti_scores = validate(model=model,
+        eval_loss, overall_scores, aspect_scores, senti_scores = validate(model=model,
                                                                     task=args.task,
                                                                     iterator=eval_iterator,
                                                                     cur_epoch=epoch,
                                                                     is_test=False)
         tensorboard_writer.add_scalar('EVAL/Loss', eval_loss, epoch)
-        tensorboard_writer.add_scalar('EVAL/Overall', overall_f1, epoch)
+        tensorboard_writer.add_scalar('EVAL/micro-F1', overall_scores["micro"][-1], epoch)
+        tensorboard_writer.add_scalar('EVAL/macro-F1', overall_scores["macro"][-1], epoch)
         LOGGER.info(f"\t{'*' * 20}Epoch Summary{'*' * 20}")
         LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f}")
-        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_f1:.6f} ; Best score = {best_score:.6f}")
+        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_scores['macro'][-1]:.6f} ; Best score = {best_score:.6f}")
         #
         # if eval_loss < best_loss:
         #     best_loss = eval_loss
-        if overall_f1 > best_score:
+        if overall_scores['macro'][-1] > best_score:
             cumulative_early_steps = 0
-            best_score = overall_f1
+            best_score = overall_scores['macro'][-1]
             saved_file = Path(args.output_dir + f"/best_model.pt")
             LOGGER.info(f"\t***New best model, saving to {saved_file}...***")
             save_model(args, saved_file, model)
