@@ -58,10 +58,10 @@ class ABSAModel(RobertaForTokenClassification):
         self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
         self.polarity_weight_loss = config.polarity_weight_loss
         self.dependency_weight_loss = config.dependency_weight_loss
-        self.polarity_transformation = nn.Linear(config.hidden_size, config.num_slabels)
+        self.polarity_transformation = nn.Linear(config.num_alabels + config.hidden_size, config.num_slabels)
         self.activation = nn.Tanh()
-        self.layer_norm = nn.LayerNorm(config.num_alabels + config.num_slabels)
-        self.polarity_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
+        self.layer_norm = nn.LayerNorm(config.num_slabels)
+        self.polarity_detection = nn.Linear(config.num_slabels, config.num_slabels)
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
         self.s_crf = CRF(config.num_slabels, batch_first=True)
@@ -93,7 +93,7 @@ class ABSAModel(RobertaForTokenClassification):
 
         a_logits = self.aspect_detection(valid_seq_output)
 
-        s_feats = torch.cat((self.polarity_transformation(valid_seq_output), a_logits), dim=-1)
+        s_feats = self.polarity_transformation(torch.cat([valid_seq_output, a_logits], dim=-1))
         s_feats = self.activation(s_feats)
         s_feats = self.layer_norm(s_feats)
         s_logits = self.polarity_detection(s_feats)
