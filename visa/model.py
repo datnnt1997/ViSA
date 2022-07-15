@@ -69,14 +69,16 @@ class ABSAModel(RobertaForTokenClassification):
         self.hier_loss = HierarchicalLossNetwork(device=config.device,
                                                  aspect_func=self.a_crf,
                                                  senti_func=self.s_crf)
-
+        self.max_loss_weight = self.hier_loss.beta
         self.post_init()
 
     def reset_hier_loss(self):
-        self.hier_loss.gamma = 0.0
+        self.hier_loss.beta = 0.0
 
     def joint_step(self, weight_gain: float = 0.001):
-        self.hier_loss.gamma = self.hier_loss.gamma + weight_gain if self.hier_loss.gamma < 1 else 1
+        self.hier_loss.beta = self.hier_loss.beta + weight_gain \
+            if self.hier_loss.beta < self.max_loss_weight \
+            else self.max_loss_weight
 
     def forward(self,
                 input_ids: torch.LongTensor,
