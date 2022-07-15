@@ -47,6 +47,8 @@ class ABSAConfig(RobertaConfig):
         super().__init__(num_labels=num_alabels, **kwargs)
         self.num_alabels = num_alabels
         self.num_slabels = num_slabels
+        self.polarity_weight_loss = 0.8
+        self.dependency_weight_loss = 0.8
         self.device = device
 
 
@@ -54,7 +56,8 @@ class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
         self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
-
+        self.polarity_weight_loss = config.polarity_weight_loss
+        self.dependency_weight_loss = config.dependency_weight_loss
         self.polarity_transformation = nn.Linear(config.hidden_size, config.num_slabels)
         self.activation = nn.Tanh()
         self.layer_norm = nn.LayerNorm(config.num_alabels + config.num_slabels)
@@ -68,6 +71,15 @@ class ABSAModel(RobertaForTokenClassification):
                                                  senti_func=self.s_crf)
 
         self.post_init()
+        self.loss_init()
+
+    def loss_init(self):
+        self.hier_loss.s_w = 0.0
+        self.hier_loss.beta = 0.0
+
+    def joint_step(self, weight_gain):
+        self.hier_loss.s_w += weight_gain
+        self.hier_loss.beta += weight_gain
 
     def forward(self,
                 input_ids: torch.LongTensor,

@@ -46,6 +46,7 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
         if scheduler:
             scheduler.step()
         tr_loss += outputs.loss.detach().item()
+    model.joint_step(weight_gain=0.025)
     epoch_loss = tr_loss / len(iterator)
     LOGGER.info(f"\t{'*' * 20}Train Summary{'*' * 20}")
     LOGGER.info(f"\tTraining Lr: {optim.param_groups[0]['lr']}; "
