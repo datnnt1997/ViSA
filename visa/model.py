@@ -43,13 +43,11 @@ class ABSAConfig(RobertaConfig):
     def __init__(self,
                  num_alabels: int = 21,
                  num_slabels: int = 4,
-                 device: str = 'cpu',
-                 teacher_forcing_ratio: float =0.5, **kwargs):
+                 device: str = 'cpu', **kwargs):
         super().__init__(num_labels=num_alabels, **kwargs)
         self.num_alabels = num_alabels
         self.num_slabels = num_slabels
         self.device = device
-        self.teacher_forcing_ratio = teacher_forcing_ratio
 
 
 class ABSAModel(RobertaForTokenClassification):
@@ -93,7 +91,7 @@ class ABSAModel(RobertaForTokenClassification):
 
         a_logits = self.aspect_detection(valid_seq_output)
 
-        s_feats = torch.cat((a_logits, self.polarity_transformation(valid_seq_output)), dim=-1)
+        s_feats = torch.cat((self.polarity_transformation(valid_seq_output), a_logits), dim=-1)
         s_feats = self.activation(s_feats)
         s_feats = self.layer_norm(s_feats)
         s_logits = self.polarity_detection(s_feats)

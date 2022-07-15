@@ -102,14 +102,14 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
                [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\t[Aspect-Sentiment]:")
     overall_scores = calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                                  pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                                  true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
-                                  pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
+                                        pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                                        true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
+                                        pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
     LOGGER.info(f"\tBIO-Report:")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
                 f"\tSpend time: {datetime.timedelta(seconds=(time.time() - start_time))}")
-    return epoch_loss, overall_scores, (epoch_aspect_avg_f1, epoch_aspect_avg_acc), (epoch_senti_avg_f1, epoch_senti_avg_acc)
+    return epoch_loss, overall_scores
 
 
 def test():
@@ -168,7 +168,9 @@ def train():
         {'params': [p for n, p in encoder_param_optimizer if any(nd in n for nd in no_decay)],
          'lr': args.learning_rate, 'weight_decay': 0.0},
         {'params': [p for n, p in task_param_optimizer if not any(nd in n for nd in no_decay)],
-         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay}
+         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay},
+        {'params': [p for n, p in task_param_optimizer if any(nd in n for nd in no_decay)],
+         'lr': args.classifier_learning_rate, 'weight_decay': 0.0}
     ]
 
     optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
@@ -200,18 +202,19 @@ def train():
                                   scheduler=scheduler)
         tensorboard_writer.add_scalar('TRAIN/Loss', tr_loss, epoch)
         # Validate trained model on dataset
-        eval_loss, overall_scores, aspect_scores, senti_scores = validate(model=model,
-                                                                    task=args.task,
-                                                                    iterator=eval_iterator,
-                                                                    cur_epoch=epoch,
-                                                                    is_test=False)
+        eval_loss, overall_scores = validate(model=model,
+                                             task=args.task,
+                                             iterator=eval_iterator,
+                                             cur_epoch=epoch,
+                                             is_test=False)
         tensorboard_writer.add_scalar('EVAL/Loss', eval_loss, epoch)
         tensorboard_writer.add_scalar('EVAL/micro-F1', overall_scores["micro"][-1], epoch)
         tensorboard_writer.add_scalar('EVAL/macro-F1', overall_scores["macro"][-1], epoch)
         LOGGER.info(f"\t{'*' * 20}Epoch Summary{'*' * 20}")
         LOGGER.info(f"\tEpoch Loss = {eval_loss:.6f} ; Best loss = {best_loss:.6f};")
-        LOGGER.info(f"\tEpoch Overall-F1 score = {overall_scores['macro'][-1]:.6f} ; Best score = {best_score:.6f} at Epoch-{best_epoch};")
-        #
+        LOGGER.info(
+            f"\tEpoch Overall-F1 score = {overall_scores['macro'][-1]:.6f} ; Best score = {best_score:.6f} at Epoch-{best_epoch};")
+
         if eval_loss < best_loss:
             best_loss = eval_loss
         if overall_scores['macro'][-1] > best_score:
