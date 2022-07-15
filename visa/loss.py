@@ -1,5 +1,5 @@
 from typing import List
-from .constants import ASPECT_LABELS, SENTIMENT_LABELS, LOGGER
+from visa.constants import ASPECT_LABELS, SENTIMENT_LABELS, LOGGER
 
 import torch
 import itertools
@@ -10,13 +10,12 @@ class HierarchicalLossNetwork:
         Logics to calculate the loss of the model.
     '''
 
-    def __init__(self, aspect_func, senti_func, device='cpu', a_w=1, s_w=0.8, alpha=1, beta=0.8, p_loss=3):
+    def __init__(self, aspect_func, senti_func, device='cpu', alpha=1, beta=0.8, gamma=1, p_loss=3):
         self.a_func = aspect_func
         self.s_func = senti_func
-        self.a_w = a_w
-        self.s_w = s_w
         self.alpha = alpha
         self.beta = beta
+        self.gamma = gamma
         self.p_loss = p_loss
         self.device = device
 
@@ -30,8 +29,13 @@ class HierarchicalLossNetwork:
         seq_len = aspect_task.size()[0]
         bool_tensor = []
         for i in range(seq_len):
-            if (ASPECT_LABELS[aspect_task[i].item()] != 'O' and SENTIMENT_LABELS[senti_task[i].item()] == 'O') or \
-                    (ASPECT_LABELS[aspect_task[i].item()] == 'O' and SENTIMENT_LABELS[senti_task[i].item()] != 'O'):
+            a_tag = ASPECT_LABELS[aspect_task[i].item()]
+            p_tag = SENTIMENT_LABELS[senti_task[i].item()]
+            if a_tag == 'O' and p_tag == 'O':
+                bool_tensor.append(False)
+            elif a_tag == 'O' or p_tag == 'O':
+                bool_tensor.append(True)
+            elif a_tag.split('-')[0] != p_tag.split('-')[0]:
                 bool_tensor.append(True)
             else:
                 bool_tensor.append(False)
@@ -43,7 +47,7 @@ class HierarchicalLossNetwork:
         '''
         a_loss = 1 - self.a_func(aspects, true_a_labels, mask=mask.type(torch.uint8), reduction='mean')
         s_loss = 1 - self.s_func(sentis, true_s_labels, mask=mask.type(torch.uint8), reduction='mean')
-        tloss = self.a_w * a_loss + self.s_w * s_loss
+        tloss = self.gamma * a_loss + self.beta * s_loss
         return self.alpha * tloss
 
     def calculate_dloss(self,
@@ -74,3 +78,10 @@ class HierarchicalLossNetwork:
         true_s_labels = torch.masked_select(true_s_labels.view(-1), active_labels).to(self.device)
         dloss = self.calculate_dloss(aspect_tags, senti_tags, true_a_labels, true_s_labels)
         return lloss + dloss, aspect_tags, senti_tags
+
+
+if __name__ == "__main__":
+    lossnetwork = HierarchicalLossNetwork(None, None)
+    ex_a = torch.LongTensor([ASPECT_LABELS.index(id) for id in ['O', 'O',          'B-PERFORMANCE', 'B-STORAGE',  'I-STORAGE',  'B-STORAGE',  'I-STORAGE']])
+    ex_p = torch.LongTensor([SENTIMENT_LABELS.index(id) for id in ['O', 'B-NEGATIVE', 'O',             'I-NEGATIVE', 'B-POSITIVE', 'B-NEGATIVE', 'I-NEGATIVE']])
+    print(lossnetwork.check_hierarchy(ex_p, ex_a))

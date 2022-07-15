@@ -46,7 +46,6 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
         if scheduler:
             scheduler.step()
         tr_loss += outputs.loss.detach().item()
-    model.joint_step(weight_gain=0.025)
     epoch_loss = tr_loss / len(iterator)
     LOGGER.info(f"\t{'*' * 20}Train Summary{'*' * 20}")
     LOGGER.info(f"\tTraining Lr: {optim.param_groups[0]['lr']}; "
@@ -159,6 +158,9 @@ def train():
         model.load_state_dict(checkpoint_data['model'])
         checkpoint_data = None
 
+    if args.weight_gain > 0.0 :
+        model.reset_hier_loss()
+
     no_decay = ['bias', 'LayerNorm.weight', 'LayerNorm.bias']
     encoder_param_optimizer = list(model.roberta.named_parameters())
     task_param_optimizer = [(n, p) for n, p in model.named_parameters() if "roberta" not in n]
@@ -208,6 +210,8 @@ def train():
                                              iterator=eval_iterator,
                                              cur_epoch=epoch,
                                              is_test=False)
+        if args.weight_gain > 0.0:
+            model.joint_step(args.weight_gain)
         tensorboard_writer.add_scalar('EVAL/Loss', eval_loss, epoch)
         tensorboard_writer.add_scalar('EVAL/micro-F1', overall_scores["micro"][-1], epoch)
         tensorboard_writer.add_scalar('EVAL/macro-F1', overall_scores["macro"][-1], epoch)
