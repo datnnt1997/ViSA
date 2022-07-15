@@ -78,8 +78,8 @@ class ABSAModel(RobertaForTokenClassification):
         self.hier_loss.beta = 0.0
 
     def joint_step(self, weight_gain):
-        self.hier_loss.s_w += weight_gain
-        self.hier_loss.beta += weight_gain
+        self.hier_loss.s_w = self.hier_loss.s_w + weight_gain if self.hier_loss.s_w < 1 else 1
+        self.hier_loss.beta = self.hier_loss.beta + weight_gain if self.hier_loss.beta < 1 else 1
 
     def forward(self,
                 input_ids: torch.LongTensor,
