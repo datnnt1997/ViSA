@@ -38,8 +38,6 @@ def get_train_argument():
                              "E.g., 0.1 = 10%% of training.")
     parser.add_argument("--weight_decay", default=0.01, type=float,
                         help="Weight deay if we apply some.")
-    parser.add_argument("--weight_gain", default=0.0, type=float,
-                        help="Weight gain for hierachical loss if we apply some.")
     parser.add_argument("--adam_epsilon", default=1e-6, type=float,
                         help="Epsilon for Adam optimizer.")
     parser.add_argument("--max_grad_norm", default=1.0, type=float,
