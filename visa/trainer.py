@@ -168,9 +168,7 @@ def train():
         {'params': [p for n, p in encoder_param_optimizer if any(nd in n for nd in no_decay)],
          'lr': args.learning_rate, 'weight_decay': 0.0},
         {'params': [p for n, p in task_param_optimizer if not any(nd in n for nd in no_decay)],
-         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay},
-        {'params': [p for n, p in task_param_optimizer if any(nd in n for nd in no_decay)],
-         'lr': args.classifier_learning_rate, 'weight_decay': 0.0}
+         'lr': args.classifier_learning_rate, 'weight_decay': args.weight_decay}
     ]
 
     optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)

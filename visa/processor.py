@@ -1,8 +1,7 @@
 from typing import Union, List
 from pyvi import ViTokenizer
 from transformers import PhobertTokenizer
-from pathlib import Path
-
+from collections import defaultdict
 from visa.constants import RDRSEGMENTER, ASPECT_LABELS, SENTIMENT_LABELS
 
 import os
@@ -94,7 +93,6 @@ def convert_example_to_features(examples: List[ABSAExample],
         seq_len = len(example.aspect_tags)
 
         subwords = tokenizer.tokenize(' '.join(example.tokens))
-
         valid_ids = np.zeros(len(encoding.input_ids), dtype=int)
         label_marks = np.zeros(len(encoding.input_ids), dtype=int)
         valid_a_labels = np.ones(len(encoding.input_ids), dtype=int) * -100

@@ -55,11 +55,12 @@ class ABSAConfig(RobertaConfig):
 class ABSAModel(RobertaForTokenClassification):
     def __init__(self, config, **kwargs):
         super(ABSAModel, self).__init__(config=config, **kwargs)
-        self.teacher_forcing_ratio = config.teacher_forcing_ratio
-        self.linear_sentiment = nn.Linear(config.hidden_size, config.num_slabels)
-
         self.aspect_detection = nn.Linear(config.hidden_size, config.num_alabels)
-        self.sentiment_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
+
+        self.polarity_transformation = nn.Linear(config.hidden_size, config.num_slabels)
+        self.activation = nn.Tanh()
+        self.layer_norm = nn.LayerNorm(config.num_alabels + config.num_slabels)
+        self.polarity_detection = nn.Linear(config.num_alabels + config.num_slabels, config.num_slabels)
 
         self.a_crf = CRF(config.num_alabels, batch_first=True)
         self.s_crf = CRF(config.num_slabels, batch_first=True)
@@ -79,7 +80,10 @@ class ABSAModel(RobertaForTokenClassification):
                 valid_ids: Optional[torch.LongTensor] = None,
                 label_masks: Optional[torch.LongTensor] = None,
                 **kwargs):
-        seq_output = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids, head_mask=None)[0]
+        seq_output = self.roberta(input_ids=input_ids,
+                                  attention_mask=attention_mask,
+                                  token_type_ids=token_type_ids,
+                                  head_mask=None)[0]
 
         batch_size, max_len, feat_dim = seq_output.shape
         range_vector = torch.arange(0, batch_size, dtype=torch.long, device=seq_output.device).unsqueeze(1)
@@ -88,14 +92,18 @@ class ABSAModel(RobertaForTokenClassification):
         valid_seq_output = self.dropout(valid_seq_output)
 
         a_logits = self.aspect_detection(valid_seq_output)
-        s_logits = self.sentiment_detection(torch.cat((a_logits, self.linear_sentiment(valid_seq_output)), dim=-1))
+
+        s_feats = torch.cat((a_logits, self.polarity_transformation(valid_seq_output)), dim=-1)
+        s_feats = self.activation(s_feats)
+        s_feats = self.layer_norm(s_feats)
+        s_logits = self.polarity_detection(s_feats)
 
         if a_labels is not None and s_labels is not None:
             loss, a_tags, s_tags = self.hier_loss(aspects=a_logits,
-                                   sentis=s_logits,
-                                   true_a_labels=a_labels,
-                                   true_s_labels=s_labels,
-                                   mask=label_masks)
+                                                  sentis=s_logits,
+                                                  true_a_labels=a_labels,
+                                                  true_s_labels=s_labels,
+                                                  mask=label_masks)
             return ABSAOutput(loss=loss, a_tags=a_tags, s_tags=s_tags)
 
         a_tags = self.a_crf.decode(a_logits, mask=label_masks != 0)
