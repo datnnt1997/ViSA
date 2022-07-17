@@ -2,59 +2,7 @@ from typing import Optional, Text, Tuple, Union, List
 from collections import defaultdict
 
 from .constants import LOGGER
-
-
-def split_tag(chunk_tag: Text) -> Union[Tuple[str, None], List[str]]:
-    """
-        Split chunk tag into IOBES prefix and chunk_type
-        e.g. B-PER -> (B, PER)
-            O -> (O, None)
-    """
-    if chunk_tag == 'O':
-        return ('O', None)
-    return chunk_tag.split('-', maxsplit=1)
-
-
-def is_chunk_end(prev_tag, tag):
-    """
-        check if the previous chunk ended between the previous and current word
-        e.g.
-        (B-PER, I-PER) -> False
-        (B-LOC, O)  -> True
-
-        Note: in case of contradicting tags, e.g. (B-PER, I-LOC)
-        this is considered as (B-PER, B-LOC)
-    """
-    prefix1, chunk_type1 = split_tag(prev_tag)
-    prefix2, chunk_type2 = split_tag(tag)
-
-    if prefix1 == 'O':
-        return False
-    if prefix2 == 'O':
-        return prefix1 != 'O'
-
-    if chunk_type1 != chunk_type2:
-        return True
-
-    return prefix2 in ['B', 'S'] or prefix1 in ['E', 'S']
-
-
-def is_chunk_start(prev_tag, tag):
-    """
-    check if a new chunk started between the previous and current word
-    """
-    prefix1, chunk_type1 = split_tag(prev_tag)
-    prefix2, chunk_type2 = split_tag(tag)
-
-    if prefix2 == 'O':
-        return False
-    if prefix1 == 'O':
-        return prefix2 != 'O'
-
-    if chunk_type1 != chunk_type2:
-        return True
-
-    return prefix2 in ['B', 'S'] or prefix1 in ['E', 'S']
+from .helper import split_tag, is_chunk_start, is_chunk_end
 
 
 def count_chunks(true_seqs, pred_seqs):
@@ -119,18 +67,18 @@ def count_chunks(true_seqs, pred_seqs):
             correct_counts, true_counts, pred_counts)
 
 
-def merge_tags(aspect_tags, senti_tags):
+def merge_tags(aspect_tags, polarity_tags):
     merged_tags = []
-    prev_a_tag, prev_s_tag = 'O', 'O'
-    for a_tag, s_tag in zip(aspect_tags, senti_tags):
-        if a_tag == 'O' or s_tag == 'O':
+    prev_a_tag, prev_ptag = 'O', 'O'
+    for a_tag, ptag in zip(aspect_tags, polarity_tags):
+        if a_tag == 'O' or ptag == 'O':
             merged_tags.append('O')
         else:
             _, a_type = split_tag(a_tag)
-            _, s_type = split_tag(s_tag)
+            _, s_type = split_tag(ptag)
 
             a_start = is_chunk_start(prev_a_tag, a_tag)
-            s_start = is_chunk_start(prev_s_tag, s_tag)
+            s_start = is_chunk_start(prev_ptag, ptag)
             if a_start or s_start:
                 merged_tag = f"B-{a_type}#{s_type}"
             else:
@@ -138,7 +86,7 @@ def merge_tags(aspect_tags, senti_tags):
 
             merged_tags.append(merged_tag)
 
-        prev_a_tag, prev_s_tag = a_tag, s_tag
+        prev_a_tag, prev_ptag = a_tag, ptag
     return merged_tags
 
 
@@ -158,7 +106,7 @@ def calc_macro_metrics(tp, p, t, percent=True):
 
 
 def get_result(correct_chunks, true_chunks, pred_chunks,
-               correct_counts, true_counts, pred_counts, verbose=True):
+               correct_counts, true_counts, pred_counts, verbose=True, is_test=False):
     sum_correct_chunks = sum(correct_chunks.values())
     sum_true_chunks = sum(true_chunks.values())
     sum_pred_chunks = sum(pred_chunks.values())
@@ -168,36 +116,41 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
 
     chunk_types = sorted(list(set(list(true_chunks) + list(pred_chunks))))
     micro_prec, micro_rec, micro_f1 = calc_macro_metrics(sum_correct_chunks, sum_pred_chunks, sum_true_chunks, percent=False)
-    res ={"micro": (micro_prec, micro_rec, micro_f1), "marco": ()}
+    res = {"micro": (micro_prec, micro_rec, micro_f1), "marco": ()}
 
     sum_prec, sum_rec, sum_f1 = 0.0, 0.0, 0.0
     for t in chunk_types:
         prec, rec, f1 = calc_macro_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
-        LOGGER.info(f"\t{t:17s}: Precision: {prec:0.4f}; Recall: {rec:0.4f}; F1-score: {f1:0.4f}  {pred_chunks[t]}")
+        if is_test:
+            LOGGER.info(f"\t\t{t:17s}: P: {prec:0.4f}; R: {rec:0.4f}; F1: {f1:0.4f}  {pred_chunks[t]}")
         sum_prec += prec
         sum_rec += rec
         sum_f1 += f1
-    macro_prec, macro_rec, macro_f1 =  (sum_prec/len(chunk_types), sum_rec/len(chunk_types), sum_f1/len(chunk_types))
+    macro_prec, macro_rec, macro_f1 = (sum_prec/len(chunk_types), sum_rec/len(chunk_types), sum_f1/len(chunk_types))
     res["macro"] = (macro_prec, macro_rec, macro_f1)
-    LOGGER.info(f"\tAccuracy: {sum_correct_counts / sum_true_counts:0.4f};")
-    LOGGER.info(f"\tmicro-Precision: {micro_prec:0.4f}; micro-Recall: {micro_rec:0.4f}; micro-F1-score: {micro_f1:0.4f}")
-    LOGGER.info(f"\tmacro-Precision: {macro_prec:0.4f}; macro-Recall: {macro_rec:0.4f}; macro-F1-score: {macro_f1:0.4f}")
+    if is_test:
+        LOGGER.info(f"\t  Acc: {sum_correct_counts / sum_true_counts:0.4f}; "
+                    f"micro-P: {micro_prec:0.4f}; micro-R: {micro_rec:0.4f}; micro-F1: {micro_f1:0.4f}; "
+                    f"macro-P: {macro_prec:0.4f}; macro-R: {macro_rec:0.4f}; macro-F1: {macro_f1:0.4f}")
+    else:
+        LOGGER.info(f"\t\tAcc: {sum_correct_counts / sum_true_counts:0.4f}; micro-F1: {micro_f1:0.4f}; "
+                    f"macro-F1: {macro_f1:0.4f}")
     return res
 
 
-def calc_score(true_seqs, pred_seqs, verbose=True):
+def calc_score(true_seqs, pred_seqs, verbose=True, is_test=False):
     correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts = count_chunks(true_seqs,
                                                                                                       pred_seqs)
     result = get_result(correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts,
-                        verbose=verbose)
+                        verbose=verbose, is_test=is_test)
     return result
 
 
-def calc_overall_score(true_apsect_seqs, pred_apsect_seqs, true_senti_seqs, pred_senti_seqs, verbose=True):
-    true_seqs = merge_tags(true_apsect_seqs, true_senti_seqs)
-    pred_seqs = merge_tags(pred_apsect_seqs, pred_senti_seqs)
+def calc_overall_score(true_apsects, pred_apsects, true_polarities, pred_polarities, verbose=True, is_test=False):
+    true_seqs = merge_tags(true_apsects, true_polarities)
+    pred_seqs = merge_tags(pred_apsects, pred_polarities)
     correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts = count_chunks(true_seqs,
                                                                                                       pred_seqs)
     result = get_result(correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts,
-                        verbose=verbose)
+                        verbose=verbose, is_test=is_test)
     return result
