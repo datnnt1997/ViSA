@@ -9,4 +9,4 @@ ViSA_MODEL_ARCHIVE_MAP = {
 }
 
 
-__all__ = ["ABSARoBERTaConfig"]
+__all__ = ["ABSARoBERTaConfig", "ViSA_MODEL_ARCHIVE_MAP"]
