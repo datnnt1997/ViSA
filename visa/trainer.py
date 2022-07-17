@@ -6,11 +6,11 @@ from sklearn.metrics import classification_report
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 from torch.utils.data import RandomSampler, DataLoader
 
-from visa.constants import LOGGER, ASPECT_LABELS, SENTIMENT_LABELS
+from visa.constants import LOGGER, ASPECT_LABELS, POLARITY_LABELS
 from visa.helper import set_ramdom_seed
 from visa.arguments import get_train_argument
 from visa.dataset import build_dataset
-from visa.model import ABSAConfig, ABSAModel
+from visa.models import ViSA_MODEL_ARCHIVE_MAP, ABSARoBERTaConfig
 from visa.metrics import calc_score, calc_overall_score
 
 import os
@@ -25,7 +25,7 @@ def save_model(args, saved_file, model):
     saved_data = {
         'model': model.state_dict(),
         'a_classes': ASPECT_LABELS,
-        's_classes': SENTIMENT_LABELS,
+        'P_classes': POLARITY_LABELS,
         'args': args
     }
     torch.save(saved_data, saved_file)
@@ -54,11 +54,11 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
     return epoch_loss
 
 
-def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.PathLike] = './', is_test=False):
+def validate(model, task, iterator, cur_epoch: int):
     start_time = time.time()
     model.eval()
     eval_loss = 0.0
-    eval_aspect_golds, eval_senti_golds, eval_aspect_preds, eval_senti_preds = [], [], [], []
+    eval_aspect_golds, eval_polarity_golds, eval_aspect_preds, eval_polarity_preds = [], [], [], []
     # Run one step on sub-dataset
     with torch.no_grad():
         tqdm_desc = f'[EVAL- Epoch {cur_epoch}]'
@@ -68,23 +68,23 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
             eval_loss += outputs.loss.detach().item()
             active_accuracy = batch['label_masks'].view(-1) != 0
             a_labels = torch.masked_select(batch['a_labels'].view(-1), active_accuracy)
-            s_labels = torch.masked_select(batch['s_labels'].view(-1), active_accuracy)
+            p_labels = torch.masked_select(batch['p_labels'].view(-1), active_accuracy)
             eval_aspect_golds.extend(a_labels.detach().cpu().tolist())
-            eval_senti_golds.extend(s_labels.detach().cpu().tolist())
-            if isinstance(outputs.a_tags[-1], list):
-                eval_aspect_preds.extend(list(itertools.chain(*outputs.a_tags)))
+            eval_polarity_golds.extend(p_labels.detach().cpu().tolist())
+            if isinstance(outputs.aspects[-1], list):
+                eval_aspect_preds.extend(list(itertools.chain(*outputs.aspects)))
             else:
-                eval_aspect_preds.extend(outputs.a_tags)
-            if isinstance(outputs.s_tags[-1], list):
-                eval_senti_preds.extend(list(itertools.chain(*outputs.s_tags)))
+                eval_aspect_preds.extend(outputs.aspects)
+            if isinstance(outputs.polarities[-1], list):
+                eval_polarity_preds.extend(list(itertools.chain(*outputs.polarities)))
             else:
-                eval_senti_preds.extend(outputs.s_tags)
+                eval_polarity_preds.extend(outputs.polarities)
 
     epoch_loss = eval_loss / len(iterator)
     aspect_reports: dict = classification_report(eval_aspect_golds, eval_aspect_preds,
                                                  output_dict=True,
                                                  zero_division=0)
-    senti_reports: dict = classification_report(eval_senti_golds, eval_senti_preds,
+    senti_reports: dict = classification_report(eval_polarity_golds, eval_polarity_preds,
                                                 output_dict=True,
                                                 zero_division=0)
     epoch_aspect_avg_f1 = aspect_reports['macro avg']['f1-score']
@@ -98,13 +98,13 @@ def validate(model, task, iterator, cur_epoch: int, output_dir: Union[str, os.Pa
     calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
                [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds])
     LOGGER.info(f"\t[Sentiment]:")
-    calc_score([SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
-               [SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
+    calc_score([POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
+               [POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds])
     LOGGER.info(f"\t[Aspect-Sentiment]:")
-    overall_scores = calc_overall_score(true_apsect_seqs=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                                        pred_apsect_seqs=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                                        true_senti_seqs=[SENTIMENT_LABELS[g_sid] for g_sid in eval_senti_golds],
-                                        pred_senti_seqs=[SENTIMENT_LABELS[p_sid] for p_sid in eval_senti_preds])
+    overall_scores = calc_overall_score(true_apsects=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+                                        pred_apsects=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                                        true_polarities=[POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
+                                        pred_polarities=[POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds])
     LOGGER.info(f"\tBIO-Report:")
     LOGGER.info(f"\t[Aspect] Accuracy: {epoch_aspect_avg_acc:.4f}; Macro-F1 score: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Accuracy: {epoch_senti_avg_acc:.4f}; Macro-F1 score: {epoch_senti_avg_f1:.4f};\n"
@@ -121,7 +121,7 @@ def train():
     LOGGER.info(f"Arguments: {args}")
     set_ramdom_seed(args.seed)
     device = 'cuda' if not args.no_cuda and torch.cuda.is_available() else 'cpu'
-    use_crf = True if 'crf' in args.model_arch else False
+    use_crf = True if 'hier' in args.model_arch else False
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
     tensorboard_writer = SummaryWriter()
@@ -143,10 +143,10 @@ def train():
                              overwrite_data=args.overwrite_data,
                              use_crf=use_crf)
 
-    config = ABSAConfig.from_pretrained(args.model_name_or_path,
-                                        num_slabels=len(SENTIMENT_LABELS),
-                                        num_alabels=len(ASPECT_LABELS))
-    model = ABSAModel.from_pretrained(args.model_name_or_path, config=config)
+    config = ABSARoBERTaConfig.from_pretrained(args.model_name_or_path,
+                                               num_aspect_labels=len(ASPECT_LABELS),
+                                               num_polarity_labels=len(POLARITY_LABELS))
+    model = ViSA_MODEL_ARCHIVE_MAP[args.model_arch].from_pretrained(args.model_name_or_path, config=config)
     model.to(device)
 
     if args.load_weights is not None:
@@ -205,8 +205,7 @@ def train():
         eval_loss, overall_scores = validate(model=model,
                                              task=args.task,
                                              iterator=eval_iterator,
-                                             cur_epoch=epoch,
-                                             is_test=False)
+                                             cur_epoch=epoch)
 
         tensorboard_writer.add_scalar('EVAL/Loss', eval_loss, epoch)
         tensorboard_writer.add_scalar('EVAL/micro-F1', overall_scores["micro"][-1], epoch)

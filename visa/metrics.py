@@ -2,59 +2,7 @@ from typing import Optional, Text, Tuple, Union, List
 from collections import defaultdict
 
 from .constants import LOGGER
-
-
-def split_tag(chunk_tag: Text) -> Union[Tuple[str, None], List[str]]:
-    """
-        Split chunk tag into IOBES prefix and chunk_type
-        e.g. B-PER -> (B, PER)
-            O -> (O, None)
-    """
-    if chunk_tag == 'O':
-        return ('O', None)
-    return chunk_tag.split('-', maxsplit=1)
-
-
-def is_chunk_end(prev_tag, tag):
-    """
-        check if the previous chunk ended between the previous and current word
-        e.g.
-        (B-PER, I-PER) -> False
-        (B-LOC, O)  -> True
-
-        Note: in case of contradicting tags, e.g. (B-PER, I-LOC)
-        this is considered as (B-PER, B-LOC)
-    """
-    prefix1, chunk_type1 = split_tag(prev_tag)
-    prefix2, chunk_type2 = split_tag(tag)
-
-    if prefix1 == 'O':
-        return False
-    if prefix2 == 'O':
-        return prefix1 != 'O'
-
-    if chunk_type1 != chunk_type2:
-        return True
-
-    return prefix2 in ['B', 'S'] or prefix1 in ['E', 'S']
-
-
-def is_chunk_start(prev_tag, tag):
-    """
-    check if a new chunk started between the previous and current word
-    """
-    prefix1, chunk_type1 = split_tag(prev_tag)
-    prefix2, chunk_type2 = split_tag(tag)
-
-    if prefix2 == 'O':
-        return False
-    if prefix1 == 'O':
-        return prefix2 != 'O'
-
-    if chunk_type1 != chunk_type2:
-        return True
-
-    return prefix2 in ['B', 'S'] or prefix1 in ['E', 'S']
+from .helper import split_tag, is_chunk_start, is_chunk_end
 
 
 def count_chunks(true_seqs, pred_seqs):
@@ -119,18 +67,18 @@ def count_chunks(true_seqs, pred_seqs):
             correct_counts, true_counts, pred_counts)
 
 
-def merge_tags(aspect_tags, senti_tags):
+def merge_tags(aspect_tags, polarity_tags):
     merged_tags = []
-    prev_a_tag, prev_s_tag = 'O', 'O'
-    for a_tag, s_tag in zip(aspect_tags, senti_tags):
-        if a_tag == 'O' or s_tag == 'O':
+    prev_a_tag, prev_ptag = 'O', 'O'
+    for a_tag, ptag in zip(aspect_tags, polarity_tags):
+        if a_tag == 'O' or ptag == 'O':
             merged_tags.append('O')
         else:
             _, a_type = split_tag(a_tag)
-            _, s_type = split_tag(s_tag)
+            _, s_type = split_tag(ptag)
 
             a_start = is_chunk_start(prev_a_tag, a_tag)
-            s_start = is_chunk_start(prev_s_tag, s_tag)
+            s_start = is_chunk_start(prev_ptag, ptag)
             if a_start or s_start:
                 merged_tag = f"B-{a_type}#{s_type}"
             else:
@@ -138,7 +86,7 @@ def merge_tags(aspect_tags, senti_tags):
 
             merged_tags.append(merged_tag)
 
-        prev_a_tag, prev_s_tag = a_tag, s_tag
+        prev_a_tag, prev_ptag = a_tag, ptag
     return merged_tags
 
 
@@ -193,9 +141,9 @@ def calc_score(true_seqs, pred_seqs, verbose=True):
     return result
 
 
-def calc_overall_score(true_apsect_seqs, pred_apsect_seqs, true_senti_seqs, pred_senti_seqs, verbose=True):
-    true_seqs = merge_tags(true_apsect_seqs, true_senti_seqs)
-    pred_seqs = merge_tags(pred_apsect_seqs, pred_senti_seqs)
+def calc_overall_score(true_apsects, pred_apsects, true_polarities, pred_polarities, verbose=True):
+    true_seqs = merge_tags(true_apsects, true_polarities)
+    pred_seqs = merge_tags(pred_apsects, pred_polarities)
     correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts = count_chunks(true_seqs,
                                                                                                       pred_seqs)
     result = get_result(correct_chunks, true_chunks, pred_chunks, correct_counts, true_counts, pred_counts,

@@ -14,9 +14,10 @@ def get_train_argument():
     parser.add_argument("--load_weights", default=None, type=str,
                         help='Path of pretrained file.')
     parser.add_argument("--model_name_or_path", default='vinai/phobert-base', type=str,
-                        help="Pre-trained model selected in the list: vinai/phobert-base, vinai/phobert-large...")
-    parser.add_argument("--model_arch", default='crf', type=str, choices=['crf'],
-                        help="Punctuation prediction model architecture selected in the list: softmax, crf, lstm_crf")
+                        help="Pre-trained model selected in the list: [`vinai/phobert-base`, `vinai/phobert-large`]")
+    parser.add_argument("--model_arch", default='hier_roberta_sl', type=str,
+                        choices=['hier_roberta_sl', 'hier_roberta_ml'],
+                        help="Model architecture selected in the list: [`hier_roberta_sl`, `hier_roberta_ml`]")
     parser.add_argument("--output_dir", default='outputs/', type=str,
                         help="The output directory where the model predictions and checkpoints will be written.")
     parser.add_argument("--max_seq_length", default=256, type=int,
