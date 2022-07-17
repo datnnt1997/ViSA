@@ -1,6 +1,25 @@
 from argparse import ArgumentParser
 
 
+def get_test_argument():
+    parser = ArgumentParser()
+    parser.add_argument('type', choices=['train', 'test', 'predict'],
+                        help='What processs to be run')
+    parser.add_argument("--data_dir", default='datasets/samples', type=str,
+                        help="The input data dir. Should contain the .txt files (or other data files) for the task.")
+    parser.add_argument("--model_path", default='outputs/best_model.pt', type=str,
+                        help="")
+    parser.add_argument("--overwrite_data", action='store_true', default=False,
+                        help="Whether not to overwirte splitted dataset")
+    parser.add_argument("--batch_size", default=16, type=int,
+                        help="Total batch size for eval.")
+    parser.add_argument('--num_worker', type=int, default=2,
+                        help="How many subprocesses to use for data loading. 0 means that the data will be loaded in "
+                             "the main process.")
+    parser.add_argument("--no_cuda", action='store_true',
+                        help="Whether not to use CUDA when available")
+    return parser.parse_args()
+
 def get_train_argument():
     parser = ArgumentParser()
     parser.add_argument('type', choices=['train', 'test', 'predict'],
