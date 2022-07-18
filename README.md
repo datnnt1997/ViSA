@@ -339,3 +339,26 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         </tbody>
     </table>
 </details>
+<details>
+    <summary style="font-size: 1.50em; font-weight: bold;">ABSA (update 18/07/2022)</summary>
+</details>
+<details>
+    <summary style="font-size: 1.50em; font-weight: bold;">YASO (update 18/07/2022)</summary>
+</details>
+
+## <div align="center">📋Todo📋</div>
+### Models
+- [x] ~~Implement **Hierarchical RoBERTa model** (***single layer***).~~
+- [x] ~~Implement **Hierarchical RoBERTa model** (***multiple layers***).~~
+- [ ] Implement **Hierarchical BERT model**.
+- [x] ~~Implement **Controlable Task-dependency loss**.~~
+### Dataset processors
+- [x] ~~Read the **UIT-ViSD4SA** dataset and convert it to ABSA features.~~
+- [ ] Read the **ABSA-**{***laptop***, ***rest***, ***twitter***} dataset and convert it to ABSA features.
+- [ ] Read the **YASO** dataset and convert it to ABSA features.
+### Pipelines
+- [X] ~~Complete **Train** pipeline.~~
+- [X] ~~Complete **Test** pipeline.~~
+- [X] Complete **Predict** pipeline.
+- [X] ~~Code metrics for evaluate ABSA task.~~
+
