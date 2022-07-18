@@ -76,12 +76,25 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.8061</td>
                 <td align="center">0.6481</td>
                 <td align="center">0.6726</td>
-                <td align="center"><b style="color: red">0.6601</b></td>
+                <td align="center">0.6601</td>
                 <td align="center">0.6169</td>
                 <td align="center">0.6509</td>
-                <td align="center"><b style="color: red">0.6331</b></td>
+                <td align="center">0.6331</td>
                 <td align="center">
                     <a href="./statics/logs/hier_roberta_sl.log"><b>Log</b></a>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">HierRoBERTa_ML</td>
+                <td align="center">0.8045</td>
+                <td align="center">0.6528</td>
+                <td align="center">0.6750</td>
+                <td align="center"><b style="color: red">0.6637</b></td>
+                <td align="center">0.6324</td>
+                <td align="center">0.6474</td>
+                <td align="center"><b style="color: red">0.6391</b></td>
+                <td align="center">
+                    <a href="./statics/logs/hier_roberta_ml.log"><b>Log</b></a>
                 </td>
             </tr>
             <tr><td align="center" colspan="9"><b>Polarity</b></td></tr>
@@ -112,12 +125,25 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.8110</td>
                 <td align="center">0.6464</td>
                 <td align="center">0.6659</td>
-                <td align="center"><b style="color: red">0.6560</b></td>
+                <td align="center">0.6560</td>
                 <td align="center">0.5601</td>
                 <td align="center">0.5747</td>
-                <td align="center"><b style="color: red">0.5673</b></td>
+                <td align="center">0.5673</td>
                 <td align="center">
                     <a href="./statics/logs/hier_roberta_sl.log"><b>Log</b></a>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">HierRoBERTa_ML</td>
+                <td align="center">0.8085</td>
+                <td align="center">0.6526</td>
+                <td align="center">0.6655</td>
+                <td align="center"><b style="color: red">0.6590</b></td>
+                <td align="center">0.5794</td>
+                <td align="center">0.5734</td>
+                <td align="center"><b style="color: red">0.5757</b></td>
+                <td align="center">
+                    <a href="./statics/logs/hier_roberta_ml.log"><b>Log</b></a>
                 </td>
             </tr>
             <tr><td align="center" colspan="9"><b>Aspect-polarity</b></td></tr>
@@ -148,17 +174,30 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.7709</td>
                 <td align="center">0.6128</td>
                 <td align="center">0.6401</td>
-                <td align="center"><b style="color: red">0.6262</b></td>
+                <td align="center">0.6262</td>
                 <td align="center">0.5089</td>
                 <td align="center">0.5389</td>
-                <td align="center"><b style="color: red">0.5166</b></td>
+                <td align="center">0.5166</td>
                 <td align="center">
                     <a href="./statics/logs/hier_roberta_sl.log"><b>Log</b></a>
                 </td>
             </tr>
+            <tr>
+                <td align="left">HierRoBERTa_ML</td>
+                <td align="center">0.7706</td>
+                <td align="center">0.6213</td>
+                <td align="center">0.6416</td>
+                <td align="center"><b style="color: red">0.6313</b></td>
+                <td align="center">0.5391</td>
+                <td align="center">0.5195</td>
+                <td align="center"><b style="color: red">0.5206</b></td>
+                <td align="center">
+                    <a href="./statics/logs/hier_roberta_ml.log"><b>Log</b></a>
+                </td>
+            </tr>
         </tbody>
     </table>
-    <div align="center"><b>Table 2</b>: Result per class for aspect label.</div>
+    <div align="center"><b>Table 2</b>: Result per class for aspect label of HierRoBERTa_ML</div>
     <table align="center">
         <thead>
              <tr>
@@ -178,97 +217,97 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         <tbody>
             <tr>
                 <td align="left">BATTERY</td>
-                <td align="center">0.7507</td>
-                <td align="center">0.7621</td>
-                <td align="center">0.7563</td>
-                <td align="center">0.5900</td>
-                <td align="center">0.4387</td>
-                <td align="center">0.7907</td>
+                <td align="center">0.7511</td>
+                <td align="center">0.7612</td>
+                <td align="center">0.7561</td>
+                <td align="center">0.5944</td>
+                <td align="center">0.5231</td>
+                <td align="center"><b style="color: red">0.8121</b></td>
             </tr>
             <tr>
                 <td align="left">CAMERA</td>
-                <td align="center">0.7563</td>
-                <td align="center">0.7796</td>
-                <td align="center"><b style="color: red">0.7678</b></td>
-                <td align="center">0.5934</td>
-                <td align="center">0.5578</td>
-                <td align="center"><b style="color: red">0.8179</b></td>
+                <td align="center">0.7588</td>
+                <td align="center">0.7650</td>
+                <td align="center"><b style="color: red">0.7619</b></td>
+                <td align="center">0.5836</td>
+                <td align="center">0.5823</td>
+                <td align="center">0.8062</td>
             </tr>
             <tr>
                 <td align="left">DESIGN</td>
-                <td align="center">0.6891</td>
-                <td align="center">0.7244</td>
-                <td align="center">0.7063</td>
-                <td align="center">0.4821</td>
-                <td align="center">0.1481</td>
-                <td align="center">0.7677</td>
+                <td align="center">0.7059</td>
+                <td align="center">0.7024</td>
+                <td align="center">0.7042</td>
+                <td align="center">0.4188</td>
+                <td align="center">0.2857</td>
+                <td align="center">0.7600</td>
             </tr>
             <tr>
                 <td align="left">FEATURES</td>
-                <td align="center">0.5744</td>
-                <td align="center">0.5723</td>
-                <td align="center">0.5733</td>
-                <td align="center">0.5081</td>
-                <td align="center">0.4615</td>
-                <td align="center">0.6591</td>
+                <td align="center">0.5600</td>
+                <td align="center">0.5784</td>
+                <td align="center">0.5690</td>
+                <td align="center">0.4894</td>
+                <td align="center">0.4545</td>
+                <td align="center">0.6667</td>
             </tr>
             <tr>
                 <td align="left">GENERAL</td>
-                <td align="center">0.6636</td>
-                <td align="center">0.6607</td>
-                <td align="center">0.6621</td>
-                <td align="center">0.5498</td>
-                <td align="center">0.4627</td>
-                <td align="center">0.6677</td>
+                <td align="center">0.6537</td>
+                <td align="center">0.6743</td>
+                <td align="center">0.6638</td>
+                <td align="center">0.5478</td>
+                <td align="center">0.4685</td>
+                <td align="center">0.6705</td>
             </tr>
             <tr>
                 <td align="left">PERFORMANCE</td>
-                <td align="center">0.6077</td>
-                <td align="center">0.6557</td>
-                <td align="center">0.6308</td>
-                <td align="center">0.4758</td>
-                <td align="center">0.3087</td>
-                <td align="center">0.6973</td>
+                <td align="center">0.6381</td>
+                <td align="center">0.6535</td>
+                <td align="center">0.6457</td>
+                <td align="center">0.5061</td>
+                <td align="center">0.2714</td>
+                <td align="center">0.7165</td>
             </tr>
             <tr>
                 <td align="left">PRICE</td>
-                <td align="center">0.4647</td>
-                <td align="center">0.4826</td>
-                <td align="center">0.4735</td>
-                <td align="center">0.3520</td>
-                <td align="center">0.2576</td>
-                <td align="center">0.5243</td>
+                <td align="center">0.4640</td>
+                <td align="center">0.4981</td>
+                <td align="center">0.4804</td>
+                <td align="center">0.3937</td>
+                <td align="center">0.2963</td>
+                <td align="center">0.4907</td>
             </tr>
             <tr>
                 <td align="left">SCREEN</td>
-                <td align="center">0.6069</td>
-                <td align="center">0.6993</td>
-                <td align="center">0.6498</td>
-                <td align="center">0.4872</td>
-                <td align="center">0.3158</td>
-                <td align="center">0.7529</td>
+                <td align="center">0.6735</td>
+                <td align="center">0.7174</td>
+                <td align="center">0.6947</td>
+                <td align="center">0.5067</td>
+                <td align="center">0.3529</td>
+                <td align="center">0.7748</td>
             </tr>
             <tr>
                 <td align="left">SER&ACC </td>
-                <td align="center">0.5820</td>
-                <td align="center">0.6431</td>
-                <td align="center">0.6111</td>
-                <td align="center">0.3302</td>
-                <td align="center">0.3077</td>
-                <td align="center">0.6743</td>
+                <td align="center">0.5672</td>
+                <td align="center">0.6527</td>
+                <td align="center">0.6069</td>
+                <td align="center">0.2939</td>
+                <td align="center">0.2857</td>
+                <td align="center">0.6727</td>
             </tr>
             <tr>
                 <td align="left">STORAGE</td>
-                <td align="center">0.4737</td>
-                <td align="center">0.5294</td>
-                <td align="center">0.5000</td>
-                <td align="center">0.2857</td>
-                <td align="center">0.5455</td>
-                <td align="center">0.6875</td>
+                <td align="center">0.5517</td>
+                <td align="center">0.4706</td>
+                <td align="center">0.5079</td>
+                <td align="center">0.3478</td>
+                <td align="center">0.4444</td>
+                <td align="center">0.6000</td>
             </tr>
         </tbody>
     </table>
-    <div align="center"><b>Table 3</b>:  Result per class for only sentiment polarity label</div>
+    <div align="center"><b>Table 3</b>:  Result per class for only sentiment polarity label of HierRoBERTa_ML</div>
     <table align="center">
         <thead>
             <tr>
@@ -281,21 +320,21 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         <tbody>
             <tr>
                 <td align="left">NEGATIVE</td>
-                <td align="center">0.5409</td>
-                <td align="center">0.5601</td>
-                <td align="center">0.5503</td>
+                <td align="center">0.5400</td>
+                <td align="center">0.5579</td>
+                <td align="center">0.5488</td>
             </tr>           
             <tr>
                 <td align="left">NEUTRAL</td>
-                <td align="center">0.4151</td>
-                <td align="center">0.4181</td>
-                <td align="center">0.4166</td>
+                <td align="center">0.4704</td>
+                <td align="center">0.4157</td>
+                <td align="center">0.4414</td>
             </tr>
             <tr>
                 <td align="left">POSITIVE</td>
-                <td align="center">0.7243</td>
-                <td align="center">0.7459</td>
-                <td align="center"><b style="color: red">0.7350</b></td>
+                <td align="center">0.7278</td>
+                <td align="center">0.7466</td>
+                <td align="center"><b style="color: red">0.7371</b></td>
             </tr>
         </tbody>
     </table>
