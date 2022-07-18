@@ -27,14 +27,14 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     <div align="center"><b>Table 1</b>: The overall experimental results</div>
     <table align="center">
         <thead>
-            <tr class="hide_border">
+            <tr>
                 <th align="left" rowspan="2">Model</th>
                 <th align="center" rowspan="2">Accuracy</th>
                 <th align="center" colspan="3">micro-Average</th>
                 <th align="center" colspan="3">micro-Average</th>
                 <th align="center" rowspan="2">Reference</th>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <th align="center">Precision</th>
                 <th align="center">Recall</th>
                 <th align="center">F1-score</th>
@@ -44,8 +44,8 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
             </tr>
         </thead>
         <tbody>
-            <tr class="hide_border"><td align="center" colspan="9"><b>Aspect</b></td></tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr><td align="center" colspan="9"><b>Aspect</b></td></tr>
+            <tr>
                 <td align="left">BiLSTM_CRF_Base</td>
                 <td align="center">.....</td>
                 <td align="center">0.6563</td>
@@ -58,7 +58,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                     <a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a>
                 </td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">BiLSTM_CRF_Large</td>
                 <td align="center">.....</td>
                 <td align="center">0.6496</td>
@@ -71,7 +71,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                     <a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a>
                 </td>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <td align="left">HierRoBERTa_SL</td>
                 <td align="center">0.8061</td>
                 <td align="center">0.6481</td>
@@ -84,8 +84,8 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                     <a href="./statics/logs/hier_roberta_sl.log"><b>Log</b></a>
                 </td>
             </tr>
-            <tr class="hide_border"><td align="center" colspan="9"><b>Polarity</b></td></tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr><td align="center" colspan="9"><b>Polarity</b></td></tr>
+            <tr>
                 <td align="left">BiLSTM_CRF_Base</td>
                 <td align="center">.....</td>
                 <td align="center">0.5488 </td>
@@ -96,7 +96,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4657</td>
                 <td align="center"><a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a></td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">BiLSTM_CRF_Large</td>
                 <td align="center">.....</td>
                 <td align="center">0.5689 </td>
@@ -107,7 +107,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4977</td>
                 <td align="center"><a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a></td>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <td align="left">HierRoBERTa_SL</td>
                 <td align="center">0.8110</td>
                 <td align="center">0.6464</td>
@@ -120,8 +120,8 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                     <a href="./statics/logs/hier_roberta_sl.log"><b>Log</b></a>
                 </td>
             </tr>
-            <tr class="hide_border"><td align="center" colspan="9"><b>Aspect-polarity</b></td></tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr><td align="center" colspan="9"><b>Aspect-polarity</b></td></tr>
+            <tr>
                 <td align="left">BiLSTM_CRF_Base</td>
                 <td align="center">.....</td>
                 <td align="center">0.6071</td>
@@ -132,7 +132,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4437</td>
                 <td align="center"><a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a></td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">BiLSTM_CRF_Large</td>
                 <td align="center">.....</td>
                 <td align="center">0.6178</td>
@@ -143,7 +143,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4570</td>
                 <td align="center"><a href="https://aclanthology.org/2021.paclic-1.34.pdf"><b>Paper</b></a></td>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <td align="left">HierRoBERTa_SL</td>
                 <td align="center">0.7709</td>
                 <td align="center">0.6128</td>
@@ -161,12 +161,12 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     <div align="center"><b>Table 2</b>: Result per class for aspect label.</div>
     <table align="center">
         <thead>
-             <tr class="hide_border">
+             <tr>
                <th align="left" rowspan="2">Aspect</th>
                 <th align="center" colspan="3">General Scores</th>
                 <th align="center" colspan="3">Polarity F1-scores</th>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <th align="center">Precision</th>
                 <th align="center">Recall</th>
                 <th align="center">F1-score</th>
@@ -176,7 +176,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
             </tr>
         </thead>
         <tbody>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">BATTERY</td>
                 <td align="center">0.7507</td>
                 <td align="center">0.7621</td>
@@ -185,7 +185,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4387</td>
                 <td align="center">0.7907</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">CAMERA</td>
                 <td align="center">0.7563</td>
                 <td align="center">0.7796</td>
@@ -194,7 +194,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.5578</td>
                 <td align="center"><b style="color: red">0.8179</b></td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">DESIGN</td>
                 <td align="center">0.6891</td>
                 <td align="center">0.7244</td>
@@ -203,7 +203,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.1481</td>
                 <td align="center">0.7677</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">FEATURES</td>
                 <td align="center">0.5744</td>
                 <td align="center">0.5723</td>
@@ -212,7 +212,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4615</td>
                 <td align="center">0.6591</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">GENERAL</td>
                 <td align="center">0.6636</td>
                 <td align="center">0.6607</td>
@@ -221,7 +221,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.4627</td>
                 <td align="center">0.6677</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">PERFORMANCE</td>
                 <td align="center">0.6077</td>
                 <td align="center">0.6557</td>
@@ -230,7 +230,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.3087</td>
                 <td align="center">0.6973</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">PRICE</td>
                 <td align="center">0.4647</td>
                 <td align="center">0.4826</td>
@@ -239,7 +239,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.2576</td>
                 <td align="center">0.5243</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">SCREEN</td>
                 <td align="center">0.6069</td>
                 <td align="center">0.6993</td>
@@ -248,7 +248,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.3158</td>
                 <td align="center">0.7529</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">SER&ACC </td>
                 <td align="center">0.5820</td>
                 <td align="center">0.6431</td>
@@ -257,7 +257,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <td align="center">0.3077</td>
                 <td align="center">0.6743</td>
             </tr>
-            <tr class="hide_border">
+            <tr>
                 <td align="left">STORAGE</td>
                 <td align="center">0.4737</td>
                 <td align="center">0.5294</td>
@@ -271,7 +271,6 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     <div align="center"><b>Table 3</b>:  Result per class for only sentiment polarity label</div>
     <table align="center">
         <thead>
-            #hide_border {border-left-style: hidden;border-right-style: hidden}
             <tr>
                 <th align="left">Sentiment</th>
                 <th align="center">Precision</th>
@@ -280,19 +279,19 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
             </tr>
         </thead>
         <tbody>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">NEGATIVE</td>
                 <td align="center">0.5409</td>
                 <td align="center">0.5601</td>
                 <td align="center">0.5503</td>
             </tr>           
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">NEUTRAL</td>
                 <td align="center">0.4151</td>
                 <td align="center">0.4181</td>
                 <td align="center">0.4166</td>
             </tr>
-            <tr class="hide_border hide_bottom_border">
+            <tr>
                 <td align="left">POSITIVE</td>
                 <td align="center">0.7243</td>
                 <td align="center">0.7459</td>
@@ -301,11 +300,3 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         </tbody>
     </table>
 </details>
-
-#foo {color: red}
-<p>foo</p>
-
-<p>bar</p>
-
-#hide_border {border-left-style: hidden;border-right-style: hidden}
-#hide_bottom_border {border-bottom-style: hidden}
