@@ -361,4 +361,9 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
 - [X] ~~Complete **Test** pipeline.~~
 - [X] Complete **Predict** pipeline.
 - [X] ~~Code metrics for evaluate ABSA task.~~
+### Documents
+- [ ] Introduce ViSA and its features and implemented model (**Introduction**].
+- [ ] Configure the environment and install any necessary libraries (**Environments**).
+- [ ] How to execute ViSA to train/fine-tune and validate the model (**Training**).
+- [x] ~~Describe the experimental setup and performance of the models (**Performances**).~~
 
