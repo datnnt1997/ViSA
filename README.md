@@ -301,6 +301,5 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     </table>
 </details>
 
-#tr.hide_border > td {border-left-style: hidden;border-right-style: hidden}
-#tr.hide_border > th {border-left-style: hidden;border-right-style: hidden}
-tr.hide_bottom_border > td {border-bottom-style: hidden}
+#hide_border {border-left-style: hidden;border-right-style: hidden}
+#hide_bottom_border {border-bottom-style: hidden}
