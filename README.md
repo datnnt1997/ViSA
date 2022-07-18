@@ -271,7 +271,8 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     <div align="center"><b>Table 3</b>:  Result per class for only sentiment polarity label</div>
     <table align="center">
         <thead>
-            <tr class="hide_border">
+            #hide_border {border-left-style: hidden;border-right-style: hidden}
+            <tr>
                 <th align="left">Sentiment</th>
                 <th align="center">Precision</th>
                 <th align="center">Recall</th>
@@ -300,6 +301,11 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         </tbody>
     </table>
 </details>
+
+#foo {color: red}
+<p>foo</p>
+
+<p>bar</p>
 
 #hide_border {border-left-style: hidden;border-right-style: hidden}
 #hide_bottom_border {border-bottom-style: hidden}
