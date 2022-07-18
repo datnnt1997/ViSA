@@ -2,7 +2,7 @@
 Vietnamese sentiment analysis 
 
 
-## <div align="center">🎓Training🎓</div>
+## 🎓 Training
 The commands below **train**/**fine-tune** model for **Sentiment analysis**.
 ```bash
 python main.py train --task UIT-ViSD4SA \
@@ -20,7 +20,7 @@ python main.py train --task UIT-ViSD4SA \
                      --early_stop 50 \
                      --overwrite_data
 ```
-## <div align="center">🥇Performances🥇</div>
+## 🥇 Performances
 All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU **AMD EPYC 7282 16-Core Processor** with **64GB RAM**, both of which are available for rent on **[vast.ai](https://vast.ai/)**. The pretrained-model used for comparison are available on **[HuggingFace](https://huggingface.co/models)**.
 <details>
     <summary style="font-size: 1.50em; font-weight: bold;">UIT-ViSD4SA (update 18/07/2022)</summary>
@@ -346,22 +346,22 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
     <summary style="font-size: 1.50em; font-weight: bold;">YASO (update 18/07/2022)</summary>
 </details>
 
-## <div align="center">📋Todo📋</div>
-### Models
+## 📋 Todo
+#### Models
 - [x] ~~Implement **Hierarchical RoBERTa model** (***single layer***).~~
 - [x] ~~Implement **Hierarchical RoBERTa model** (***multiple layers***).~~
 - [ ] Implement **Hierarchical BERT model**.
 - [x] ~~Implement **Controlable Task-dependency loss**.~~
-### Dataset processors
+#### Dataset processors
 - [x] ~~Read the **UIT-ViSD4SA** dataset and convert it to ABSA features.~~
 - [ ] Read the **ABSA-**{***laptop***, ***rest***, ***twitter***} dataset and convert it to ABSA features.
 - [ ] Read the **YASO** dataset and convert it to ABSA features.
-### Pipelines
+#### Pipelines
 - [X] ~~Complete **Train** pipeline.~~
 - [X] ~~Complete **Test** pipeline.~~
 - [X] Complete **Predict** pipeline.
 - [X] ~~Code metrics for evaluate ABSA task.~~
-### Documents
+#### Documents
 - [ ] Introduce ViSA and its features and implemented model (**Introduction**].
 - [ ] Configure the environment and install any necessary libraries (**Environments**).
 - [ ] How to execute ViSA to train/fine-tune and validate the model (**Training**).
