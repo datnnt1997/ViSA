@@ -8,7 +8,7 @@ from torch.utils.data import RandomSampler, DataLoader
 
 from visa.constants import LOGGER, ASPECT_LABELS, POLARITY_LABELS
 from visa.helper import set_ramdom_seed, get_total_model_parameters
-from visa.dataset import build_dataset
+from visa.processors import build_dataset, PhoBERTProcessor
 from visa.models import ViSA_MODEL_ARCHIVE_MAP, ABSARoBERTaConfig
 from visa.metrics import calc_score, calc_overall_score
 
@@ -136,14 +136,14 @@ def test():
     model.to(device)
     LOGGER.info("Load model trained weights")
     model.load_state_dict(checkpoint_data['model'])
-
+    processor = PhoBERTProcessor(model_name_or_path=args.model_name_or_path,
+                                 max_length=args.max_seq_length,
+                                 use_crf=use_crf)
     test_set = build_dataset(args.data_dir,
-                             tokenizer,
+                             processor,
                              dtype='test',
-                             max_seq_len=args.max_seq_length,
                              device=device,
-                             overwrite_data=args.overwrite_data,
-                             use_crf=use_crf)
+                             overwrite_data=args.overwrite_data,)
     test_iterator = DataLoader(test_set, batch_size=args.batch_size, num_workers=args.num_workers)
     # Summary
     total_params, _ = get_total_model_parameters(model)
@@ -181,21 +181,20 @@ def train():
     tensorboard_writer = SummaryWriter()
     assert os.path.isdir(args.data_dir), f'{args.data_dir} not found!'
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
+    processor = PhoBERTProcessor(model_name_or_path=args.model_name_or_path,
+                                 max_length=args.max_seq_length,
+                                 use_crf=use_crf)
+
     train_set = build_dataset(args.data_dir,
-                              tokenizer,
+                              processor,
                               dtype='train',
-                              max_seq_len=args.max_seq_length,
                               device=device,
-                              overwrite_data=args.overwrite_data,
-                              use_crf=use_crf)
+                              overwrite_data=args.overwrite_data)
     eval_set = build_dataset(args.data_dir,
-                             tokenizer,
+                             processor,
                              dtype='test',
-                             max_seq_len=args.max_seq_length,
                              device=device,
-                             overwrite_data=args.overwrite_data,
-                             use_crf=use_crf)
+                             overwrite_data=args.overwrite_data)
 
     config = ABSARoBERTaConfig.from_pretrained(args.model_name_or_path,
                                                num_aspect_labels=len(ASPECT_LABELS),
@@ -283,12 +282,10 @@ def train():
             cumulative_early_steps += 1
     if args.run_test:
         test_set = build_dataset(args.data_dir,
-                                 tokenizer,
+                                 processor,
                                  dtype='test',
-                                 max_seq_len=args.max_seq_length,
                                  device=device,
-                                 overwrite_data=args.overwrite_data,
-                                 use_crf=use_crf)
+                                 overwrite_data=args.overwrite_data)
         test_iterator = DataLoader(test_set, batch_size=args.eval_batch_size, num_workers=args.num_workers)
         if device == 'cpu':
             checkpoint_data = torch.load(args.output_dir + f"/best_model.pt", map_location='cpu')

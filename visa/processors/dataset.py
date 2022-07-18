@@ -2,13 +2,13 @@ from typing import Union, List
 from pathlib import Path
 from torch.utils.data import Dataset
 
-from visa.processor import read_data, convert_example_to_features, ABSAFeature
+from .base_processor import ABSAFeature
 
 import os
 import torch
 
 
-class ABSADataset(Dataset):
+class SADataset(Dataset):
     def __init__(self, features: List[ABSAFeature], device: str = 'cpu'):
         self.examples = features
         self.device = device
@@ -21,21 +21,19 @@ class ABSADataset(Dataset):
 
 
 def build_dataset(data_dir: Union[str or os.PathLike],
-                  tokenizer,
+                  processor,
                   dtype: str = 'train',
-                  max_seq_len: int = 128,
                   device: str = 'cpu',
-                  overwrite_data: bool = True,
-                  use_crf: bool = True) -> ABSADataset:
+                  overwrite_data: bool = True,) -> SADataset:
     dfile_path = Path(data_dir+f'/{dtype}.jsonl')
     cached_path = dfile_path.with_suffix('.cached')
     if not os.path.exists(cached_path) or overwrite_data:
-        examples = read_data(dfile_path)
-        features = convert_example_to_features(examples, tokenizer, max_seq_len, use_crf=use_crf)
+        examples = processor.read_visd4sa_data(dfile_path)
+        features = processor.convert_example_to_features(examples)
         torch.save(features, cached_path)
     else:
         features = torch.load(cached_path)
-    return ABSADataset(features, device=device)
+    return SADataset(features, device=device)
 
 
 # DEBUG
