@@ -31,7 +31,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
                 <th align="left" rowspan="2">Model</th>
                 <th align="center" rowspan="2">Accuracy</th>
                 <th align="center" colspan="3">micro-Average</th>
-                <th align="center" colspan="3">micro-Average</th>
+                <th align="center" colspan="3">macro-Average</th>
                 <th align="center" rowspan="2">Reference</th>
             </tr>
             <tr>
