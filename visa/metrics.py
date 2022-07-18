@@ -122,14 +122,14 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
     for t in chunk_types:
         prec, rec, f1 = calc_macro_metrics(correct_chunks[t], pred_chunks[t], true_chunks[t], percent=False)
         if is_test:
-            LOGGER.info(f"\t\t{t:17s}: P: {prec:0.4f}; R: {rec:0.4f}; F1: {f1:0.4f}  {pred_chunks[t]}")
+            LOGGER.info(f"\t  {t:17s}: P: {prec:0.4f}; R: {rec:0.4f}; F1: {f1:0.4f}  {pred_chunks[t]}")
         sum_prec += prec
         sum_rec += rec
         sum_f1 += f1
     macro_prec, macro_rec, macro_f1 = (sum_prec/len(chunk_types), sum_rec/len(chunk_types), sum_f1/len(chunk_types))
     res["macro"] = (macro_prec, macro_rec, macro_f1)
     if is_test:
-        LOGGER.info(f"\t  Acc: {sum_correct_counts / sum_true_counts:0.4f}; "
+        LOGGER.info(f"\t Acc: {sum_correct_counts / sum_true_counts:0.4f}; "
                     f"micro-P: {micro_prec:0.4f}; micro-R: {micro_rec:0.4f}; micro-F1: {micro_f1:0.4f}; "
                     f"macro-P: {macro_prec:0.4f}; macro-R: {macro_rec:0.4f}; macro-F1: {macro_f1:0.4f}")
     else:
