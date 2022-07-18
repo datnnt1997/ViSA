@@ -1,0 +1,2072 @@
+Start TRAIN process...
+Arguments: Namespace(adam_epsilon=1e-06, classifier_learning_rate=0.003, data_dir='./datasets/UIT-ViSD4SA', early_stop=50.0, epochs=100, eval_batch_size=32, gradient_accumulation_steps=1, learning_rate=0.0001, load_weights=None, max_grad_norm=1.0, max_seq_length=256, model_arch='hier_roberta_sl', model_name_or_path='vinai/phobert-base', no_cuda=False, num_workers=0, output_dir='outputs', overwrite_data=True, run_test=True, save_step=20000, seed=42, task='UIT-ViSD4SA', train_batch_size=32, type='train', warmup_proportion=0.1, weight_decay=0.01)
+
+==============================Training epoch 0==============================
+	********************Train Summary********************
+	Training Lr: 9.999999957365929e-05; Loss: 1103.6577; Spend time: 0:03:01.566432
+	********************Validate Summary********************
+	Validation Loss: 277.5447;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7553; micro-F1: 0.5224; macro-F1: 0.4728
+	[Sentiment]:
+		Acc: 0.7592; micro-F1: 0.5229; macro-F1: 0.3365
+	[Aspect-Sentiment]:
+		Acc: 0.7149; micro-F1: 0.4785; macro-F1: 0.2765
+	BIO-Report:
+	[Aspect] Acc: 0.7553; macro-F1: 0.6464;
+	[Sentiment] Acc: 0.7592; macro-F1: 0.5320;
+	Spend time: 0:00:20.663651
+	********************Epoch Summary********************
+	Epoch Loss = 277.544653 ; Best loss = inf;
+	Epoch Overall-F1 score = 0.276537 ; Best score = 0.000000 at Epoch-0;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 1==============================
+	********************Train Summary********************
+	Training Lr: 9.997441108102376e-05; Loss: 235.2593; Spend time: 0:03:00.288945
+	********************Validate Summary********************
+	Validation Loss: 221.2082;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7952; micro-F1: 0.6222; macro-F1: 0.5920
+	[Sentiment]:
+		Acc: 0.7873; micro-F1: 0.5941; macro-F1: 0.4418
+	[Aspect-Sentiment]:
+		Acc: 0.7533; micro-F1: 0.5740; macro-F1: 0.3799
+	BIO-Report:
+	[Aspect] Acc: 0.7952; macro-F1: 0.7394;
+	[Sentiment] Acc: 0.7873; macro-F1: 0.6337;
+	Spend time: 0:00:20.744848
+	********************Epoch Summary********************
+	Epoch Loss = 221.208178 ; Best loss = 277.544653;
+	Epoch Overall-F1 score = 0.379868 ; Best score = 0.276537 at Epoch-0;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 2==============================
+	********************Train Summary********************
+	Training Lr: 9.989808761917534e-05; Loss: 170.5720; Spend time: 0:03:01.076921
+	********************Validate Summary********************
+	Validation Loss: 198.3234;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7858; micro-F1: 0.6288; macro-F1: 0.6061
+	[Sentiment]:
+		Acc: 0.7993; micro-F1: 0.6241; macro-F1: 0.5195
+	[Aspect-Sentiment]:
+		Acc: 0.7597; micro-F1: 0.5928; macro-F1: 0.4614
+	BIO-Report:
+	[Aspect] Acc: 0.7858; macro-F1: 0.7345;
+	[Sentiment] Acc: 0.7993; macro-F1: 0.6853;
+	Spend time: 0:00:20.670898
+	********************Epoch Summary********************
+	Epoch Loss = 198.323423 ; Best loss = 221.208178;
+	Epoch Overall-F1 score = 0.461387 ; Best score = 0.379868 at Epoch-1;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 3==============================
+	********************Train Summary********************
+	Training Lr: 9.977110667313894e-05; Loss: 114.8347; Spend time: 0:03:00.353122
+	********************Validate Summary********************
+	Validation Loss: 147.4258;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8025; micro-F1: 0.6371; macro-F1: 0.6052
+	[Sentiment]:
+		Acc: 0.8052; micro-F1: 0.6313; macro-F1: 0.5296
+	[Aspect-Sentiment]:
+		Acc: 0.7655; micro-F1: 0.5938; macro-F1: 0.4498
+	BIO-Report:
+	[Aspect] Acc: 0.8025; macro-F1: 0.7149;
+	[Sentiment] Acc: 0.8052; macro-F1: 0.6920;
+	Spend time: 0:00:20.666848
+	********************Epoch Summary********************
+	Epoch Loss = 147.425812 ; Best loss = 198.323423;
+	Epoch Overall-F1 score = 0.449786 ; Best score = 0.461387 at Epoch-2;
+
+==============================Training epoch 4==============================
+	********************Train Summary********************
+	Training Lr: 9.959359715637744e-05; Loss: 80.4702; Spend time: 0:03:01.380132
+	********************Validate Summary********************
+	Validation Loss: 153.1225;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7980; micro-F1: 0.6474; macro-F1: 0.6216
+	[Sentiment]:
+		Acc: 0.7950; micro-F1: 0.6279; macro-F1: 0.5256
+	[Aspect-Sentiment]:
+		Acc: 0.7624; micro-F1: 0.6104; macro-F1: 0.4788
+	BIO-Report:
+	[Aspect] Acc: 0.7980; macro-F1: 0.7447;
+	[Sentiment] Acc: 0.7950; macro-F1: 0.6851;
+	Spend time: 0:00:20.743481
+	********************Epoch Summary********************
+	Epoch Loss = 153.122534 ; Best loss = 147.425812;
+	Epoch Overall-F1 score = 0.478767 ; Best score = 0.461387 at Epoch-2;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 5==============================
+	********************Train Summary********************
+	Training Lr: 9.93657392799163e-05; Loss: 63.5997; Spend time: 0:03:00.146931
+	********************Validate Summary********************
+	Validation Loss: 137.1803;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7844; micro-F1: 0.6413; macro-F1: 0.6195
+	[Sentiment]:
+		Acc: 0.7859; micro-F1: 0.6349; macro-F1: 0.5366
+	[Aspect-Sentiment]:
+		Acc: 0.7480; micro-F1: 0.6075; macro-F1: 0.4798
+	BIO-Report:
+	[Aspect] Acc: 0.7844; macro-F1: 0.7367;
+	[Sentiment] Acc: 0.7859; macro-F1: 0.6861;
+	Spend time: 0:00:20.633412
+	********************Epoch Summary********************
+	Epoch Loss = 137.180287 ; Best loss = 147.425812;
+	Epoch Overall-F1 score = 0.479821 ; Best score = 0.478767 at Epoch-4;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 6==============================
+	********************Train Summary********************
+	Training Lr: 9.908776436938991e-05; Loss: 52.2285; Spend time: 0:03:00.866043
+	********************Validate Summary********************
+	Validation Loss: 124.5048;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8075; micro-F1: 0.6561; macro-F1: 0.6251
+	[Sentiment]:
+		Acc: 0.8101; micro-F1: 0.6465; macro-F1: 0.5415
+	[Aspect-Sentiment]:
+		Acc: 0.7727; micro-F1: 0.6176; macro-F1: 0.4803
+	BIO-Report:
+	[Aspect] Acc: 0.8075; macro-F1: 0.7462;
+	[Sentiment] Acc: 0.8101; macro-F1: 0.6931;
+	Spend time: 0:00:20.760957
+	********************Epoch Summary********************
+	Epoch Loss = 124.504824 ; Best loss = 137.180287;
+	Epoch Overall-F1 score = 0.480302 ; Best score = 0.479821 at Epoch-5;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 7==============================
+	********************Train Summary********************
+	Training Lr: 9.875995463019546e-05; Loss: 37.1552; Spend time: 0:03:00.547040
+	********************Validate Summary********************
+	Validation Loss: 122.2204;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7861; micro-F1: 0.6406; macro-F1: 0.6097
+	[Sentiment]:
+		Acc: 0.7955; micro-F1: 0.6377; macro-F1: 0.5385
+	[Aspect-Sentiment]:
+		Acc: 0.7544; micro-F1: 0.6074; macro-F1: 0.4737
+	BIO-Report:
+	[Aspect] Acc: 0.7861; macro-F1: 0.7333;
+	[Sentiment] Acc: 0.7955; macro-F1: 0.6869;
+	Spend time: 0:00:20.580888
+	********************Epoch Summary********************
+	Epoch Loss = 122.220364 ; Best loss = 124.504824;
+	Epoch Overall-F1 score = 0.473734 ; Best score = 0.480302 at Epoch-6;
+
+==============================Training epoch 8==============================
+	********************Train Summary********************
+	Training Lr: 9.838264286099261e-05; Loss: 31.1793; Spend time: 0:03:00.463843
+	********************Validate Summary********************
+	Validation Loss: 120.7694;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8023; micro-F1: 0.6412; macro-F1: 0.6171
+	[Sentiment]:
+		Acc: 0.8002; micro-F1: 0.6376; macro-F1: 0.5453
+	[Aspect-Sentiment]:
+		Acc: 0.7626; micro-F1: 0.6067; macro-F1: 0.4817
+	BIO-Report:
+	[Aspect] Acc: 0.8023; macro-F1: 0.7444;
+	[Sentiment] Acc: 0.8002; macro-F1: 0.6920;
+	Spend time: 0:00:20.773536
+	********************Epoch Summary********************
+	Epoch Loss = 120.769402 ; Best loss = 122.220364;
+	Epoch Overall-F1 score = 0.481675 ; Best score = 0.480302 at Epoch-6;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 9==============================
+	********************Train Summary********************
+	Training Lr: 9.795621211584004e-05; Loss: 25.8931; Spend time: 0:03:00.320020
+	********************Validate Summary********************
+	Validation Loss: 115.1456;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7964; micro-F1: 0.6382; macro-F1: 0.6211
+	[Sentiment]:
+		Acc: 0.7995; micro-F1: 0.6306; macro-F1: 0.5395
+	[Aspect-Sentiment]:
+		Acc: 0.7575; micro-F1: 0.6026; macro-F1: 0.4897
+	BIO-Report:
+	[Aspect] Acc: 0.7964; macro-F1: 0.7326;
+	[Sentiment] Acc: 0.7995; macro-F1: 0.6898;
+	Spend time: 0:00:20.528886
+	********************Epoch Summary********************
+	Epoch Loss = 115.145570 ; Best loss = 120.769402;
+	Epoch Overall-F1 score = 0.489727 ; Best score = 0.481675 at Epoch-8;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 10==============================
+	********************Train Summary********************
+	Training Lr: 9.748109531531167e-05; Loss: 30.8960; Spend time: 0:03:00.020616
+	********************Validate Summary********************
+	Validation Loss: 109.0229;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8015; micro-F1: 0.6448; macro-F1: 0.6156
+	[Sentiment]:
+		Acc: 0.7931; micro-F1: 0.6287; macro-F1: 0.5360
+	[Aspect-Sentiment]:
+		Acc: 0.7555; micro-F1: 0.6052; macro-F1: 0.4851
+	BIO-Report:
+	[Aspect] Acc: 0.8015; macro-F1: 0.7442;
+	[Sentiment] Acc: 0.7931; macro-F1: 0.6873;
+	Spend time: 0:00:20.686559
+	********************Epoch Summary********************
+	Epoch Loss = 109.022875 ; Best loss = 115.145570;
+	Epoch Overall-F1 score = 0.485124 ; Best score = 0.489727 at Epoch-9;
+
+==============================Training epoch 11==============================
+	********************Train Summary********************
+	Training Lr: 9.695777480698749e-05; Loss: 22.5566; Spend time: 0:03:00.470828
+	********************Validate Summary********************
+	Validation Loss: 115.9458;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7987; micro-F1: 0.6449; macro-F1: 0.6148
+	[Sentiment]:
+		Acc: 0.8059; micro-F1: 0.6406; macro-F1: 0.5494
+	[Aspect-Sentiment]:
+		Acc: 0.7650; micro-F1: 0.6102; macro-F1: 0.4888
+	BIO-Report:
+	[Aspect] Acc: 0.7987; macro-F1: 0.7341;
+	[Sentiment] Acc: 0.8059; macro-F1: 0.7007;
+	Spend time: 0:00:20.588917
+	********************Epoch Summary********************
+	Epoch Loss = 115.945793 ; Best loss = 109.022875;
+	Epoch Overall-F1 score = 0.488794 ; Best score = 0.489727 at Epoch-9;
+
+==============================Training epoch 12==============================
+	********************Train Summary********************
+	Training Lr: 9.638678187576522e-05; Loss: 24.2217; Spend time: 0:03:00.456065
+	********************Validate Summary********************
+	Validation Loss: 108.0578;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8007; micro-F1: 0.6390; macro-F1: 0.6208
+	[Sentiment]:
+		Acc: 0.7999; micro-F1: 0.6289; macro-F1: 0.5330
+	[Aspect-Sentiment]:
+		Acc: 0.7618; micro-F1: 0.5984; macro-F1: 0.4848
+	BIO-Report:
+	[Aspect] Acc: 0.8007; macro-F1: 0.7449;
+	[Sentiment] Acc: 0.7999; macro-F1: 0.6900;
+	Spend time: 0:00:20.706311
+	********************Epoch Summary********************
+	Epoch Loss = 108.057780 ; Best loss = 109.022875;
+	Epoch Overall-F1 score = 0.484754 ; Best score = 0.489727 at Epoch-9;
+
+==============================Training epoch 13==============================
+	********************Train Summary********************
+	Training Lr: 9.576869620448972e-05; Loss: 18.7606; Spend time: 0:03:00.857283
+	********************Validate Summary********************
+	Validation Loss: 107.5132;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7977; micro-F1: 0.6406; macro-F1: 0.6197
+	[Sentiment]:
+		Acc: 0.8015; micro-F1: 0.6358; macro-F1: 0.5471
+	[Aspect-Sentiment]:
+		Acc: 0.7633; micro-F1: 0.6055; macro-F1: 0.4909
+	BIO-Report:
+	[Aspect] Acc: 0.7977; macro-F1: 0.7480;
+	[Sentiment] Acc: 0.8015; macro-F1: 0.6942;
+	Spend time: 0:00:20.745933
+	********************Epoch Summary********************
+	Epoch Loss = 107.513202 ; Best loss = 108.057780;
+	Epoch Overall-F1 score = 0.490940 ; Best score = 0.489727 at Epoch-9;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 14==============================
+	********************Train Summary********************
+	Training Lr: 9.510414528544805e-05; Loss: 16.3153; Spend time: 0:02:59.010682
+	********************Validate Summary********************
+	Validation Loss: 111.8099;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8010; micro-F1: 0.6465; macro-F1: 0.5933
+	[Sentiment]:
+		Acc: 0.8066; micro-F1: 0.6473; macro-F1: 0.5539
+	[Aspect-Sentiment]:
+		Acc: 0.7655; micro-F1: 0.6153; macro-F1: 0.4679
+	BIO-Report:
+	[Aspect] Acc: 0.8010; macro-F1: 0.7228;
+	[Sentiment] Acc: 0.8066; macro-F1: 0.6955;
+	Spend time: 0:00:20.677063
+	********************Epoch Summary********************
+	Epoch Loss = 111.809919 ; Best loss = 107.513202;
+	Epoch Overall-F1 score = 0.467861 ; Best score = 0.490940 at Epoch-13;
+
+==============================Training epoch 15==============================
+	********************Train Summary********************
+	Training Lr: 9.439380378332733e-05; Loss: 16.5594; Spend time: 0:03:00.461468
+	********************Validate Summary********************
+	Validation Loss: 107.6968;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8026; micro-F1: 0.6439; macro-F1: 0.6214
+	[Sentiment]:
+		Acc: 0.8012; micro-F1: 0.6367; macro-F1: 0.5527
+	[Aspect-Sentiment]:
+		Acc: 0.7630; micro-F1: 0.6104; macro-F1: 0.4876
+	BIO-Report:
+	[Aspect] Acc: 0.8026; macro-F1: 0.7447;
+	[Sentiment] Acc: 0.8012; macro-F1: 0.7010;
+	Spend time: 0:00:20.899318
+	********************Epoch Summary********************
+	Epoch Loss = 107.696811 ; Best loss = 107.513202;
+	Epoch Overall-F1 score = 0.487597 ; Best score = 0.490940 at Epoch-13;
+
+==============================Training epoch 16==============================
+	********************Train Summary********************
+	Training Lr: 9.363839285028252e-05; Loss: 13.8729; Spend time: 0:03:00.290621
+	********************Validate Summary********************
+	Validation Loss: 104.3470;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7957; micro-F1: 0.6363; macro-F1: 0.6017
+	[Sentiment]:
+		Acc: 0.8010; micro-F1: 0.6341; macro-F1: 0.5356
+	[Aspect-Sentiment]:
+		Acc: 0.7603; micro-F1: 0.6013; macro-F1: 0.4675
+	BIO-Report:
+	[Aspect] Acc: 0.7957; macro-F1: 0.7290;
+	[Sentiment] Acc: 0.8010; macro-F1: 0.6829;
+	Spend time: 0:00:20.720529
+	********************Epoch Summary********************
+	Epoch Loss = 104.347016 ; Best loss = 107.513202;
+	Epoch Overall-F1 score = 0.467531 ; Best score = 0.490940 at Epoch-13;
+
+==============================Training epoch 17==============================
+	********************Train Summary********************
+	Training Lr: 9.283867939380887e-05; Loss: 17.5332; Spend time: 0:03:00.262086
+	********************Validate Summary********************
+	Validation Loss: 109.0062;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8027; micro-F1: 0.6397; macro-F1: 0.6147
+	[Sentiment]:
+		Acc: 0.8051; micro-F1: 0.6396; macro-F1: 0.5489
+	[Aspect-Sentiment]:
+		Acc: 0.7671; micro-F1: 0.6077; macro-F1: 0.4961
+	BIO-Report:
+	[Aspect] Acc: 0.8027; macro-F1: 0.7413;
+	[Sentiment] Acc: 0.8051; macro-F1: 0.6987;
+	Spend time: 0:00:20.884739
+	********************Epoch Summary********************
+	Epoch Loss = 109.006199 ; Best loss = 104.347016;
+	Epoch Overall-F1 score = 0.496087 ; Best score = 0.490940 at Epoch-13;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 18==============================
+	********************Train Summary********************
+	Training Lr: 9.199547529816305e-05; Loss: 13.4022; Spend time: 0:03:01.239985
+	********************Validate Summary********************
+	Validation Loss: 103.6959;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7955; micro-F1: 0.6331; macro-F1: 0.6116
+	[Sentiment]:
+		Acc: 0.8023; micro-F1: 0.6242; macro-F1: 0.5332
+	[Aspect-Sentiment]:
+		Acc: 0.7610; micro-F1: 0.6036; macro-F1: 0.4817
+	BIO-Report:
+	[Aspect] Acc: 0.7955; macro-F1: 0.7331;
+	[Sentiment] Acc: 0.8023; macro-F1: 0.6960;
+	Spend time: 0:00:20.731090
+	********************Epoch Summary********************
+	Epoch Loss = 103.695894 ; Best loss = 104.347016;
+	Epoch Overall-F1 score = 0.481678 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 19==============================
+	********************Train Summary********************
+	Training Lr: 9.110963660012286e-05; Loss: 12.7224; Spend time: 0:03:01.144491
+	********************Validate Summary********************
+	Validation Loss: 110.1224;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7966; micro-F1: 0.6406; macro-F1: 0.6057
+	[Sentiment]:
+		Acc: 0.7933; micro-F1: 0.6286; macro-F1: 0.5420
+	[Aspect-Sentiment]:
+		Acc: 0.7565; micro-F1: 0.6084; macro-F1: 0.4929
+	BIO-Report:
+	[Aspect] Acc: 0.7966; macro-F1: 0.7357;
+	[Sentiment] Acc: 0.7933; macro-F1: 0.6922;
+	Spend time: 0:00:20.653956
+	********************Epoch Summary********************
+	Epoch Loss = 110.122426 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.492883 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 20==============================
+	********************Train Summary********************
+	Training Lr: 9.018206261992239e-05; Loss: 15.4410; Spend time: 0:03:00.341477
+	********************Validate Summary********************
+	Validation Loss: 127.5271;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7946; micro-F1: 0.6362; macro-F1: 0.6050
+	[Sentiment]:
+		Acc: 0.8012; micro-F1: 0.6288; macro-F1: 0.5202
+	[Aspect-Sentiment]:
+		Acc: 0.7593; micro-F1: 0.5966; macro-F1: 0.4569
+	BIO-Report:
+	[Aspect] Acc: 0.7946; macro-F1: 0.7346;
+	[Sentiment] Acc: 0.8012; macro-F1: 0.6607;
+	Spend time: 0:00:20.368185
+	********************Epoch Summary********************
+	Epoch Loss = 127.527072 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.456929 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 21==============================
+	********************Train Summary********************
+	Training Lr: 8.921369504824516e-05; Loss: 14.1622; Spend time: 0:03:00.798266
+	********************Validate Summary********************
+	Validation Loss: 119.5829;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7904; micro-F1: 0.6322; macro-F1: 0.6094
+	[Sentiment]:
+		Acc: 0.7953; micro-F1: 0.6286; macro-F1: 0.5334
+	[Aspect-Sentiment]:
+		Acc: 0.7522; micro-F1: 0.5975; macro-F1: 0.4641
+	BIO-Report:
+	[Aspect] Acc: 0.7904; macro-F1: 0.7331;
+	[Sentiment] Acc: 0.7953; macro-F1: 0.6854;
+	Spend time: 0:00:20.788673
+	********************Epoch Summary********************
+	Epoch Loss = 119.582944 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.464104 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 22==============================
+	********************Train Summary********************
+	Training Lr: 8.820551699020179e-05; Loss: 22.6001; Spend time: 0:03:00.964742
+	********************Validate Summary********************
+	Validation Loss: 121.7878;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7928; micro-F1: 0.6269; macro-F1: 0.5884
+	[Sentiment]:
+		Acc: 0.8010; micro-F1: 0.6357; macro-F1: 0.5443
+	[Aspect-Sentiment]:
+		Acc: 0.7580; micro-F1: 0.5962; macro-F1: 0.4575
+	BIO-Report:
+	[Aspect] Acc: 0.7928; macro-F1: 0.7097;
+	[Sentiment] Acc: 0.8010; macro-F1: 0.6915;
+	Spend time: 0:00:20.550152
+	********************Epoch Summary********************
+	Epoch Loss = 121.787806 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.457464 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 23==============================
+	********************Train Summary********************
+	Training Lr: 8.715855196726315e-05; Loss: 16.0136; Spend time: 0:03:00.545021
+	********************Validate Summary********************
+	Validation Loss: 107.5115;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7964; micro-F1: 0.6433; macro-F1: 0.6150
+	[Sentiment]:
+		Acc: 0.7988; micro-F1: 0.6394; macro-F1: 0.5451
+	[Aspect-Sentiment]:
+		Acc: 0.7621; micro-F1: 0.6109; macro-F1: 0.4906
+	BIO-Report:
+	[Aspect] Acc: 0.7964; macro-F1: 0.7394;
+	[Sentiment] Acc: 0.7988; macro-F1: 0.6820;
+	Spend time: 0:00:21.046331
+	********************Epoch Summary********************
+	Epoch Loss = 107.511467 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.490641 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 24==============================
+	********************Train Summary********************
+	Training Lr: 8.607386287816199e-05; Loss: 9.4621; Spend time: 0:03:02.935709
+	********************Validate Summary********************
+	Validation Loss: 100.3045;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7998; micro-F1: 0.6414; macro-F1: 0.6047
+	[Sentiment]:
+		Acc: 0.8054; micro-F1: 0.6405; macro-F1: 0.5512
+	[Aspect-Sentiment]:
+		Acc: 0.7641; micro-F1: 0.6056; macro-F1: 0.4731
+	BIO-Report:
+	[Aspect] Acc: 0.7998; macro-F1: 0.7357;
+	[Sentiment] Acc: 0.8054; macro-F1: 0.7005;
+	Spend time: 0:00:20.631648
+	********************Epoch Summary********************
+	Epoch Loss = 100.304479 ; Best loss = 103.695894;
+	Epoch Overall-F1 score = 0.473138 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 25==============================
+	********************Train Summary********************
+	Training Lr: 8.495255091981789e-05; Loss: 7.6701; Spend time: 0:03:00.466117
+	********************Validate Summary********************
+	Validation Loss: 94.9603;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8012; micro-F1: 0.6479; macro-F1: 0.6241
+	[Sentiment]:
+		Acc: 0.8005; micro-F1: 0.6412; macro-F1: 0.5494
+	[Aspect-Sentiment]:
+		Acc: 0.7611; micro-F1: 0.6116; macro-F1: 0.4828
+	BIO-Report:
+	[Aspect] Acc: 0.8012; macro-F1: 0.7454;
+	[Sentiment] Acc: 0.8005; macro-F1: 0.6864;
+	Spend time: 0:00:20.740168
+	********************Epoch Summary********************
+	Epoch Loss = 94.960259 ; Best loss = 100.304479;
+	Epoch Overall-F1 score = 0.482791 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 26==============================
+	********************Train Summary********************
+	Training Lr: 8.379575446938135e-05; Loss: 8.8798; Spend time: 0:03:00.152233
+	********************Validate Summary********************
+	Validation Loss: 97.1461;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8040; micro-F1: 0.6535; macro-F1: 0.6193
+	[Sentiment]:
+		Acc: 0.8063; micro-F1: 0.6460; macro-F1: 0.5488
+	[Aspect-Sentiment]:
+		Acc: 0.7700; micro-F1: 0.6180; macro-F1: 0.4762
+	BIO-Report:
+	[Aspect] Acc: 0.8040; macro-F1: 0.7382;
+	[Sentiment] Acc: 0.8063; macro-F1: 0.6894;
+	Spend time: 0:00:20.753602
+	********************Epoch Summary********************
+	Epoch Loss = 97.146064 ; Best loss = 94.960259;
+	Epoch Overall-F1 score = 0.476215 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 27==============================
+	********************Train Summary********************
+	Training Lr: 8.260464792853173e-05; Loss: 9.2431; Spend time: 0:02:59.660760
+	********************Validate Summary********************
+	Validation Loss: 108.8357;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7988; micro-F1: 0.6483; macro-F1: 0.6251
+	[Sentiment]:
+		Acc: 0.7987; micro-F1: 0.6451; macro-F1: 0.5506
+	[Aspect-Sentiment]:
+		Acc: 0.7613; micro-F1: 0.6143; macro-F1: 0.4843
+	BIO-Report:
+	[Aspect] Acc: 0.7988; macro-F1: 0.7392;
+	[Sentiment] Acc: 0.7987; macro-F1: 0.6874;
+	Spend time: 0:00:20.637168
+	********************Epoch Summary********************
+	Epoch Loss = 108.835656 ; Best loss = 94.960259;
+	Epoch Overall-F1 score = 0.484255 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 28==============================
+	********************Train Summary********************
+	Training Lr: 8.138044053120239e-05; Loss: 13.3711; Spend time: 0:03:00.161325
+	********************Validate Summary********************
+	Validation Loss: 118.6122;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8001; micro-F1: 0.6480; macro-F1: 0.6094
+	[Sentiment]:
+		Acc: 0.7968; micro-F1: 0.6366; macro-F1: 0.5417
+	[Aspect-Sentiment]:
+		Acc: 0.7599; micro-F1: 0.6083; macro-F1: 0.4729
+	BIO-Report:
+	[Aspect] Acc: 0.8001; macro-F1: 0.7240;
+	[Sentiment] Acc: 0.7968; macro-F1: 0.6874;
+	Spend time: 0:00:20.742447
+	********************Epoch Summary********************
+	Epoch Loss = 118.612249 ; Best loss = 94.960259;
+	Epoch Overall-F1 score = 0.472898 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 29==============================
+	********************Train Summary********************
+	Training Lr: 8.012437511594352e-05; Loss: 10.5836; Spend time: 0:02:59.237476
+	********************Validate Summary********************
+	Validation Loss: 94.6513;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7993; micro-F1: 0.6517; macro-F1: 0.6221
+	[Sentiment]:
+		Acc: 0.8021; micro-F1: 0.6489; macro-F1: 0.5509
+	[Aspect-Sentiment]:
+		Acc: 0.7618; micro-F1: 0.6179; macro-F1: 0.4819
+	BIO-Report:
+	[Aspect] Acc: 0.7993; macro-F1: 0.7394;
+	[Sentiment] Acc: 0.8021; macro-F1: 0.6929;
+	Spend time: 0:00:20.585522
+	********************Epoch Summary********************
+	Epoch Loss = 94.651315 ; Best loss = 94.960259;
+	Epoch Overall-F1 score = 0.481947 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 30==============================
+	********************Train Summary********************
+	Training Lr: 7.883772686416883e-05; Loss: 7.9322; Spend time: 0:03:00.771948
+	********************Validate Summary********************
+	Validation Loss: 131.1690;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7852; micro-F1: 0.6452; macro-F1: 0.6170
+	[Sentiment]:
+		Acc: 0.7978; micro-F1: 0.6457; macro-F1: 0.5478
+	[Aspect-Sentiment]:
+		Acc: 0.7546; micro-F1: 0.6153; macro-F1: 0.4813
+	BIO-Report:
+	[Aspect] Acc: 0.7852; macro-F1: 0.7201;
+	[Sentiment] Acc: 0.7978; macro-F1: 0.6930;
+	Spend time: 0:00:20.678826
+	********************Epoch Summary********************
+	Epoch Loss = 131.168974 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.481264 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 31==============================
+	********************Train Summary********************
+	Training Lr: 7.75218020055673e-05; Loss: 7.9378; Spend time: 0:03:00.480321
+	********************Validate Summary********************
+	Validation Loss: 118.3533;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7811; micro-F1: 0.6402; macro-F1: 0.6040
+	[Sentiment]:
+		Acc: 0.7853; micro-F1: 0.6354; macro-F1: 0.5421
+	[Aspect-Sentiment]:
+		Acc: 0.7396; micro-F1: 0.6059; macro-F1: 0.4696
+	BIO-Report:
+	[Aspect] Acc: 0.7811; macro-F1: 0.7222;
+	[Sentiment] Acc: 0.7853; macro-F1: 0.6851;
+	Spend time: 0:00:20.551151
+	********************Epoch Summary********************
+	Epoch Loss = 118.353343 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.469572 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 32==============================
+	********************Train Summary********************
+	Training Lr: 7.617793649199391e-05; Loss: 8.4251; Spend time: 0:02:59.687211
+	********************Validate Summary********************
+	Validation Loss: 115.8881;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8005; micro-F1: 0.6521; macro-F1: 0.6216
+	[Sentiment]:
+		Acc: 0.7998; micro-F1: 0.6467; macro-F1: 0.5502
+	[Aspect-Sentiment]:
+		Acc: 0.7625; micro-F1: 0.6190; macro-F1: 0.4903
+	BIO-Report:
+	[Aspect] Acc: 0.8005; macro-F1: 0.7204;
+	[Sentiment] Acc: 0.7998; macro-F1: 0.6893;
+	Spend time: 0:00:20.805353
+	********************Epoch Summary********************
+	Epoch Loss = 115.888117 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.490265 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 33==============================
+	********************Train Summary********************
+	Training Lr: 7.480749464118616e-05; Loss: 8.3469; Spend time: 0:03:00.959544
+	********************Validate Summary********************
+	Validation Loss: 98.5219;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7969; micro-F1: 0.6523; macro-F1: 0.6230
+	[Sentiment]:
+		Acc: 0.8016; micro-F1: 0.6499; macro-F1: 0.5548
+	[Aspect-Sentiment]:
+		Acc: 0.7610; micro-F1: 0.6198; macro-F1: 0.4833
+	BIO-Report:
+	[Aspect] Acc: 0.7969; macro-F1: 0.7288;
+	[Sentiment] Acc: 0.8016; macro-F1: 0.6862;
+	Spend time: 0:00:20.455007
+	********************Epoch Summary********************
+	Epoch Loss = 98.521927 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.483253 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 34==============================
+	********************Train Summary********************
+	Training Lr: 7.341186775168272e-05; Loss: 6.5021; Spend time: 0:03:00.569441
+	********************Validate Summary********************
+	Validation Loss: 96.6678;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7911; micro-F1: 0.6464; macro-F1: 0.6086
+	[Sentiment]:
+		Acc: 0.7961; micro-F1: 0.6402; macro-F1: 0.5518
+	[Aspect-Sentiment]:
+		Acc: 0.7511; micro-F1: 0.6107; macro-F1: 0.4921
+	BIO-Report:
+	[Aspect] Acc: 0.7911; macro-F1: 0.7178;
+	[Sentiment] Acc: 0.7961; macro-F1: 0.6907;
+	Spend time: 0:00:20.907943
+	********************Epoch Summary********************
+	Epoch Loss = 96.667766 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.492075 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 35==============================
+	********************Train Summary********************
+	Training Lr: 7.199247269035088e-05; Loss: 9.3986; Spend time: 0:03:01.588158
+	********************Validate Summary********************
+	Validation Loss: 101.4720;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7941; micro-F1: 0.6485; macro-F1: 0.6216
+	[Sentiment]:
+		Acc: 0.7981; micro-F1: 0.6448; macro-F1: 0.5517
+	[Aspect-Sentiment]:
+		Acc: 0.7568; micro-F1: 0.6132; macro-F1: 0.4925
+	BIO-Report:
+	[Aspect] Acc: 0.7941; macro-F1: 0.7254;
+	[Sentiment] Acc: 0.7981; macro-F1: 0.6918;
+	Spend time: 0:00:21.026334
+	********************Epoch Summary********************
+	Epoch Loss = 101.471952 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.492507 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 36==============================
+	********************Train Summary********************
+	Training Lr: 7.055075045395634e-05; Loss: 6.3839; Spend time: 0:03:01.505587
+	********************Validate Summary********************
+	Validation Loss: 94.6167;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7979; micro-F1: 0.6481; macro-F1: 0.6231
+	[Sentiment]:
+		Acc: 0.8050; micro-F1: 0.6408; macro-F1: 0.5415
+	[Aspect-Sentiment]:
+		Acc: 0.7634; micro-F1: 0.6090; macro-F1: 0.4729
+	BIO-Report:
+	[Aspect] Acc: 0.7979; macro-F1: 0.7262;
+	[Sentiment] Acc: 0.8050; macro-F1: 0.6877;
+	Spend time: 0:00:20.877019
+	********************Epoch Summary********************
+	Epoch Loss = 94.616681 ; Best loss = 94.651315;
+	Epoch Overall-F1 score = 0.472854 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 37==============================
+	********************Train Summary********************
+	Training Lr: 6.908816470623613e-05; Loss: 6.8234; Spend time: 0:03:01.756079
+	********************Validate Summary********************
+	Validation Loss: 109.3226;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7986; micro-F1: 0.6527; macro-F1: 0.6196
+	[Sentiment]:
+		Acc: 0.7894; micro-F1: 0.6377; macro-F1: 0.5405
+	[Aspect-Sentiment]:
+		Acc: 0.7544; micro-F1: 0.6169; macro-F1: 0.4679
+	BIO-Report:
+	[Aspect] Acc: 0.7986; macro-F1: 0.7312;
+	[Sentiment] Acc: 0.7894; macro-F1: 0.6746;
+	Spend time: 0:00:20.792466
+	********************Epoch Summary********************
+	Epoch Loss = 109.322616 ; Best loss = 94.616681;
+	Epoch Overall-F1 score = 0.467879 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 38==============================
+	********************Train Summary********************
+	Training Lr: 6.760620029195932e-05; Loss: 8.1740; Spend time: 0:03:01.816888
+	********************Validate Summary********************
+	Validation Loss: 99.4975;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7972; micro-F1: 0.6465; macro-F1: 0.6186
+	[Sentiment]:
+		Acc: 0.7981; micro-F1: 0.6455; macro-F1: 0.5476
+	[Aspect-Sentiment]:
+		Acc: 0.7605; micro-F1: 0.6132; macro-F1: 0.4777
+	BIO-Report:
+	[Aspect] Acc: 0.7972; macro-F1: 0.7303;
+	[Sentiment] Acc: 0.7981; macro-F1: 0.6839;
+	Spend time: 0:00:20.704517
+	********************Epoch Summary********************
+	Epoch Loss = 99.497522 ; Best loss = 94.616681;
+	Epoch Overall-F1 score = 0.477724 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 39==============================
+	********************Train Summary********************
+	Training Lr: 6.610636172948455e-05; Loss: 7.8233; Spend time: 0:03:01.328793
+	********************Validate Summary********************
+	Validation Loss: 90.3957;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8068; micro-F1: 0.6589; macro-F1: 0.6319
+	[Sentiment]:
+		Acc: 0.8082; micro-F1: 0.6504; macro-F1: 0.5556
+	[Aspect-Sentiment]:
+		Acc: 0.7691; micro-F1: 0.6227; macro-F1: 0.4795
+	BIO-Report:
+	[Aspect] Acc: 0.8068; macro-F1: 0.7470;
+	[Sentiment] Acc: 0.8082; macro-F1: 0.6974;
+	Spend time: 0:00:20.907358
+	********************Epoch Summary********************
+	Epoch Loss = 90.395732 ; Best loss = 94.616681;
+	Epoch Overall-F1 score = 0.479514 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 40==============================
+	********************Train Summary********************
+	Training Lr: 6.459017168334442e-05; Loss: 5.0110; Spend time: 0:03:01.671498
+	********************Validate Summary********************
+	Validation Loss: 90.1965;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7983; micro-F1: 0.6468; macro-F1: 0.6225
+	[Sentiment]:
+		Acc: 0.8026; micro-F1: 0.6427; macro-F1: 0.5549
+	[Aspect-Sentiment]:
+		Acc: 0.7604; micro-F1: 0.6116; macro-F1: 0.4857
+	BIO-Report:
+	[Aspect] Acc: 0.7983; macro-F1: 0.7328;
+	[Sentiment] Acc: 0.8026; macro-F1: 0.6956;
+	Spend time: 0:00:20.874897
+	********************Epoch Summary********************
+	Epoch Loss = 90.196489 ; Best loss = 90.395732;
+	Epoch Overall-F1 score = 0.485699 ; Best score = 0.496087 at Epoch-17;
+
+==============================Training epoch 41==============================
+	********************Train Summary********************
+	Training Lr: 6.305916941840765e-05; Loss: 6.5746; Spend time: 0:03:01.538891
+	********************Validate Summary********************
+	Validation Loss: 109.9444;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8067; micro-F1: 0.6648; macro-F1: 0.6352
+	[Sentiment]:
+		Acc: 0.8092; micro-F1: 0.6563; macro-F1: 0.5593
+	[Aspect-Sentiment]:
+		Acc: 0.7715; micro-F1: 0.6318; macro-F1: 0.4971
+	BIO-Report:
+	[Aspect] Acc: 0.8067; macro-F1: 0.7492;
+	[Sentiment] Acc: 0.8092; macro-F1: 0.6957;
+	Spend time: 0:00:20.789927
+	********************Epoch Summary********************
+	Epoch Loss = 109.944356 ; Best loss = 90.196489;
+	Epoch Overall-F1 score = 0.497070 ; Best score = 0.496087 at Epoch-17;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 42==============================
+	********************Train Summary********************
+	Training Lr: 6.15149092371882e-05; Loss: 5.9717; Spend time: 0:03:00.836238
+	********************Validate Summary********************
+	Validation Loss: 117.9185;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7984; micro-F1: 0.6551; macro-F1: 0.6289
+	[Sentiment]:
+		Acc: 0.8018; micro-F1: 0.6479; macro-F1: 0.5484
+	[Aspect-Sentiment]:
+		Acc: 0.7627; micro-F1: 0.6195; macro-F1: 0.4821
+	BIO-Report:
+	[Aspect] Acc: 0.7984; macro-F1: 0.7411;
+	[Sentiment] Acc: 0.8018; macro-F1: 0.6829;
+	Spend time: 0:00:20.972974
+	********************Epoch Summary********************
+	Epoch Loss = 117.918472 ; Best loss = 90.196489;
+	Epoch Overall-F1 score = 0.482065 ; Best score = 0.497070 at Epoch-41;
+
+==============================Training epoch 43==============================
+	********************Train Summary********************
+	Training Lr: 5.995895890188788e-05; Loss: 6.5445; Spend time: 0:03:01.150860
+	********************Validate Summary********************
+	Validation Loss: 87.3250;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8056; micro-F1: 0.6586; macro-F1: 0.6311
+	[Sentiment]:
+		Acc: 0.8059; micro-F1: 0.6480; macro-F1: 0.5514
+	[Aspect-Sentiment]:
+		Acc: 0.7676; micro-F1: 0.6210; macro-F1: 0.4793
+	BIO-Report:
+	[Aspect] Acc: 0.8056; macro-F1: 0.7443;
+	[Sentiment] Acc: 0.8059; macro-F1: 0.6975;
+	Spend time: 0:00:20.899076
+	********************Epoch Summary********************
+	Epoch Loss = 87.325004 ; Best loss = 90.196489;
+	Epoch Overall-F1 score = 0.479283 ; Best score = 0.497070 at Epoch-41;
+
+==============================Training epoch 44==============================
+	********************Train Summary********************
+	Training Lr: 5.839289804277447e-05; Loss: 4.0478; Spend time: 0:03:01.459622
+	********************Validate Summary********************
+	Validation Loss: 92.2655;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8086; micro-F1: 0.6563; macro-F1: 0.6248
+	[Sentiment]:
+		Acc: 0.8115; micro-F1: 0.6502; macro-F1: 0.5585
+	[Aspect-Sentiment]:
+		Acc: 0.7739; micro-F1: 0.6230; macro-F1: 0.4935
+	BIO-Report:
+	[Aspect] Acc: 0.8086; macro-F1: 0.7490;
+	[Sentiment] Acc: 0.8115; macro-F1: 0.7064;
+	Spend time: 0:00:20.634007
+	********************Epoch Summary********************
+	Epoch Loss = 92.265522 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.493470 ; Best score = 0.497070 at Epoch-41;
+
+==============================Training epoch 45==============================
+	********************Train Summary********************
+	Training Lr: 5.6818316554511144e-05; Loss: 4.0364; Spend time: 0:03:01.220543
+	********************Validate Summary********************
+	Validation Loss: 95.5521;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8044; micro-F1: 0.6576; macro-F1: 0.6289
+	[Sentiment]:
+		Acc: 0.8046; micro-F1: 0.6494; macro-F1: 0.5509
+	[Aspect-Sentiment]:
+		Acc: 0.7670; micro-F1: 0.6226; macro-F1: 0.4905
+	BIO-Report:
+	[Aspect] Acc: 0.8044; macro-F1: 0.7467;
+	[Sentiment] Acc: 0.8046; macro-F1: 0.6961;
+	Spend time: 0:00:20.709484
+	********************Epoch Summary********************
+	Epoch Loss = 95.552083 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.490548 ; Best score = 0.497070 at Epoch-41;
+
+==============================Training epoch 46==============================
+	********************Train Summary********************
+	Training Lr: 5.523681298206526e-05; Loss: 3.6903; Spend time: 0:03:01.500113
+	********************Validate Summary********************
+	Validation Loss: 91.1745;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8025; micro-F1: 0.6540; macro-F1: 0.6230
+	[Sentiment]:
+		Acc: 0.8042; micro-F1: 0.6424; macro-F1: 0.5488
+	[Aspect-Sentiment]:
+		Acc: 0.7636; micro-F1: 0.6186; macro-F1: 0.4971
+	BIO-Report:
+	[Aspect] Acc: 0.8025; macro-F1: 0.7385;
+	[Sentiment] Acc: 0.8042; macro-F1: 0.6944;
+	Spend time: 0:00:20.538054
+	********************Epoch Summary********************
+	Epoch Loss = 91.174525 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.497146 ; Best score = 0.497070 at Epoch-41;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 47==============================
+	********************Train Summary********************
+	Training Lr: 5.36499928978352e-05; Loss: 4.6823; Spend time: 0:03:01.928415
+	********************Validate Summary********************
+	Validation Loss: 95.0299;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8078; micro-F1: 0.6586; macro-F1: 0.6387
+	[Sentiment]:
+		Acc: 0.8078; micro-F1: 0.6498; macro-F1: 0.5520
+	[Aspect-Sentiment]:
+		Acc: 0.7701; micro-F1: 0.6199; macro-F1: 0.4979
+	BIO-Report:
+	[Aspect] Acc: 0.8078; macro-F1: 0.7510;
+	[Sentiment] Acc: 0.8078; macro-F1: 0.6939;
+	Spend time: 0:00:20.965243
+	********************Epoch Summary********************
+	Epoch Loss = 95.029862 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.497866 ; Best score = 0.497146 at Epoch-46;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 48==============================
+	********************Train Summary********************
+	Training Lr: 5.2059467271642905e-05; Loss: 4.4653; Spend time: 0:03:01.441647
+	********************Validate Summary********************
+	Validation Loss: 91.8382;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8054; micro-F1: 0.6498; macro-F1: 0.6201
+	[Sentiment]:
+		Acc: 0.8030; micro-F1: 0.6453; macro-F1: 0.5509
+	[Aspect-Sentiment]:
+		Acc: 0.7669; micro-F1: 0.6159; macro-F1: 0.4909
+	BIO-Report:
+	[Aspect] Acc: 0.8054; macro-F1: 0.7320;
+	[Sentiment] Acc: 0.8030; macro-F1: 0.6923;
+	Spend time: 0:00:20.542266
+	********************Epoch Summary********************
+	Epoch Loss = 91.838157 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.490928 ; Best score = 0.497866 at Epoch-47;
+
+==============================Training epoch 49==============================
+	********************Train Summary********************
+	Training Lr: 5.0466850835246714e-05; Loss: 3.8060; Spend time: 0:03:00.617929
+	********************Validate Summary********************
+	Validation Loss: 88.4262;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8002; micro-F1: 0.6528; macro-F1: 0.6230
+	[Sentiment]:
+		Acc: 0.8074; micro-F1: 0.6498; macro-F1: 0.5548
+	[Aspect-Sentiment]:
+		Acc: 0.7652; micro-F1: 0.6207; macro-F1: 0.4888
+	BIO-Report:
+	[Aspect] Acc: 0.8002; macro-F1: 0.7318;
+	[Sentiment] Acc: 0.8074; macro-F1: 0.6972;
+	Spend time: 0:00:20.905369
+	********************Epoch Summary********************
+	Epoch Loss = 88.426202 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.488846 ; Best score = 0.497866 at Epoch-47;
+
+==============================Training epoch 50==============================
+	********************Train Summary********************
+	Training Lr: 4.887376044303514e-05; Loss: 3.7994; Spend time: 0:03:00.983145
+	********************Validate Summary********************
+	Validation Loss: 92.5064;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8061; micro-F1: 0.6601; macro-F1: 0.6331
+	[Sentiment]:
+		Acc: 0.8110; micro-F1: 0.6560; macro-F1: 0.5673
+	[Aspect-Sentiment]:
+		Acc: 0.7709; micro-F1: 0.6262; macro-F1: 0.5166
+	BIO-Report:
+	[Aspect] Acc: 0.8061; macro-F1: 0.7432;
+	[Sentiment] Acc: 0.8110; macro-F1: 0.7086;
+	Spend time: 0:00:20.615602
+	********************Epoch Summary********************
+	Epoch Loss = 92.506419 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.516596 ; Best score = 0.497866 at Epoch-47;
+	***New best model, saving to outputs/best_model.pt...***
+
+==============================Training epoch 51==============================
+	********************Train Summary********************
+	Training Lr: 4.728181343056556e-05; Loss: 4.0049; Spend time: 0:03:01.063418
+	********************Validate Summary********************
+	Validation Loss: 92.0316;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8058; micro-F1: 0.6570; macro-F1: 0.6324
+	[Sentiment]:
+		Acc: 0.8054; micro-F1: 0.6486; macro-F1: 0.5543
+	[Aspect-Sentiment]:
+		Acc: 0.7680; micro-F1: 0.6227; macro-F1: 0.4965
+	BIO-Report:
+	[Aspect] Acc: 0.8058; macro-F1: 0.7385;
+	[Sentiment] Acc: 0.8054; macro-F1: 0.6940;
+	Spend time: 0:00:21.020537
+	********************Epoch Summary********************
+	Epoch Loss = 92.031590 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.496485 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 52==============================
+	********************Train Summary********************
+	Training Lr: 4.569262597261461e-05; Loss: 5.0974; Spend time: 0:03:01.140986
+	********************Validate Summary********************
+	Validation Loss: 98.0335;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8029; micro-F1: 0.6535; macro-F1: 0.6212
+	[Sentiment]:
+		Acc: 0.8071; micro-F1: 0.6449; macro-F1: 0.5498
+	[Aspect-Sentiment]:
+		Acc: 0.7668; micro-F1: 0.6174; macro-F1: 0.4942
+	BIO-Report:
+	[Aspect] Acc: 0.8029; macro-F1: 0.7315;
+	[Sentiment] Acc: 0.8071; macro-F1: 0.6914;
+	Spend time: 0:00:20.846751
+	********************Epoch Summary********************
+	Epoch Loss = 98.033493 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.494241 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 53==============================
+	********************Train Summary********************
+	Training Lr: 4.4107811442406916e-05; Loss: 4.1730; Spend time: 0:03:01.116992
+	********************Validate Summary********************
+	Validation Loss: 97.6147;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8050; micro-F1: 0.6562; macro-F1: 0.6192
+	[Sentiment]:
+		Acc: 0.8054; micro-F1: 0.6454; macro-F1: 0.5471
+	[Aspect-Sentiment]:
+		Acc: 0.7653; micro-F1: 0.6228; macro-F1: 0.4777
+	BIO-Report:
+	[Aspect] Acc: 0.8050; macro-F1: 0.7310;
+	[Sentiment] Acc: 0.8054; macro-F1: 0.6908;
+	Spend time: 0:00:20.812533
+	********************Epoch Summary********************
+	Epoch Loss = 97.614745 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.477716 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 54==============================
+	********************Train Summary********************
+	Training Lr: 4.252897877368791e-05; Loss: 3.3487; Spend time: 0:03:01.643793
+	********************Validate Summary********************
+	Validation Loss: 100.5849;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8071; micro-F1: 0.6610; macro-F1: 0.6304
+	[Sentiment]:
+		Acc: 0.8103; micro-F1: 0.6523; macro-F1: 0.5601
+	[Aspect-Sentiment]:
+		Acc: 0.7710; micro-F1: 0.6267; macro-F1: 0.4981
+	BIO-Report:
+	[Aspect] Acc: 0.8071; macro-F1: 0.7323;
+	[Sentiment] Acc: 0.8103; macro-F1: 0.7034;
+	Spend time: 0:00:20.960200
+	********************Epoch Summary********************
+	Epoch Loss = 100.584870 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.498127 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 55==============================
+	********************Train Summary********************
+	Training Lr: 4.095773082730391e-05; Loss: 3.4263; Spend time: 0:03:01.737398
+	********************Validate Summary********************
+	Validation Loss: 95.2107;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8090; micro-F1: 0.6651; macro-F1: 0.6304
+	[Sentiment]:
+		Acc: 0.8085; micro-F1: 0.6529; macro-F1: 0.5606
+	[Aspect-Sentiment]:
+		Acc: 0.7704; micro-F1: 0.6309; macro-F1: 0.4937
+	BIO-Report:
+	[Aspect] Acc: 0.8090; macro-F1: 0.7324;
+	[Sentiment] Acc: 0.8085; macro-F1: 0.6993;
+	Spend time: 0:00:20.729590
+	********************Epoch Summary********************
+	Epoch Loss = 95.210716 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.493728 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 56==============================
+	********************Train Summary********************
+	Training Lr: 3.939566276394742e-05; Loss: 3.2084; Spend time: 0:03:01.055384
+	********************Validate Summary********************
+	Validation Loss: 94.3821;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.7995; micro-F1: 0.6491; macro-F1: 0.6207
+	[Sentiment]:
+		Acc: 0.8064; micro-F1: 0.6462; macro-F1: 0.5513
+	[Aspect-Sentiment]:
+		Acc: 0.7654; micro-F1: 0.6152; macro-F1: 0.4897
+	BIO-Report:
+	[Aspect] Acc: 0.7995; macro-F1: 0.7332;
+	[Sentiment] Acc: 0.8064; macro-F1: 0.6932;
+	Spend time: 0:00:20.825084
+	********************Epoch Summary********************
+	Epoch Loss = 94.382122 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.489734 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 57==============================
+	********************Train Summary********************
+	Training Lr: 3.7844360424719664e-05; Loss: 2.4146; Spend time: 0:02:59.747257
+	********************Validate Summary********************
+	Validation Loss: 91.9366;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8060; micro-F1: 0.6645; macro-F1: 0.6345
+	[Sentiment]:
+		Acc: 0.8084; micro-F1: 0.6524; macro-F1: 0.5633
+	[Aspect-Sentiment]:
+		Acc: 0.7711; micro-F1: 0.6304; macro-F1: 0.5079
+	BIO-Report:
+	[Aspect] Acc: 0.8060; macro-F1: 0.7437;
+	[Sentiment] Acc: 0.8084; macro-F1: 0.7013;
+	Spend time: 0:00:20.811707
+	********************Epoch Summary********************
+	Epoch Loss = 91.936578 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.507853 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 58==============================
+	********************Train Summary********************
+	Training Lr: 3.630539872115471e-05; Loss: 2.2356; Spend time: 0:03:00.971073
+	********************Validate Summary********************
+	Validation Loss: 95.8916;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6625; macro-F1: 0.6330
+	[Sentiment]:
+		Acc: 0.8089; micro-F1: 0.6566; macro-F1: 0.5564
+	[Aspect-Sentiment]:
+		Acc: 0.7706; micro-F1: 0.6309; macro-F1: 0.5012
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7370;
+	[Sentiment] Acc: 0.8089; macro-F1: 0.6967;
+	Spend time: 0:00:20.925288
+	********************Epoch Summary********************
+	Epoch Loss = 95.891555 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.501239 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 59==============================
+	********************Train Summary********************
+	Training Lr: 3.478034003633947e-05; Loss: 3.0491; Spend time: 0:03:00.369819
+	********************Validate Summary********************
+	Validation Loss: 84.9448;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8035; micro-F1: 0.6540; macro-F1: 0.6269
+	[Sentiment]:
+		Acc: 0.8050; micro-F1: 0.6487; macro-F1: 0.5568
+	[Aspect-Sentiment]:
+		Acc: 0.7640; micro-F1: 0.6190; macro-F1: 0.4906
+	BIO-Report:
+	[Aspect] Acc: 0.8035; macro-F1: 0.7343;
+	[Sentiment] Acc: 0.8050; macro-F1: 0.6982;
+	Spend time: 0:00:20.917647
+	********************Epoch Summary********************
+	Epoch Loss = 84.944839 ; Best loss = 87.325004;
+	Epoch Overall-F1 score = 0.490560 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 60==============================
+	********************Train Summary********************
+	Training Lr: 3.327073263875271e-05; Loss: 2.8749; Spend time: 0:03:01.093308
+	********************Validate Summary********************
+	Validation Loss: 88.1548;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6598; macro-F1: 0.6336
+	[Sentiment]:
+		Acc: 0.8064; micro-F1: 0.6520; macro-F1: 0.5531
+	[Aspect-Sentiment]:
+		Acc: 0.7705; micro-F1: 0.6255; macro-F1: 0.4869
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7433;
+	[Sentiment] Acc: 0.8064; macro-F1: 0.6866;
+	Spend time: 0:00:20.927413
+	********************Epoch Summary********************
+	Epoch Loss = 88.154839 ; Best loss = 84.944839;
+	Epoch Overall-F1 score = 0.486897 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 61==============================
+	********************Train Summary********************
+	Training Lr: 3.177810911043358e-05; Loss: 2.3177; Spend time: 0:03:00.862437
+	********************Validate Summary********************
+	Validation Loss: 81.8346;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8045; micro-F1: 0.6579; macro-F1: 0.6246
+	[Sentiment]:
+		Acc: 0.8076; micro-F1: 0.6501; macro-F1: 0.5525
+	[Aspect-Sentiment]:
+		Acc: 0.7673; micro-F1: 0.6205; macro-F1: 0.4917
+	BIO-Report:
+	[Aspect] Acc: 0.8045; macro-F1: 0.7292;
+	[Sentiment] Acc: 0.8076; macro-F1: 0.6931;
+	Spend time: 0:00:20.814810
+	********************Epoch Summary********************
+	Epoch Loss = 81.834550 ; Best loss = 84.944839;
+	Epoch Overall-F1 score = 0.491681 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 62==============================
+	********************Train Summary********************
+	Training Lr: 3.030398479107528e-05; Loss: 2.3719; Spend time: 0:03:01.516158
+	********************Validate Summary********************
+	Validation Loss: 89.1270;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8075; micro-F1: 0.6592; macro-F1: 0.6292
+	[Sentiment]:
+		Acc: 0.8092; micro-F1: 0.6531; macro-F1: 0.5570
+	[Aspect-Sentiment]:
+		Acc: 0.7718; micro-F1: 0.6253; macro-F1: 0.5013
+	BIO-Report:
+	[Aspect] Acc: 0.8075; macro-F1: 0.7384;
+	[Sentiment] Acc: 0.8092; macro-F1: 0.6919;
+	Spend time: 0:00:20.864250
+	********************Epoch Summary********************
+	Epoch Loss = 89.127050 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.501307 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 63==============================
+	********************Train Summary********************
+	Training Lr: 2.884985623962352e-05; Loss: 2.6003; Spend time: 0:03:01.391635
+	********************Validate Summary********************
+	Validation Loss: 84.5788;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6624; macro-F1: 0.6353
+	[Sentiment]:
+		Acc: 0.8092; micro-F1: 0.6543; macro-F1: 0.5617
+	[Aspect-Sentiment]:
+		Acc: 0.7716; micro-F1: 0.6285; macro-F1: 0.5066
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7384;
+	[Sentiment] Acc: 0.8092; macro-F1: 0.6987;
+	Spend time: 0:00:20.470594
+	********************Epoch Summary********************
+	Epoch Loss = 84.578794 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.506553 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 64==============================
+	********************Train Summary********************
+	Training Lr: 2.741719971494143e-05; Loss: 2.5912; Spend time: 0:03:00.780452
+	********************Validate Summary********************
+	Validation Loss: 89.9999;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8065; micro-F1: 0.6543; macro-F1: 0.6218
+	[Sentiment]:
+		Acc: 0.8031; micro-F1: 0.6513; macro-F1: 0.5570
+	[Aspect-Sentiment]:
+		Acc: 0.7643; micro-F1: 0.6207; macro-F1: 0.4912
+	BIO-Report:
+	[Aspect] Acc: 0.8065; macro-F1: 0.7371;
+	[Sentiment] Acc: 0.8031; macro-F1: 0.6959;
+	Spend time: 0:00:20.734585
+	********************Epoch Summary********************
+	Epoch Loss = 89.999941 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.491152 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 65==============================
+	********************Train Summary********************
+	Training Lr: 2.6007469677083684e-05; Loss: 2.4863; Spend time: 0:03:01.677136
+	********************Validate Summary********************
+	Validation Loss: 97.9951;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8084; micro-F1: 0.6586; macro-F1: 0.6312
+	[Sentiment]:
+		Acc: 0.8064; micro-F1: 0.6515; macro-F1: 0.5522
+	[Aspect-Sentiment]:
+		Acc: 0.7712; micro-F1: 0.6238; macro-F1: 0.4913
+	BIO-Report:
+	[Aspect] Acc: 0.8084; macro-F1: 0.7424;
+	[Sentiment] Acc: 0.8064; macro-F1: 0.6904;
+	Spend time: 0:00:20.650759
+	********************Epoch Summary********************
+	Epoch Loss = 97.995070 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.491288 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 66==============================
+	********************Train Summary********************
+	Training Lr: 2.4622097310701014e-05; Loss: 2.7162; Spend time: 0:03:01.297061
+	********************Validate Summary********************
+	Validation Loss: 90.5712;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8106; micro-F1: 0.6630; macro-F1: 0.6241
+	[Sentiment]:
+		Acc: 0.8081; micro-F1: 0.6540; macro-F1: 0.5569
+	[Aspect-Sentiment]:
+		Acc: 0.7709; micro-F1: 0.6263; macro-F1: 0.4879
+	BIO-Report:
+	[Aspect] Acc: 0.8106; macro-F1: 0.7376;
+	[Sentiment] Acc: 0.8081; macro-F1: 0.6963;
+	Spend time: 0:00:20.827033
+	********************Epoch Summary********************
+	Epoch Loss = 90.571198 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.487866 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 67==============================
+	********************Train Summary********************
+	Training Lr: 2.326248907207449e-05; Loss: 2.5574; Spend time: 0:03:00.473069
+	********************Validate Summary********************
+	Validation Loss: 83.3220;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8093; micro-F1: 0.6656; macro-F1: 0.6331
+	[Sentiment]:
+		Acc: 0.8085; micro-F1: 0.6552; macro-F1: 0.5624
+	[Aspect-Sentiment]:
+		Acc: 0.7707; micro-F1: 0.6302; macro-F1: 0.5011
+	BIO-Report:
+	[Aspect] Acc: 0.8093; macro-F1: 0.7385;
+	[Sentiment] Acc: 0.8085; macro-F1: 0.7003;
+	Spend time: 0:00:20.638006
+	********************Epoch Summary********************
+	Epoch Loss = 83.322034 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.501085 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 68==============================
+	********************Train Summary********************
+	Training Lr: 2.193002526125439e-05; Loss: 2.2166; Spend time: 0:02:59.285969
+	********************Validate Summary********************
+	Validation Loss: 85.0872;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8034; micro-F1: 0.6536; macro-F1: 0.6209
+	[Sentiment]:
+		Acc: 0.8056; micro-F1: 0.6455; macro-F1: 0.5519
+	[Aspect-Sentiment]:
+		Acc: 0.7653; micro-F1: 0.6171; macro-F1: 0.4948
+	BIO-Report:
+	[Aspect] Acc: 0.8034; macro-F1: 0.7307;
+	[Sentiment] Acc: 0.8056; macro-F1: 0.6961;
+	Spend time: 0:00:20.818010
+	********************Epoch Summary********************
+	Epoch Loss = 85.087233 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.494798 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 69==============================
+	********************Train Summary********************
+	Training Lr: 2.0626058620753473e-05; Loss: 2.0327; Spend time: 0:03:00.826137
+	********************Validate Summary********************
+	Validation Loss: 86.6962;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8054; micro-F1: 0.6611; macro-F1: 0.6279
+	[Sentiment]:
+		Acc: 0.8077; micro-F1: 0.6538; macro-F1: 0.5562
+	[Aspect-Sentiment]:
+		Acc: 0.7677; micro-F1: 0.6258; macro-F1: 0.4955
+	BIO-Report:
+	[Aspect] Acc: 0.8054; macro-F1: 0.7346;
+	[Sentiment] Acc: 0.8077; macro-F1: 0.6966;
+	Spend time: 0:00:20.756546
+	********************Epoch Summary********************
+	Epoch Loss = 86.696227 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.495520 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 70==============================
+	********************Train Summary********************
+	Training Lr: 1.9351912962217146e-05; Loss: 1.9678; Spend time: 0:03:00.490553
+	********************Validate Summary********************
+	Validation Loss: 90.4462;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8076; micro-F1: 0.6612; macro-F1: 0.6307
+	[Sentiment]:
+		Acc: 0.8105; micro-F1: 0.6558; macro-F1: 0.5638
+	[Aspect-Sentiment]:
+		Acc: 0.7723; micro-F1: 0.6295; macro-F1: 0.5091
+	BIO-Report:
+	[Aspect] Acc: 0.8076; macro-F1: 0.7385;
+	[Sentiment] Acc: 0.8105; macro-F1: 0.7048;
+	Spend time: 0:00:20.677206
+	********************Epoch Summary********************
+	Epoch Loss = 90.446246 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.509118 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 71==============================
+	********************Train Summary********************
+	Training Lr: 1.8108881822464696e-05; Loss: 2.1251; Spend time: 0:03:00.063122
+	********************Validate Summary********************
+	Validation Loss: 87.7456;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8082; micro-F1: 0.6621; macro-F1: 0.6275
+	[Sentiment]:
+		Acc: 0.8089; micro-F1: 0.6522; macro-F1: 0.5565
+	[Aspect-Sentiment]:
+		Acc: 0.7731; micro-F1: 0.6282; macro-F1: 0.5013
+	BIO-Report:
+	[Aspect] Acc: 0.8082; macro-F1: 0.7404;
+	[Sentiment] Acc: 0.8089; macro-F1: 0.6953;
+	Spend time: 0:00:20.766542
+	********************Epoch Summary********************
+	Epoch Loss = 87.745599 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.501307 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 72==============================
+	********************Train Summary********************
+	Training Lr: 1.6898227150266404e-05; Loss: 2.0146; Spend time: 0:03:00.269099
+	********************Validate Summary********************
+	Validation Loss: 80.1967;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8071; micro-F1: 0.6593; macro-F1: 0.6259
+	[Sentiment]:
+		Acc: 0.8074; micro-F1: 0.6508; macro-F1: 0.5585
+	[Aspect-Sentiment]:
+		Acc: 0.7685; micro-F1: 0.6248; macro-F1: 0.4962
+	BIO-Report:
+	[Aspect] Acc: 0.8071; macro-F1: 0.7377;
+	[Sentiment] Acc: 0.8074; macro-F1: 0.6989;
+	Spend time: 0:00:20.676371
+	********************Epoch Summary********************
+	Epoch Loss = 80.196684 ; Best loss = 81.834550;
+	Epoch Overall-F1 score = 0.496195 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 73==============================
+	********************Train Summary********************
+	Training Lr: 1.5721178025189043e-05; Loss: 2.0299; Spend time: 0:03:00.282734
+	********************Validate Summary********************
+	Validation Loss: 80.8742;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8109; micro-F1: 0.6604; macro-F1: 0.6275
+	[Sentiment]:
+		Acc: 0.8133; micro-F1: 0.6557; macro-F1: 0.5610
+	[Aspect-Sentiment]:
+		Acc: 0.7752; micro-F1: 0.6281; macro-F1: 0.5024
+	BIO-Report:
+	[Aspect] Acc: 0.8109; macro-F1: 0.7424;
+	[Sentiment] Acc: 0.8133; macro-F1: 0.7003;
+	Spend time: 0:00:20.850820
+	********************Epoch Summary********************
+	Epoch Loss = 80.874236 ; Best loss = 80.196684;
+	Epoch Overall-F1 score = 0.502414 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 74==============================
+	********************Train Summary********************
+	Training Lr: 1.4578929409811043e-05; Loss: 1.9445; Spend time: 0:02:59.683013
+	********************Validate Summary********************
+	Validation Loss: 83.5910;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8113; micro-F1: 0.6620; macro-F1: 0.6293
+	[Sentiment]:
+		Acc: 0.8120; micro-F1: 0.6560; macro-F1: 0.5658
+	[Aspect-Sentiment]:
+		Acc: 0.7749; micro-F1: 0.6295; macro-F1: 0.5061
+	BIO-Report:
+	[Aspect] Acc: 0.8113; macro-F1: 0.7411;
+	[Sentiment] Acc: 0.8120; macro-F1: 0.7039;
+	Spend time: 0:00:20.629102
+	********************Epoch Summary********************
+	Epoch Loss = 83.590953 ; Best loss = 80.196684;
+	Epoch Overall-F1 score = 0.506054 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 75==============================
+	********************Train Summary********************
+	Training Lr: 1.3472640936573916e-05; Loss: 1.9877; Spend time: 0:03:01.315754
+	********************Validate Summary********************
+	Validation Loss: 79.2311;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8108; micro-F1: 0.6647; macro-F1: 0.6361
+	[Sentiment]:
+		Acc: 0.8113; micro-F1: 0.6555; macro-F1: 0.5621
+	[Aspect-Sentiment]:
+		Acc: 0.7734; micro-F1: 0.6301; macro-F1: 0.5128
+	BIO-Report:
+	[Aspect] Acc: 0.8108; macro-F1: 0.7436;
+	[Sentiment] Acc: 0.8113; macro-F1: 0.7000;
+	Spend time: 0:00:20.756365
+	********************Epoch Summary********************
+	Epoch Loss = 79.231130 ; Best loss = 80.196684;
+	Epoch Overall-F1 score = 0.512839 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 76==============================
+	********************Train Summary********************
+	Training Lr: 1.2403435730501412e-05; Loss: 2.0036; Spend time: 0:02:59.673217
+	********************Validate Summary********************
+	Validation Loss: 83.4079;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8087; micro-F1: 0.6597; macro-F1: 0.6301
+	[Sentiment]:
+		Acc: 0.8114; micro-F1: 0.6555; macro-F1: 0.5663
+	[Aspect-Sentiment]:
+		Acc: 0.7740; micro-F1: 0.6290; macro-F1: 0.5066
+	BIO-Report:
+	[Aspect] Acc: 0.8087; macro-F1: 0.7404;
+	[Sentiment] Acc: 0.8114; macro-F1: 0.7048;
+	Spend time: 0:00:20.406101
+	********************Epoch Summary********************
+	Epoch Loss = 83.407947 ; Best loss = 79.231130;
+	Epoch Overall-F1 score = 0.506558 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 77==============================
+	********************Train Summary********************
+	Training Lr: 1.1372399268981598e-05; Loss: 1.9796; Spend time: 0:02:59.985278
+	********************Validate Summary********************
+	Validation Loss: 78.7605;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8114; micro-F1: 0.6604; macro-F1: 0.6322
+	[Sentiment]:
+		Acc: 0.8121; micro-F1: 0.6537; macro-F1: 0.5650
+	[Aspect-Sentiment]:
+		Acc: 0.7749; micro-F1: 0.6288; macro-F1: 0.5104
+	BIO-Report:
+	[Aspect] Acc: 0.8114; macro-F1: 0.7411;
+	[Sentiment] Acc: 0.8121; macro-F1: 0.7037;
+	Spend time: 0:00:20.741676
+	********************Epoch Summary********************
+	Epoch Loss = 78.760488 ; Best loss = 79.231130;
+	Epoch Overall-F1 score = 0.510353 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 78==============================
+	********************Train Summary********************
+	Training Lr: 1.0380578279769777e-05; Loss: 2.1432; Spend time: 0:03:00.752830
+	********************Validate Summary********************
+	Validation Loss: 87.6283;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8085; micro-F1: 0.6608; macro-F1: 0.6276
+	[Sentiment]:
+		Acc: 0.8110; micro-F1: 0.6566; macro-F1: 0.5674
+	[Aspect-Sentiment]:
+		Acc: 0.7726; micro-F1: 0.6286; macro-F1: 0.5052
+	BIO-Report:
+	[Aspect] Acc: 0.8085; macro-F1: 0.7376;
+	[Sentiment] Acc: 0.8110; macro-F1: 0.7052;
+	Spend time: 0:00:20.374808
+	********************Epoch Summary********************
+	Epoch Loss = 87.628284 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.505177 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 79==============================
+	********************Train Summary********************
+	Training Lr: 9.428979678330552e-06; Loss: 1.8382; Spend time: 0:03:00.513978
+	********************Validate Summary********************
+	Validation Loss: 79.4731;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8085; micro-F1: 0.6598; macro-F1: 0.6284
+	[Sentiment]:
+		Acc: 0.8070; micro-F1: 0.6519; macro-F1: 0.5649
+	[Aspect-Sentiment]:
+		Acc: 0.7708; micro-F1: 0.6249; macro-F1: 0.5100
+	BIO-Report:
+	[Aspect] Acc: 0.8085; macro-F1: 0.7379;
+	[Sentiment] Acc: 0.8070; macro-F1: 0.7009;
+	Spend time: 0:00:20.703750
+	********************Epoch Summary********************
+	Epoch Loss = 79.473059 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.509962 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 80==============================
+	********************Train Summary********************
+	Training Lr: 8.5185695455982e-06; Loss: 1.9580; Spend time: 0:03:00.971669
+	********************Validate Summary********************
+	Validation Loss: 82.0064;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8108; micro-F1: 0.6624; macro-F1: 0.6306
+	[Sentiment]:
+		Acc: 0.8100; micro-F1: 0.6540; macro-F1: 0.5640
+	[Aspect-Sentiment]:
+		Acc: 0.7732; micro-F1: 0.6282; macro-F1: 0.5096
+	BIO-Report:
+	[Aspect] Acc: 0.8108; macro-F1: 0.7395;
+	[Sentiment] Acc: 0.8100; macro-F1: 0.7033;
+	Spend time: 0:00:20.560200
+	********************Epoch Summary********************
+	Epoch Loss = 82.006437 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.509567 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 81==============================
+	********************Train Summary********************
+	Training Lr: 7.650272147192993e-06; Loss: 1.8824; Spend time: 0:03:00.417681
+	********************Validate Summary********************
+	Validation Loss: 83.6086;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8088; micro-F1: 0.6617; macro-F1: 0.6303
+	[Sentiment]:
+		Acc: 0.8082; micro-F1: 0.6535; macro-F1: 0.5632
+	[Aspect-Sentiment]:
+		Acc: 0.7710; micro-F1: 0.6268; macro-F1: 0.4989
+	BIO-Report:
+	[Aspect] Acc: 0.8088; macro-F1: 0.7386;
+	[Sentiment] Acc: 0.8082; macro-F1: 0.6980;
+	Spend time: 0:00:20.708283
+	********************Epoch Summary********************
+	Epoch Loss = 83.608563 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.498897 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 82==============================
+	********************Train Summary********************
+	Training Lr: 6.824968995089215e-06; Loss: 1.8381; Spend time: 0:02:59.404023
+	********************Validate Summary********************
+	Validation Loss: 78.9376;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8087; micro-F1: 0.6625; macro-F1: 0.6299
+	[Sentiment]:
+		Acc: 0.8106; micro-F1: 0.6575; macro-F1: 0.5683
+	[Aspect-Sentiment]:
+		Acc: 0.7729; micro-F1: 0.6296; macro-F1: 0.5120
+	BIO-Report:
+	[Aspect] Acc: 0.8087; macro-F1: 0.7369;
+	[Sentiment] Acc: 0.8106; macro-F1: 0.7063;
+	Spend time: 0:00:20.652666
+	********************Epoch Summary********************
+	Epoch Loss = 78.937632 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.512000 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 83==============================
+	********************Train Summary********************
+	Training Lr: 6.0434979526875045e-06; Loss: 1.8451; Spend time: 0:02:59.903747
+	********************Validate Summary********************
+	Validation Loss: 78.6065;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6642; macro-F1: 0.6311
+	[Sentiment]:
+		Acc: 0.8102; micro-F1: 0.6557; macro-F1: 0.5643
+	[Aspect-Sentiment]:
+		Acc: 0.7730; micro-F1: 0.6303; macro-F1: 0.5040
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7371;
+	[Sentiment] Acc: 0.8102; macro-F1: 0.7018;
+	Spend time: 0:00:20.737478
+	********************Epoch Summary********************
+	Epoch Loss = 78.606546 ; Best loss = 78.760488;
+	Epoch Overall-F1 score = 0.504029 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 84==============================
+	********************Train Summary********************
+	Training Lr: 5.306652384200056e-06; Loss: 1.8629; Spend time: 0:03:00.924630
+	********************Validate Summary********************
+	Validation Loss: 76.3892;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8093; micro-F1: 0.6656; macro-F1: 0.6355
+	[Sentiment]:
+		Acc: 0.8093; micro-F1: 0.6582; macro-F1: 0.5648
+	[Aspect-Sentiment]:
+		Acc: 0.7725; micro-F1: 0.6334; macro-F1: 0.5125
+	BIO-Report:
+	[Aspect] Acc: 0.8093; macro-F1: 0.7391;
+	[Sentiment] Acc: 0.8093; macro-F1: 0.7012;
+	Spend time: 0:00:20.680498
+	********************Epoch Summary********************
+	Epoch Loss = 76.389192 ; Best loss = 78.606546;
+	Epoch Overall-F1 score = 0.512503 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 85==============================
+	********************Train Summary********************
+	Training Lr: 4.6151803492122055e-06; Loss: 1.8674; Spend time: 0:03:00.048750
+	********************Validate Summary********************
+	Validation Loss: 76.8935;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8100; micro-F1: 0.6644; macro-F1: 0.6316
+	[Sentiment]:
+		Acc: 0.8113; micro-F1: 0.6584; macro-F1: 0.5645
+	[Aspect-Sentiment]:
+		Acc: 0.7741; micro-F1: 0.6320; macro-F1: 0.5023
+	BIO-Report:
+	[Aspect] Acc: 0.8100; macro-F1: 0.7395;
+	[Sentiment] Acc: 0.8113; macro-F1: 0.7016;
+	Spend time: 0:00:20.680897
+	********************Epoch Summary********************
+	Epoch Loss = 76.893499 ; Best loss = 76.389192;
+	Epoch Overall-F1 score = 0.502346 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 86==============================
+	********************Train Summary********************
+	Training Lr: 3.969783843238245e-06; Loss: 1.8950; Spend time: 0:03:00.506740
+	********************Validate Summary********************
+	Validation Loss: 81.9191;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6624; macro-F1: 0.6309
+	[Sentiment]:
+		Acc: 0.8114; micro-F1: 0.6590; macro-F1: 0.5668
+	[Aspect-Sentiment]:
+		Acc: 0.7726; micro-F1: 0.6318; macro-F1: 0.5070
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7385;
+	[Sentiment] Acc: 0.8114; macro-F1: 0.7029;
+	Spend time: 0:00:20.735788
+	********************Epoch Summary********************
+	Epoch Loss = 81.919119 ; Best loss = 76.389192;
+	Epoch Overall-F1 score = 0.507040 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 87==============================
+	********************Train Summary********************
+	Training Lr: 3.3711180850421798e-06; Loss: 1.8895; Spend time: 0:03:00.303432
+	********************Validate Summary********************
+	Validation Loss: 79.4069;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8085; micro-F1: 0.6625; macro-F1: 0.6319
+	[Sentiment]:
+		Acc: 0.8121; micro-F1: 0.6580; macro-F1: 0.5690
+	[Aspect-Sentiment]:
+		Acc: 0.7730; micro-F1: 0.6309; macro-F1: 0.5110
+	BIO-Report:
+	[Aspect] Acc: 0.8085; macro-F1: 0.7396;
+	[Sentiment] Acc: 0.8121; macro-F1: 0.7050;
+	Spend time: 0:00:20.654090
+	********************Epoch Summary********************
+	Epoch Loss = 79.406927 ; Best loss = 76.389192;
+	Epoch Overall-F1 score = 0.510968 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 88==============================
+	********************Train Summary********************
+	Training Lr: 2.819790851447246e-06; Loss: 1.9060; Spend time: 0:03:00.479126
+	********************Validate Summary********************
+	Validation Loss: 74.2735;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8106; micro-F1: 0.6655; macro-F1: 0.6324
+	[Sentiment]:
+		Acc: 0.8104; micro-F1: 0.6601; macro-F1: 0.5710
+	[Aspect-Sentiment]:
+		Acc: 0.7724; micro-F1: 0.6323; macro-F1: 0.5077
+	BIO-Report:
+	[Aspect] Acc: 0.8106; macro-F1: 0.7390;
+	[Sentiment] Acc: 0.8104; macro-F1: 0.7036;
+	Spend time: 0:00:20.660344
+	********************Epoch Summary********************
+	Epoch Loss = 74.273483 ; Best loss = 76.389192;
+	Epoch Overall-F1 score = 0.507716 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 89==============================
+	********************Train Summary********************
+	Training Lr: 2.3163618603094073e-06; Loss: 1.8714; Spend time: 0:03:00.278457
+	********************Validate Summary********************
+	Validation Loss: 77.8418;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8081; micro-F1: 0.6656; macro-F1: 0.6356
+	[Sentiment]:
+		Acc: 0.8090; micro-F1: 0.6577; macro-F1: 0.5689
+	[Aspect-Sentiment]:
+		Acc: 0.7704; micro-F1: 0.6322; macro-F1: 0.5132
+	BIO-Report:
+	[Aspect] Acc: 0.8081; macro-F1: 0.7396;
+	[Sentiment] Acc: 0.8090; macro-F1: 0.7017;
+	Spend time: 0:00:20.497487
+	********************Epoch Summary********************
+	Epoch Loss = 77.841836 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.513186 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 90==============================
+	********************Train Summary********************
+	Training Lr: 1.8613422022811466e-06; Loss: 1.8892; Spend time: 0:03:02.202952
+	********************Validate Summary********************
+	Validation Loss: 75.5152;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8099; micro-F1: 0.6651; macro-F1: 0.6346
+	[Sentiment]:
+		Acc: 0.8104; micro-F1: 0.6581; macro-F1: 0.5675
+	[Aspect-Sentiment]:
+		Acc: 0.7723; micro-F1: 0.6324; macro-F1: 0.5126
+	BIO-Report:
+	[Aspect] Acc: 0.8099; macro-F1: 0.7396;
+	[Sentiment] Acc: 0.8104; macro-F1: 0.7024;
+	Spend time: 0:00:20.780916
+	********************Epoch Summary********************
+	Epoch Loss = 75.515236 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.512640 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 91==============================
+	********************Train Summary********************
+	Training Lr: 1.4551938219425132e-06; Loss: 1.8356; Spend time: 0:03:00.173620
+	********************Validate Summary********************
+	Validation Loss: 75.8044;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8101; micro-F1: 0.6666; macro-F1: 0.6365
+	[Sentiment]:
+		Acc: 0.8101; micro-F1: 0.6586; macro-F1: 0.5696
+	[Aspect-Sentiment]:
+		Acc: 0.7728; micro-F1: 0.6329; macro-F1: 0.5141
+	BIO-Report:
+	[Aspect] Acc: 0.8101; macro-F1: 0.7405;
+	[Sentiment] Acc: 0.8101; macro-F1: 0.7033;
+	Spend time: 0:00:20.517575
+	********************Epoch Summary********************
+	Epoch Loss = 75.804361 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.514102 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 92==============================
+	********************Train Summary********************
+	Training Lr: 1.098329048826313e-06; Loss: 1.8358; Spend time: 0:03:01.677877
+	********************Validate Summary********************
+	Validation Loss: 77.0393;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8104; micro-F1: 0.6642; macro-F1: 0.6335
+	[Sentiment]:
+		Acc: 0.8113; micro-F1: 0.6576; macro-F1: 0.5685
+	[Aspect-Sentiment]:
+		Acc: 0.7738; micro-F1: 0.6320; macro-F1: 0.5133
+	BIO-Report:
+	[Aspect] Acc: 0.8104; macro-F1: 0.7401;
+	[Sentiment] Acc: 0.8113; macro-F1: 0.7036;
+	Spend time: 0:00:20.744053
+	********************Epoch Summary********************
+	Epoch Loss = 77.039315 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.513309 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 93==============================
+	********************Train Summary********************
+	Training Lr: 7.911101788132813e-07; Loss: 1.8367; Spend time: 0:03:00.675904
+	********************Validate Summary********************
+	Validation Loss: 75.4734;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8102; micro-F1: 0.6652; macro-F1: 0.6345
+	[Sentiment]:
+		Acc: 0.8095; micro-F1: 0.6574; macro-F1: 0.5689
+	[Aspect-Sentiment]:
+		Acc: 0.7717; micro-F1: 0.6316; macro-F1: 0.5130
+	BIO-Report:
+	[Aspect] Acc: 0.8102; macro-F1: 0.7400;
+	[Sentiment] Acc: 0.8095; macro-F1: 0.7020;
+	Spend time: 0:00:20.498916
+	********************Epoch Summary********************
+	Epoch Loss = 75.473428 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.512967 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 94==============================
+	********************Train Summary********************
+	Training Lr: 5.338491063224759e-07; Loss: 1.9058; Spend time: 0:03:00.341770
+	********************Validate Summary********************
+	Validation Loss: 74.3833;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8098; micro-F1: 0.6650; macro-F1: 0.6346
+	[Sentiment]:
+		Acc: 0.8099; micro-F1: 0.6568; macro-F1: 0.5680
+	[Aspect-Sentiment]:
+		Acc: 0.7723; micro-F1: 0.6316; macro-F1: 0.5153
+	BIO-Report:
+	[Aspect] Acc: 0.8098; macro-F1: 0.7400;
+	[Sentiment] Acc: 0.8099; macro-F1: 0.7034;
+	Spend time: 0:00:20.712751
+	********************Epoch Summary********************
+	Epoch Loss = 74.383342 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.515338 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 95==============================
+	********************Train Summary********************
+	Training Lr: 3.2680700767013795e-07; Loss: 1.8273; Spend time: 0:02:59.976897
+	********************Validate Summary********************
+	Validation Loss: 75.8259;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8106; micro-F1: 0.6655; macro-F1: 0.6350
+	[Sentiment]:
+		Acc: 0.8105; micro-F1: 0.6580; macro-F1: 0.5688
+	[Aspect-Sentiment]:
+		Acc: 0.7729; micro-F1: 0.6325; macro-F1: 0.5147
+	BIO-Report:
+	[Aspect] Acc: 0.8106; macro-F1: 0.7407;
+	[Sentiment] Acc: 0.8105; macro-F1: 0.7031;
+	Spend time: 0:00:20.742116
+	********************Epoch Summary********************
+	Epoch Loss = 75.825904 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.514724 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 96==============================
+	********************Train Summary********************
+	Training Lr: 1.701940759185505e-07; Loss: 1.8744; Spend time: 0:02:59.935369
+	********************Validate Summary********************
+	Validation Loss: 75.2203;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8104; micro-F1: 0.6658; macro-F1: 0.6352
+	[Sentiment]:
+		Acc: 0.8111; micro-F1: 0.6588; macro-F1: 0.5693
+	[Aspect-Sentiment]:
+		Acc: 0.7736; micro-F1: 0.6330; macro-F1: 0.5154
+	BIO-Report:
+	[Aspect] Acc: 0.8104; macro-F1: 0.7407;
+	[Sentiment] Acc: 0.8111; macro-F1: 0.7031;
+	Spend time: 0:00:20.714037
+	********************Epoch Summary********************
+	Epoch Loss = 75.220304 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.515432 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 97==============================
+	********************Train Summary********************
+	Training Lr: 6.416930748405769e-08; Loss: 1.9123; Spend time: 0:02:59.961643
+	********************Validate Summary********************
+	Validation Loss: 74.8513;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8102; micro-F1: 0.6655; macro-F1: 0.6349
+	[Sentiment]:
+		Acc: 0.8111; micro-F1: 0.6586; macro-F1: 0.5696
+	[Aspect-Sentiment]:
+		Acc: 0.7736; micro-F1: 0.6327; macro-F1: 0.5156
+	BIO-Report:
+	[Aspect] Acc: 0.8102; macro-F1: 0.7406;
+	[Sentiment] Acc: 0.8111; macro-F1: 0.7034;
+	Spend time: 0:00:20.800988
+	********************Epoch Summary********************
+	Epoch Loss = 74.851260 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.515636 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 98==============================
+	********************Train Summary********************
+	Training Lr: 8.840340720883688e-09; Loss: 1.8466; Spend time: 0:02:58.867780
+	********************Validate Summary********************
+	Validation Loss: 75.8497;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8105; micro-F1: 0.6658; macro-F1: 0.6352
+	[Sentiment]:
+		Acc: 0.8112; micro-F1: 0.6585; macro-F1: 0.5695
+	[Aspect-Sentiment]:
+		Acc: 0.7740; micro-F1: 0.6329; macro-F1: 0.5157
+	BIO-Report:
+	[Aspect] Acc: 0.8105; macro-F1: 0.7408;
+	[Sentiment] Acc: 0.8112; macro-F1: 0.7035;
+	Spend time: 0:00:20.729191
+	********************Epoch Summary********************
+	Epoch Loss = 75.849696 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.515734 ; Best score = 0.516596 at Epoch-50;
+
+==============================Training epoch 99==============================
+	********************Train Summary********************
+	Training Lr: 4.263346644650667e-09; Loss: 1.8864; Spend time: 0:03:00.484712
+	********************Validate Summary********************
+	Validation Loss: 75.8038;
+	Chunk-Report:
+	[Aspect]:
+		Acc: 0.8105; micro-F1: 0.6655; macro-F1: 0.6350
+	[Sentiment]:
+		Acc: 0.8112; micro-F1: 0.6585; macro-F1: 0.5695
+	[Aspect-Sentiment]:
+		Acc: 0.7740; micro-F1: 0.6329; macro-F1: 0.5157
+	BIO-Report:
+	[Aspect] Acc: 0.8105; macro-F1: 0.7408;
+	[Sentiment] Acc: 0.8112; macro-F1: 0.7035;
+	Spend time: 0:00:20.666742
+	********************Epoch Summary********************
+	Epoch Loss = 75.803754 ; Best loss = 74.273483;
+	Epoch Overall-F1 score = 0.515737 ; Best score = 0.516596 at Epoch-50;
+	********************Test Summary********************
+	Validation Loss: 92.5064;
+	Chunk-Report:
+	[Aspect]:
+		BATTERY          : P: 0.7507; R: 0.7621; F1: 0.7563  1131
+		CAMERA           : P: 0.7563; R: 0.7796; F1: 0.7678  636
+		DESIGN           : P: 0.6891; R: 0.7244; F1: 0.7063  431
+		FEATURES         : P: 0.5744; R: 0.5723; F1: 0.5733  820
+		GENERAL          : P: 0.6636; R: 0.6607; F1: 0.6621  1611
+		PERFORMANCE      : P: 0.6077; R: 0.6557; F1: 0.6308  1476
+		PRICE            : P: 0.4647; R: 0.4826; F1: 0.4735  269
+		SCREEN           : P: 0.6069; R: 0.6993; F1: 0.6498  318
+		SER&ACC          : P: 0.5820; R: 0.6431; F1: 0.6111  579
+		STORAGE          : P: 0.4737; R: 0.5294; F1: 0.5000  38
+	  Acc: 0.8061; micro-P: 0.6481; micro-R: 0.6726; micro-F1: 0.6601; macro-P: 0.6169; macro-R: 0.6509; macro-F1: 0.6331
+	[Sentiment]:
+		NEGATIVE         : P: 0.5409; R: 0.5601; F1: 0.5503  2370
+		NEUTRAL          : P: 0.4151; R: 0.4181; F1: 0.4166  424
+		POSITIVE         : P: 0.7243; R: 0.7459; F1: 0.7350  4462
+	  Acc: 0.8110; micro-P: 0.6464; micro-R: 0.6659; micro-F1: 0.6560; macro-P: 0.5601; macro-R: 0.5747; macro-F1: 0.5673
+	[Aspect-Sentiment]:
+		BATTERY#NEGATIVE : P: 0.5835; R: 0.5965; F1: 0.5900  413
+		BATTERY#NEUTRAL  : P: 0.3953; R: 0.4928; F1: 0.4387  86
+		BATTERY#POSITIVE : P: 0.7858; R: 0.7956; F1: 0.7907  649
+		CAMERA#NEGATIVE  : P: 0.5659; R: 0.6237; F1: 0.5934  205
+		CAMERA#NEUTRAL   : P: 0.5942; R: 0.5256; F1: 0.5578  69
+		CAMERA#POSITIVE  : P: 0.8089; R: 0.8272; F1: 0.8179  361
+		DESIGN#NEGATIVE  : P: 0.4796; R: 0.4845; F1: 0.4821  98
+		DESIGN#NEUTRAL   : P: 0.1667; R: 0.1333; F1: 0.1481  12
+		DESIGN#POSITIVE  : P: 0.7391; R: 0.7987; F1: 0.7677  322
+		FEATURES#NEGATIVE: P: 0.5134; R: 0.5028; F1: 0.5081  522
+		FEATURES#NEUTRAL : P: 0.4545; R: 0.4688; F1: 0.4615  33
+		FEATURES#POSITIVE: P: 0.6410; R: 0.6783; F1: 0.6591  273
+		GENERAL#NEGATIVE : P: 0.5321; R: 0.5687; F1: 0.5498  280
+		GENERAL#NEUTRAL  : P: 0.4429; R: 0.4844; F1: 0.4627  70
+		GENERAL#POSITIVE : P: 0.6770; R: 0.6587; F1: 0.6677  1257
+		PERFORMANCE#NEGATIVE: P: 0.4448; R: 0.5115; F1: 0.4758  598
+		PERFORMANCE#NEUTRAL: P: 0.3239; R: 0.2949; F1: 0.3087  71
+		PERFORMANCE#POSITIVE: P: 0.6675; R: 0.7299; F1: 0.6973  842
+		PRICE#NEGATIVE   : P: 0.4074; R: 0.3099; F1: 0.3520  54
+		PRICE#NEUTRAL    : P: 0.2537; R: 0.2615; F1: 0.2576  67
+		PRICE#POSITIVE   : P: 0.4861; R: 0.5691; F1: 0.5243  144
+		SCREEN#NEGATIVE  : P: 0.4351; R: 0.5534; F1: 0.4872  131
+		SCREEN#NEUTRAL   : P: 0.3333; R: 0.3000; F1: 0.3158  9
+		SCREEN#POSITIVE  : P: 0.7232; R: 0.7853; F1: 0.7529  177
+		SER&ACC#NEGATIVE : P: 0.3153; R: 0.3465; F1: 0.3302  111
+		SER&ACC#NEUTRAL  : P: 0.2000; R: 0.6667; F1: 0.3077  10
+		SER&ACC#POSITIVE : P: 0.6484; R: 0.7024; F1: 0.6743  455
+		STORAGE#NEGATIVE : P: 0.2500; R: 0.3333; F1: 0.2857  16
+		STORAGE#NEUTRAL  : P: 0.7500; R: 0.4286; F1: 0.5455  4
+		STORAGE#POSITIVE : P: 0.6471; R: 0.7333; F1: 0.6875  17
+	  Acc: 0.7709; micro-P: 0.6128; micro-R: 0.6401; micro-F1: 0.6262; macro-P: 0.5089; macro-R: 0.5389; macro-F1: 0.5166
+	BIO-Report:
+	[Aspect] Acc: 0.8061; macro-F1: 0.7432;
+	[Sentiment] Acc: 0.8110; macro-F1: 0.7086;
+	Spend time: 0:00:20.348350
