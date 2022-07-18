@@ -24,19 +24,6 @@ python main.py train --task UIT-ViSD4SA \
 All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU **AMD EPYC 7282 16-Core Processor** with **64GB RAM**, both of which are available for rent on **[vast.ai](https://vast.ai/)**. The pretrained-model used for comparison are available on **[HuggingFace](https://huggingface.co/models)**.
 <details>
     <summary style="font-size: 1.50em; font-weight: bold;">UIT-ViSD4SA (update 18/07/2022)</summary>
-    <style type="text/css">
-        tr.hide_border > td, td.hide_border{
-            border-left-style: hidden;
-            border-right-style: hidden;
-        }
-        tr.hide_border > th, th.hide_border{
-            border-left-style: hidden;
-            border-right-style: hidden;
-        }
-        tr.hide_bottom_border > td, td.hide_bottom_border{
-            border-bottom-style: hidden;
-        }
-    </style>
     <div align="center"><b>Table 1</b>: The overall experimental results</div>
     <table align="center">
         <thead>
@@ -313,3 +300,7 @@ All experiments were performed on an **RTX 3090** with **24GB VRAM**, and  a CPU
         </tbody>
     </table>
 </details>
+
+#tr.hide_border > td {border-left-style: hidden;border-right-style: hidden}
+#tr.hide_border > th {border-left-style: hidden;border-right-style: hidden}
+tr.hide_bottom_border > td {border-bottom-style: hidden}
