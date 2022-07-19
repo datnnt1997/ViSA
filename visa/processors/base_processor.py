@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union, List, Tuple
 
 import os
 import json
@@ -33,7 +33,7 @@ class BaseProcessor(object):
         self.use_crf = use_crf
 
     def word_segment(self, raw: str) -> List[str]:
-        return NotImplemented
+        return raw.split()
 
     def read_visd4sa_data(self, fpath: Union[str, os.PathLike]) -> List[ABSAExample]:
         examples = []
@@ -41,15 +41,17 @@ class BaseProcessor(object):
             for line in f.readlines():
                 data = json.loads(line)
                 raw_text = data['text']
-                norm_text = []
-                aspect_tags = []
-                polarity_tags = []
+
+                norm_words = []  # word sequence
+                aspect_tags = []  # tag sequence for target aspect
+                polarity_tags = []  # tag sequence for targeted sentiment polarity
+
                 last_index = 0
                 for span in data["labels"]:
                     as_tag, senti_tag = span[-1].split("#")
                     # Add prefix tokens
                     prefix_span_text = self.word_segment(raw_text[last_index:span[0]])
-                    norm_text.extend(prefix_span_text)
+                    norm_words.extend(prefix_span_text)
                     aspect_tags.extend(["O"] * len(prefix_span_text))
                     polarity_tags.extend(["O"] * len(prefix_span_text))
 
@@ -61,62 +63,73 @@ class BaseProcessor(object):
                             continue
                         aspect_tags.append(f"I-{as_tag.strip()}")
                         polarity_tags.append(f"I-{senti_tag.strip()}")
-                    norm_text.extend(aspect_text)
+                    norm_words.extend(aspect_text)
                     last_index = span[1]
 
                 last_span_text = self.word_segment(raw_text[last_index:])
-                norm_text.extend(last_span_text)
+                norm_words.extend(last_span_text)
                 aspect_tags.extend(["O"] * len(last_span_text))
                 polarity_tags.extend(["O"] * len(last_span_text))
 
-                assert len(norm_text) == len(aspect_tags), f"Not match: {line}"
-                examples.append(ABSAExample(tokens=norm_text, a_tags=aspect_tags, p_tags=polarity_tags))
+                assert len(norm_words) == len(aspect_tags), f"Not match: {line}"
+                examples.append(ABSAExample(tokens=norm_words, a_tags=aspect_tags, p_tags=polarity_tags))
         return examples
 
     def read_absa_data(self, fpath: Union[str, os.PathLike]) -> List[ABSAExample]:
         examples = []
         with open(fpath, encoding='UTF-8') as fp:
+            def parse_item(word_item: str) -> Tuple[str, Union[str, None], str]:
+                eles = word_item.split('=')
+                if len(eles) == 2:
+                    word, wtag = eles
+                else:
+                    wtag = eles[-1]
+                    word = (len(eles) - 2) * "="
+                if wtag == "O":
+                    return word, None, wtag
+                ptag = wtag.split("-")[-1].strip()
+                return word, "T", ptag
             for line in fp:
-                record = {}
-                sent, tag_string = line.strip().split('####')
-                record['sentence'] = sent
-                word_tag_pairs = tag_string.split(' ')
-                # tag sequence for targeted sentiment
-                ts_tags = []
-                # tag sequence for opinion target extraction
-                ote_tags = []
-                # word sequence
-                words = []
-                for item in word_tag_pairs:
-                    # valid label is: O, T-POS, T-NEG, T-NEU
-                    eles = item.split('=')
-                    if len(eles) == 2:
-                        word, tag = eles
-                    elif len(eles) > 2:
-                        tag = eles[-1]
-                        word = (len(eles) - 2) * "="
-                    words.append(word.lower())
-                    if tag == 'O':
-                        ote_tags.append('O')
-                        ts_tags.append('O')
-                    elif tag == 'T-POS':
-                        ote_tags.append('T')
-                        ts_tags.append('T-POS')
-                    elif tag == 'T-NEG':
-                        ote_tags.append('T')
-                        ts_tags.append('T-NEG')
-                    elif tag == 'T-NEU':
-                        ote_tags.append('T')
-                        ts_tags.append('T-NEU')
+                _, tag_string = line.strip().split('####')
+
+                norm_words = []  # word sequence
+                aspect_tags = []  # tag sequence for target aspect
+                polarity_tags = []  # tag sequence for targeted sentiment polarity
+
+                span = []
+                prev_tag = None
+                items = tag_string.split(' ')
+                for idx, item in enumerate(items):
+                    # Valid label is: O, T-POS, T-NEG, T-NEU
+                    word, prefix, ptag = parse_item(item)
+                    if prev_tag is None or prev_tag == ptag:
+                        prev_tag = ptag
+                        span.append(word)
+                        if idx + 1 < len(item):
+                            continue
+                    spand_text = self.word_segment(" ".join(span))
+                    norm_words.extend(spand_text)
+                    if prev_tag == 'O':
+                        aspect_tags.extend(['O'] * len(spand_text))
+                        polarity_tags.extend(['O'] * len(spand_text))
                     else:
-                        raise Exception('Invalid tag %s!!!' % tag)
-                record['words'] = words.copy()
-                record['ote_raw_tags'] = ote_tags.copy()
-                record['ts_raw_tags'] = ts_tags.copy()
-                examples.append(record)
+                        for idx, _ in enumerate(spand_text):
+                            if idx == 0:
+                                aspect_tags.append(f"B-SPAN")
+                                polarity_tags.append(f"B-{prev_tag.strip()}")
+                                continue
+                            aspect_tags.append(f"I-SPAN")
+                            polarity_tags.append(f"I-{prev_tag.strip()}")
+                    span = [word]
+                    prev_tag = ptag
+                assert len(norm_words) == len(aspect_tags), f"Not match: {line}"
+                examples.append(ABSAExample(tokens=norm_words, a_tags=aspect_tags, p_tags=polarity_tags))
         return examples
 
     def convert_example_to_features(self, examples: List[ABSAExample]) -> List[ABSAFeature]:
         return NotImplemented
 
 
+if __name__ == "__main__":
+    processor = BaseProcessor("vinai/phobert-base")
+    processor.read_absa_data("./datasets/absa/laptop14_test.txt")
