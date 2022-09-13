@@ -184,6 +184,7 @@ def train():
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
     train_set = build_dataset(args.data_dir,
                               tokenizer,
+                              task=args.task,
                               dtype='train',
                               max_seq_len=args.max_seq_length,
                               device=device,
@@ -191,6 +192,7 @@ def train():
                               use_crf=use_crf)
     eval_set = build_dataset(args.data_dir,
                              tokenizer,
+                             task=args.task,
                              dtype='test',
                              max_seq_len=args.max_seq_length,
                              device=device,

@@ -20,11 +20,13 @@ def get_test_argument():
                         help="Whether not to use CUDA when available")
     return parser.parse_args()
 
+
 def get_train_argument():
     parser = ArgumentParser()
     parser.add_argument('type', choices=['train', 'test', 'predict'],
                         help='What process to be run')
-    parser.add_argument("--task", default='UIT-ViSD4SA', type=str, choices=['UIT-ViSD4SA'],
+    parser.add_argument("--task", default='UIT-ViSD4SA', type=str, choices=['UIT-ViSD4SA', 'ABSA-LAPTOP',
+                                                                            'ABSA-TWITTER', 'ABSA-REST_TOTAL'],
                         help="Training task selected in the list: [`UIT-ViSD4SA`].")
     parser.add_argument("--data_dir", default='datasets/samples', type=str,
                         help="The input data dir. Should contain the .csv files (or other data files) for the task.")
@@ -33,7 +35,8 @@ def get_train_argument():
     parser.add_argument("--load_weights", default=None, type=str,
                         help='Path of pretrained file.')
     parser.add_argument("--model_name_or_path", default='vinai/phobert-base', type=str,
-                        help="Pre-trained model selected in the list: [`vinai/phobert-base`, `vinai/phobert-large`]")
+                        help="Pre-trained model selected in the list: [`vinai/phobert-base`, `vinai/phobert-large`,"
+                             "`bert-base-uncased`, `bert-base-cased`]")
     parser.add_argument("--model_arch", default='hier_roberta_sl', type=str,
                         choices=['hier_roberta_sl', 'hier_roberta_ml'],
                         help="Model architecture selected in the list: [`hier_roberta_sl`, `hier_roberta_ml`]")

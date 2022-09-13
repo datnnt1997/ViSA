@@ -16,3 +16,6 @@ if os.path.exists("vncorenlp/VnCoreNLP-1.1.1.jar"):
     RDRSEGMENTER = VnCoreNLP("vncorenlp/VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m')
 else:
     RDRSEGMENTER = None
+
+ABSA_ASPECT_LABELS = ['O', 'B-T', 'I-T']
+ABSA_POLARITY_LABELS = ['O', 'B-POS', 'I-POS', 'B-NEG', 'I-NEG', 'B-NEU', 'I-NEU']
