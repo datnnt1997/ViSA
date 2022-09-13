@@ -190,6 +190,7 @@ def train():
                               device=device,
                               overwrite_data=args.overwrite_data,
                               use_crf=use_crf)
+
     eval_set = build_dataset(args.data_dir,
                              tokenizer,
                              task=args.task,
