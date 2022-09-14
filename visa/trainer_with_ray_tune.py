@@ -41,8 +41,8 @@ def train_one_epoch(model, iterator, optim, cur_epoch: int, max_grad_norm: float
     start_time = time.time()
     tr_loss = 0.0
     model.train()
-    tqdm_bar = tqdm(enumerate(iterator), total=len(iterator), desc=f'[TRAIN-EPOCH {cur_epoch}]')
-    for idx, batch in tqdm_bar:
+    # tqdm_bar = tqdm(enumerate(iterator), total=len(iterator), desc=f'[TRAIN-EPOCH {cur_epoch}]')
+    for idx, batch in enumerate(iterator):
         outputs = model(**batch)
         # backward pass
         torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=max_grad_norm)
@@ -68,8 +68,8 @@ def validate(model, task, iterator, cur_epoch: int, is_test: bool = False):
     # Run one step on sub-dataset
     with torch.no_grad():
         tqdm_desc = f"[{'TEST' if is_test else 'EVAL'}- Epoch {cur_epoch}]"
-        eval_bar = tqdm(enumerate(iterator), total=len(iterator), desc=tqdm_desc)
-        for idx, batch in eval_bar:
+        # eval_bar = tqdm(enumerate(iterator), total=len(iterator), desc=tqdm_desc)
+        for idx, batch in enumerate(iterator):
             outputs = model(**batch)
             eval_loss += outputs.loss.detach().item()
             active_accuracy = batch['label_masks'].view(-1) != 0
@@ -342,7 +342,7 @@ def main():
         partial(train, args=args),
         resources_per_trial={"cpu": 2, "gpu": 1},
         config=config,
-        num_samples=1,
+        num_samples=10,
         scheduler=scheduler,
         progress_reporter=reporter)
 
