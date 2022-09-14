@@ -128,13 +128,14 @@ def get_result(correct_chunks, true_chunks, pred_chunks,
         sum_f1 += f1
     macro_prec, macro_rec, macro_f1 = (sum_prec/len(chunk_types), sum_rec/len(chunk_types), sum_f1/len(chunk_types))
     res["macro"] = (macro_prec, macro_rec, macro_f1)
-    if is_test:
-        LOGGER.info(f"\t Acc: {sum_correct_counts / sum_true_counts:0.4f}; "
-                    f"micro-P: {micro_prec:0.4f}; micro-R: {micro_rec:0.4f}; micro-F1: {micro_f1:0.4f}; "
-                    f"macro-P: {macro_prec:0.4f}; macro-R: {macro_rec:0.4f}; macro-F1: {macro_f1:0.4f}")
-    else:
-        LOGGER.info(f"\t\tAcc: {sum_correct_counts / sum_true_counts:0.4f}; micro-F1: {micro_f1:0.4f}; "
-                    f"macro-F1: {macro_f1:0.4f}")
+    if verbose:
+        if is_test:
+            LOGGER.info(f"\t Acc: {sum_correct_counts / sum_true_counts:0.4f}; "
+                        f"micro-P: {micro_prec:0.4f}; micro-R: {micro_rec:0.4f}; micro-F1: {micro_f1:0.4f}; "
+                        f"macro-P: {macro_prec:0.4f}; macro-R: {macro_rec:0.4f}; macro-F1: {macro_f1:0.4f}")
+        else:
+            LOGGER.info(f"\t\tAcc: {sum_correct_counts / sum_true_counts:0.4f}; micro-F1: {micro_f1:0.4f}; "
+                        f"macro-F1: {macro_f1:0.4f}")
     return res
 
 

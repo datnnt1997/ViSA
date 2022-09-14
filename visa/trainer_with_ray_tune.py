@@ -116,7 +116,8 @@ def validate(model, task, iterator, cur_epoch: int, is_test: bool = False):
                                         pred_apsects=[aspect_label_map[p_aid] for p_aid in eval_aspect_preds],
                                         true_polarities=[polarity_label_map[g_sid] for g_sid in eval_polarity_golds],
                                         pred_polarities=[polarity_label_map[p_sid] for p_sid in eval_polarity_preds],
-                                        is_test=is_test)
+                                        is_test=is_test,
+                                        verbose=False)
     # LOGGER.info(f"\tBIO-Report:")
     # LOGGER.info(f"\t[Aspect] Acc: {epoch_aspect_avg_acc:.4f}; macro-F1: {epoch_aspect_avg_f1:.4f};\n"
     #             f"\t[Sentiment] Acc: {epoch_polarity_avg_acc:.4f}; macro-F1: {epoch_polarity_avg_f1:.4f};\n"
@@ -298,26 +299,6 @@ def train(config, args=None):
             save_model(args, saved_file, model)
         else:
             cumulative_early_steps += 1
-    if args.run_test:
-        test_set = build_dataset(args.data_dir,
-                                 tokenizer,
-                                 task=args.task,
-                                 dtype='test',
-                                 max_seq_len=args.max_seq_length,
-                                 device=device,
-                                 overwrite_data=args.overwrite_data,
-                                 use_crf=use_crf)
-        test_iterator = DataLoader(test_set, batch_size=args.eval_batch_size, num_workers=args.num_workers)
-        if device == 'cpu':
-            checkpoint_data = torch.load(args.output_dir + f"/best_model.pt", map_location='cpu')
-        else:
-            checkpoint_data = torch.load(args.output_dir + f"/best_model.pt")
-        model.load_state_dict(checkpoint_data['model'])
-        _, _ = validate(model=model,
-                        task=args.task,
-                        iterator=test_iterator,
-                        is_test=True,
-                        cur_epoch=0)
 
 
 def main():
