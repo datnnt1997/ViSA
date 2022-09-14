@@ -333,7 +333,7 @@ def main():
         metric="aspect_sentiment_f1",
         mode="max",
         max_t=100,
-        grace_period=1,
+        grace_period=args.early_stop,
         reduction_factor=2)
     reporter = CLIReporter(
         parameter_columns=["learning_rate", "classifier_learning_rate", "batch_size"],
