@@ -9,7 +9,7 @@ from torch.utils.data import RandomSampler, DataLoader
 from visa.constants import LOGGER, ASPECT_LABELS, POLARITY_LABELS, ABSA_POLARITY_LABELS, ABSA_ASPECT_LABELS
 from visa.helper import set_ramdom_seed, get_total_model_parameters
 from visa.dataset import build_dataset
-from visa.models import ViSA_MODEL_ARCHIVE_MAP, ABSARoBERTaConfig
+from visa.models import ViSA_MODEL_ARCHIVE_MAP, ViSA_CONFIG_ARCHIVE_MAP
 from visa.metrics import calc_score, calc_overall_score
 
 import visa.arguments as arguments
@@ -132,9 +132,10 @@ def test():
     use_crf = True if 'hier' in args.model_arch else False
     tokenizer = AutoTokenizer.from_pretrained(configs.model_name_or_path)
 
-    config = ABSARoBERTaConfig.from_pretrained(args.model_name_or_path,
-                                               num_aspect_labels=len(checkpoint_data['a_classes']),
-                                               num_polarity_labels=len(checkpoint_data['p_classes']))
+    config = ViSA_CONFIG_ARCHIVE_MAP[configs.model_arch].\
+        from_pretrained(args.model_name_or_path,
+                        num_aspect_labels=len(checkpoint_data['a_classes']),
+                        num_polarity_labels=len(checkpoint_data['p_classes']))
     model_clss = ViSA_MODEL_ARCHIVE_MAP[configs.model_arch]
     model = model_clss(config=config)
     model.resize_token_embeddings(len(tokenizer))
@@ -205,11 +206,15 @@ def train():
                              overwrite_data=args.overwrite_data,
                              use_crf=use_crf)
 
-    config = ABSARoBERTaConfig.from_pretrained(args.model_name_or_path,
-                                               num_aspect_labels=len(ASPECT_LABELS),
-                                               num_polarity_labels=len(POLARITY_LABELS))
+    aspect_label_map = ASPECT_LABELS if args.task == 'UIT-ViSD4SA' else ABSA_ASPECT_LABELS
+    polarity_label_map = POLARITY_LABELS if args.task == 'UIT-ViSD4SA' else ABSA_POLARITY_LABELS
+
+    config = ViSA_CONFIG_ARCHIVE_MAP[args.model_arch].from_pretrained(args.model_name_or_path,
+                                                                      num_aspect_labels=len(aspect_label_map),
+                                                                      num_polarity_labels=len(polarity_label_map))
     model = ViSA_MODEL_ARCHIVE_MAP[args.model_arch].from_pretrained(args.model_name_or_path, config=config)
     model.to(device)
+
 
     if args.load_weights is not None:
         LOGGER.info(f'Load pretrained model weights from "{args.load_weights}"')
@@ -221,8 +226,9 @@ def train():
         checkpoint_data = None
 
     no_decay = ['bias', 'LayerNorm.weight', 'LayerNorm.bias']
-    encoder_param_optimizer = list(model.roberta.named_parameters())
-    task_param_optimizer = [(n, p) for n, p in model.named_parameters() if "roberta" not in n]
+    encoder_param_optimizer = [(f'{model.base_model_prefix}.{n}', p) for n, p in model.base_model.named_parameters()]
+    model_params = [(n, p) for n, p in model.named_parameters()]
+    task_param_optimizer = list(set(model_params) - set(encoder_param_optimizer))
 
     optimizer_grouped_parameters = [
         {'params': [p for n, p in encoder_param_optimizer if not any(nd in n for nd in no_decay)],

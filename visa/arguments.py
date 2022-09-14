@@ -38,8 +38,9 @@ def get_train_argument():
                         help="Pre-trained model selected in the list: [`vinai/phobert-base`, `vinai/phobert-large`,"
                              "`bert-base-uncased`, `bert-base-cased`]")
     parser.add_argument("--model_arch", default='hier_roberta_sl', type=str,
-                        choices=['hier_roberta_sl', 'hier_roberta_ml'],
-                        help="Model architecture selected in the list: [`hier_roberta_sl`, `hier_roberta_ml`]")
+                        choices=['hier_roberta_sl', 'hier_roberta_ml', 'hier_bert_ml'],
+                        help="Model architecture selected in the list: [`hier_roberta_sl`, `hier_roberta_ml`, "
+                             "`hier_bert_ml`]")
     parser.add_argument("--output_dir", default='outputs/', type=str,
                         help="The output directory where the model predictions and checkpoints will be written.")
     parser.add_argument("--max_seq_length", default=256, type=int,
