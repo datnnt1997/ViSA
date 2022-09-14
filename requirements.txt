@@ -9,3 +9,5 @@ tensorboardX~=2.5
 matplotlib~=3.5.2
 pyvi~=0.1.1
 prettytable~=3.3.0
+ray~=2.0.0
+pandas~=1.4.4
