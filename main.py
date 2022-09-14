@@ -1,4 +1,4 @@
-from visa import TRAIN, TEST, LOGGER
+from visa import TRAIN, TEST, LOGGER, TRAIN_WITH_RAY
 
 import sys
 
@@ -6,6 +6,9 @@ if __name__ == '__main__':
     if sys.argv[1] == 'train':
         LOGGER.info("Start TRAIN process...")
         TRAIN()
+    if sys.argv[1] == 'hparam_tuning':
+        LOGGER.info("Start Hyperparameter tuning process...")
+        TRAIN_WITH_RAY()
     elif sys.argv[1] == 'test':
         LOGGER.info("Start TEST process...")
         TEST()

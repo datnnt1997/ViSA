@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 
 def get_test_argument():
     parser = ArgumentParser()
-    parser.add_argument('type', choices=['train', 'test', 'predict'],
+    parser.add_argument('type', choices=['train', 'test', 'predict', 'hparam_tuning'],
                         help='What processs to be run')
     parser.add_argument("--data_dir", default='datasets/samples', type=str,
                         help="The input data dir. Should contain the .txt files (or other data files) for the task.")
@@ -23,7 +23,7 @@ def get_test_argument():
 
 def get_train_argument():
     parser = ArgumentParser()
-    parser.add_argument('type', choices=['train', 'test', 'predict'],
+    parser.add_argument('type', choices=['train', 'test', 'predict', 'hparam_tuning'],
                         help='What process to be run')
     parser.add_argument("--task", default='UIT-ViSD4SA', type=str, choices=['UIT-ViSD4SA', 'ABSA-LAPTOP',
                                                                             'ABSA-TWITTER', 'ABSA-REST_TOTAL'],
