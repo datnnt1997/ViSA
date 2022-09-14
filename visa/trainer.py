@@ -6,7 +6,7 @@ from sklearn.metrics import classification_report
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 from torch.utils.data import RandomSampler, DataLoader
 
-from visa.constants import LOGGER, ASPECT_LABELS, POLARITY_LABELS
+from visa.constants import LOGGER, ASPECT_LABELS, POLARITY_LABELS, ABSA_POLARITY_LABELS, ABSA_ASPECT_LABELS
 from visa.helper import set_ramdom_seed, get_total_model_parameters
 from visa.dataset import build_dataset
 from visa.models import ViSA_MODEL_ARCHIVE_MAP, ABSARoBERTaConfig
@@ -102,11 +102,20 @@ def validate(model, task, iterator, cur_epoch: int, is_test: bool = False):
     calc_score([POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
                [POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds], is_test=is_test)
     LOGGER.info(f"\t[Aspect-Sentiment]:")
-    overall_scores = calc_overall_score(true_apsects=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                                        pred_apsects=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                                        true_polarities=[POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
-                                        pred_polarities=[POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds],
-                                        is_test=is_test)
+    if task == 'UIT-ViSD4SA':
+        overall_scores = calc_overall_score(true_apsects=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+                                            pred_apsects=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                                            true_polarities=[POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
+                                            pred_polarities=[POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds],
+                                            is_test=is_test)
+    elif 'ABSA' in task:
+        overall_scores = calc_overall_score(true_apsects=[ABSA_ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
+                                            pred_apsects=[ABSA_ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
+                                            true_polarities=[ABSA_POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
+                                            pred_polarities=[ABSA_POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds],
+                                            is_test=is_test)
+    else:
+        raise ValueError()
     LOGGER.info(f"\tBIO-Report:")
     LOGGER.info(f"\t[Aspect] Acc: {epoch_aspect_avg_acc:.4f}; macro-F1: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Acc: {epoch_polarity_avg_acc:.4f}; macro-F1: {epoch_polarity_avg_f1:.4f};\n"
@@ -287,6 +296,7 @@ def train():
     if args.run_test:
         test_set = build_dataset(args.data_dir,
                                  tokenizer,
+                                 task=args.task,
                                  dtype='test',
                                  max_seq_len=args.max_seq_length,
                                  device=device,

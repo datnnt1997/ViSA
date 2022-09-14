@@ -1,0 +1,10 @@
+The bread is top notch as well.####The=O bread=T-POS is=O top=O notch=O as=O well=O .=O
+I have to say they have one of the fastest delivery times in the city.####I=O have=O to=O say=O they=O have=O one=O of=O the=O fastest=O delivery=T-POS times=T-POS in=O the=O city=O .=O
+Food is always fresh and hot- ready to eat!####Food=T-POS is=O always=O fresh=O and=O hot=O ready=O to=O eat=O !=O
+Did I mention that the coffee is OUTSTANDING?####Did=O I=O mention=O that=O the=O coffee=T-POS is=O OUTSTANDING=O ?=O
+Certainly not the best sushi in New York, however, it is always fresh, and the place is very clean, sterile.####Certainly=O not=O the=O best=O sushi=O in=O New=O York=O ,=O however=O ,=O it=O is=O always=O fresh=O ,=O and=O the=O place=T-POS is=O very=O clean=O ,=O sterile=O .=O
+I trust the people at Go Sushi, it never disappoints.####I=O trust=O the=O people=T-POS at=O Go=O Sushi=O ,=O it=O never=O disappoints=O .=O
+Straight-forward, no surprises, very decent Japanese food.####Straight-forward=O ,=O no=O surprises=O ,=O very=O decent=O Japanese=T-POS food=T-POS .=O
+BEST spicy tuna roll, great asian salad.####BEST=O spicy=T-POS tuna=T-POS roll=T-POS ,=O great=O asian=T-POS salad=T-POS .=O
+Try the rose roll (not on menu).####Try=O the=O rose=T-POS roll=T-POS not=O on=O menu=T-NEU .=O
+I love the drinks, esp lychee martini, and the food is also VERY good.####I=O love=O the=O drinks=T-POS ,=O esp=O lychee=T-POS martini=T-POS ,=O and=O the=O food=T-POS is=O also=O VERY=O good=O .=O
