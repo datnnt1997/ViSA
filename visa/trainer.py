@@ -95,27 +95,23 @@ def validate(model, task, iterator, cur_epoch: int, is_test: bool = False):
     LOGGER.info(f"\t{'*' * 20}{'Test' if is_test else 'Validate'} Summary{'*' * 20}")
     LOGGER.info(f"\tValidation Loss: {epoch_loss:.4f};")
     LOGGER.info(f"\tChunk-Report:")
+
     LOGGER.info(f"\t[Aspect]:")
-    calc_score([ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-               [ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds], is_test=is_test)
+    aspect_label_map = ASPECT_LABELS if task == 'UIT-ViSD4SA' else ABSA_ASPECT_LABELS
+    polarity_label_map = POLARITY_LABELS if task == 'UIT-ViSD4SA' else ABSA_POLARITY_LABELS
+
+    calc_score([aspect_label_map[g_aid] for g_aid in eval_aspect_golds],
+               [aspect_label_map[p_aid] for p_aid in eval_aspect_preds], is_test=is_test)
     LOGGER.info(f"\t[Sentiment]:")
     calc_score([POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
                [POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds], is_test=is_test)
     LOGGER.info(f"\t[Aspect-Sentiment]:")
-    if task == 'UIT-ViSD4SA':
-        overall_scores = calc_overall_score(true_apsects=[ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                                            pred_apsects=[ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                                            true_polarities=[POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
-                                            pred_polarities=[POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds],
-                                            is_test=is_test)
-    elif 'ABSA' in task:
-        overall_scores = calc_overall_score(true_apsects=[ABSA_ASPECT_LABELS[g_aid] for g_aid in eval_aspect_golds],
-                                            pred_apsects=[ABSA_ASPECT_LABELS[p_aid] for p_aid in eval_aspect_preds],
-                                            true_polarities=[ABSA_POLARITY_LABELS[g_sid] for g_sid in eval_polarity_golds],
-                                            pred_polarities=[ABSA_POLARITY_LABELS[p_sid] for p_sid in eval_polarity_preds],
-                                            is_test=is_test)
-    else:
-        raise ValueError()
+
+    overall_scores = calc_overall_score(true_apsects=[aspect_label_map[g_aid] for g_aid in eval_aspect_golds],
+                                        pred_apsects=[aspect_label_map[p_aid] for p_aid in eval_aspect_preds],
+                                        true_polarities=[polarity_label_map[g_sid] for g_sid in eval_polarity_golds],
+                                        pred_polarities=[polarity_label_map[p_sid] for p_sid in eval_polarity_preds],
+                                        is_test=is_test)
     LOGGER.info(f"\tBIO-Report:")
     LOGGER.info(f"\t[Aspect] Acc: {epoch_aspect_avg_acc:.4f}; macro-F1: {epoch_aspect_avg_f1:.4f};\n"
                 f"\t[Sentiment] Acc: {epoch_polarity_avg_acc:.4f}; macro-F1: {epoch_polarity_avg_f1:.4f};\n"
